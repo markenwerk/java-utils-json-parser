@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Torsten Krause, Markenwerk GmbH
+ * Copyright (c) 2015, 2016 Torsten Krause, Markenwerk GmbH
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,12 +36,13 @@ import org.junit.Test;
  */
 public class JsonReaderTests {
 
-	@SuppressWarnings("resource")
+	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
 	public void create_nullReader() {
 		new JsonReader(null);
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void emptyDocument() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read(""));
@@ -54,6 +55,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmpty_invalidStart() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("\""));
@@ -67,6 +69,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void emptyArray() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[]"));
 		try {
@@ -83,6 +86,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void emptyArray_unfinished() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("["));
@@ -97,6 +101,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNull() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[null]"));
 		try {
@@ -113,6 +118,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleFalse() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[false]"));
 		try {
@@ -129,6 +135,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleTrue() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[true]"));
 		try {
@@ -145,6 +152,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleEmptyString() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[\"\"]"));
 		try {
@@ -161,6 +169,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyString() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[\"foo\"]"));
 		try {
@@ -177,6 +186,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyVeryLargeString() throws MalformedJsonException, IOException {
 		String value = createVeryLargeString();
 		JsonReader jsonReader = new JsonReader(read("[\"" + value + "\"]"));
@@ -203,6 +213,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithEscapeSequences() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[\"\\\"\\\\\\/\\b\\f\\r\\n\\t\"]"));
 		try {
@@ -219,6 +230,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithUnicodeEscapeSequences() throws MalformedJsonException,
 			IOException {
 		JsonReader jsonReader = new JsonReader(read("[\"\\uBEEF\\ubeef\"]"));
@@ -236,6 +248,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithSurrogateUnicodeEscapeSequences() throws MalformedJsonException,
 			IOException {
 		JsonReader jsonReader = new JsonReader(read("[\"\\uD834\\uDD1E\"]"));
@@ -252,6 +265,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_singleNonEmptyStringDangelingEscapeSequences() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[\"\\"));
@@ -265,6 +279,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_singleNonEmptyStringUnterminatedEscapeSequences() throws MalformedJsonException,
 			IOException {
@@ -279,6 +294,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_singleNonEmptyStringInvalidEscapeSequences() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[\"\\x\"]"));
@@ -292,6 +308,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_singleNonEmptyStringDangelingUnicodeEscapeSequences() throws MalformedJsonException,
 			IOException {
@@ -306,6 +323,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_singleNonEmptyStringUnterminatedUnicodeEscapeSequences() throws MalformedJsonException,
 			IOException {
@@ -320,6 +338,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_singleNonEmptyStringInvalidUnicodeEscapeSequences() throws MalformedJsonException,
 			IOException {
@@ -335,6 +354,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleLong() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[0]"));
 		try {
@@ -351,6 +371,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveLong() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42]"));
 		try {
@@ -367,6 +388,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNegativeLong() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[-42]"));
 		try {
@@ -383,6 +405,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleInteger() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42]"));
 		try {
@@ -398,6 +421,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooLargeInteger() throws MalformedJsonException, IOException {
 		long value = ((long) Integer.MAX_VALUE) + 1;
@@ -412,6 +436,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooSmallInteger() throws MalformedJsonException, IOException {
 		long value = ((long) Integer.MIN_VALUE) - 1;
@@ -427,6 +452,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleShort() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42]"));
 		try {
@@ -442,6 +468,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooLargeShort() throws MalformedJsonException, IOException {
 		long value = ((long) Short.MAX_VALUE) + 1;
@@ -456,6 +483,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooSmallShort() throws MalformedJsonException, IOException {
 		long value = ((long) Short.MIN_VALUE) - 1;
@@ -471,6 +499,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleCharacter() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42]"));
 		try {
@@ -486,6 +515,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooLargeCharacter() throws MalformedJsonException, IOException {
 		long value = ((long) Character.MAX_VALUE) + 1;
@@ -500,6 +530,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooSmallCharacter() throws MalformedJsonException, IOException {
 		long value = ((long) Character.MIN_VALUE) - 1;
@@ -515,6 +546,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleByte() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42]"));
 		try {
@@ -530,6 +562,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooLargeByte() throws MalformedJsonException, IOException {
 		long value = ((long) Byte.MAX_VALUE) + 1;
@@ -544,6 +577,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooSmallByte() throws MalformedJsonException, IOException {
 		long value = ((long) Byte.MIN_VALUE) - 1;
@@ -559,6 +593,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleDouble() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[0.0]"));
 		try {
@@ -575,6 +610,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDouble() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42.23]"));
 		try {
@@ -591,6 +627,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNegativeDouble() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[-42.23]"));
 		try {
@@ -607,6 +644,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDoubleWithPositiveExponent() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42.0e7]"));
 		try {
@@ -623,6 +661,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDoubleWithNegativeExponent() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42.0e-7]"));
 		try {
@@ -639,6 +678,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleFloat() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[42.23]"));
 		try {
@@ -654,6 +694,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_singleInvalidLiteal() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[x]"));
@@ -668,6 +709,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_multipleValues() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[null,null]"));
 		try {
@@ -692,6 +734,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_nestedArray() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[[]]"));
 		try {
@@ -715,6 +758,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_unfinishedDangelingValue() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[null"));
@@ -729,6 +773,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyArray_unfinishedDangelingComma() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[null,"));
@@ -744,6 +789,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void emptyObject() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{}"));
 		try {
@@ -760,6 +806,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void emptyObject_unfinished() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{"));
@@ -774,6 +821,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_singleValue() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"foo\":null}"));
 		try {
@@ -797,6 +845,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_multipleValues() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"foo\":null,\"bar\":null}"));
 		try {
@@ -825,6 +874,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_nestedValue() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"foo\":{}}"));
 		try {
@@ -850,6 +900,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyObject_unfinishedDangelingName() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"foo\""));
@@ -864,6 +915,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyObject_unfinishedDangelingColon() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"foo\":"));
@@ -878,6 +930,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyObject_unfinishedDangelingValue() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"foo\":null"));
@@ -893,6 +946,7 @@ public class JsonReaderTests {
 		}
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test(expected = MalformedJsonException.class)
 	public void nonEmptyObject_unfinishedDangelingComma() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"foo\":null,"));
@@ -909,6 +963,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_complexValue() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(
 				read(" \n { \"foo\" : [ \"bar\\n\" , true , { \n } ] , \"baz\" : { \"foo\" \t : \t 42 } } \n "));
@@ -998,6 +1053,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyDocument_skipRootArray() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[]"));
 		try {
@@ -1013,6 +1069,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_skipSingleValue() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[null,\"keep\" ]"));
 		try {
@@ -1031,6 +1088,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_skipComplexValue() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("[[{\"skipped\":[true]}],\"keep\" ]"));
 		try {
@@ -1049,6 +1107,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyDocument_skipRootObject() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{}"));
 		try {
@@ -1064,6 +1123,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_skipSingleValueBeforeName() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"skip\":null,\"keep\":null}"));
 		try {
@@ -1083,6 +1143,7 @@ public class JsonReaderTests {
 	}
 
 	@Test
+	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_skipSingleValueAfterName() throws MalformedJsonException, IOException {
 		JsonReader jsonReader = new JsonReader(read("{\"skip\":null,\"keep\":null}"));
 		try {
