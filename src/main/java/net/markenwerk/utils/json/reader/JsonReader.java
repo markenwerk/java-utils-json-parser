@@ -44,7 +44,7 @@ public final class JsonReader implements Closeable {
 
 	private final Buffer buffer;
 
-	private JsonToken token;
+	private JsonState state;
 
 	private boolean booleanValue;
 
@@ -70,49 +70,49 @@ public final class JsonReader implements Closeable {
 		stack.push(Context.EMPTY_DOCUMENT);
 	}
 
-	public void beginArray() throws MalformedJsonException, IOException {
-		consume(JsonToken.ARRAY_BEGIN);
+	public void beginArray() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.ARRAY_BEGIN);
 	}
 
-	public void endArray() throws MalformedJsonException, IOException {
-		consume(JsonToken.ARRAY_END);
+	public void endArray() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.ARRAY_END);
 	}
 
-	public void beginObject() throws MalformedJsonException, IOException {
-		consume(JsonToken.OBJECT_BEGIN);
+	public void beginObject() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.OBJECT_BEGIN);
 	}
 
-	public void endObject() throws MalformedJsonException, IOException {
-		consume(JsonToken.OBJECT_END);
+	public void endObject() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.OBJECT_END);
 	}
 
-	public void endDocumnet() throws MalformedJsonException, IOException {
-		consume(JsonToken.DOCUMENT_END);
+	public void endDocumnet() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.DOCUMENT_END);
 	}
 
-	public boolean hasNext() throws MalformedJsonException, IOException {
-		currentToken();
-		return JsonToken.OBJECT_END != token && JsonToken.ARRAY_END != token;
+	public boolean hasNext() throws IllegalStateException, JsonSyntaxException, IOException {
+		currentState();
+		return JsonState.OBJECT_END != state && JsonState.ARRAY_END != state;
 	}
 
-	public JsonToken currentToken() throws MalformedJsonException, IOException {
-		if (null == token) {
-			token = prepareToken();
+	public JsonState currentState() throws JsonSyntaxException, IOException {
+		if (null == state) {
+			state = nextState();
 		}
-		return token;
+		return state;
 	}
 
-	private JsonToken prepareToken() throws MalformedJsonException, IOException {
+	private JsonState nextState() throws JsonSyntaxException, IOException {
 		switch (stack.peek()) {
 		case EMPTY_DOCUMENT:
 			stack.replace(Context.NONEMPTY_DOCUMENT);
 			try {
-				JsonToken firstToken = prepareNextValue("Invalid document start (expected '[' or '{')");
-				if (JsonToken.ARRAY_BEGIN != firstToken && JsonToken.OBJECT_BEGIN != firstToken) {
+				JsonState initialState = prepareNextValue("Invalid document start (expected '[' or '{')");
+				if (JsonState.ARRAY_BEGIN != initialState && JsonState.OBJECT_BEGIN != initialState) {
 					throw syntaxError("Invalid document start (expected '[' or '{')");
 				}
-				return firstToken;
-			} catch (MalformedJsonException e) {
+				return initialState;
+			} catch (JsonSyntaxException e) {
 				throw syntaxError("Invalid document start (expected '[' or '{')");
 			}
 		case EMPTY_ARRAY:
@@ -129,8 +129,8 @@ public final class JsonReader implements Closeable {
 			try {
 				prepareNextValue("Invalid document end (expected EOF)");
 				throw syntaxError("Expected EOF");
-			} catch (MalformedJsonException e) {
-				return JsonToken.DOCUMENT_END;
+			} catch (JsonSyntaxException e) {
+				return JsonState.DOCUMENT_END;
 			}
 		case CLOSED:
 			throw new IllegalStateException("JsonReader is closed");
@@ -139,19 +139,19 @@ public final class JsonReader implements Closeable {
 		}
 	}
 
-	private void consume(JsonToken expected) throws MalformedJsonException, IOException {
-		currentToken();
-		if (token != expected) {
-			throw new IllegalStateException("Current token is " + token + " (expected " + expected + ")");
+	private void consume(JsonState expected) throws JsonSyntaxException, IllegalStateException, IOException {
+		currentState();
+		if (state != expected) {
+			throw new IllegalStateException("Current state is " + state + " (expected " + expected + ")");
 		}
-		token = null;
+		state = null;
 	}
 
-	private JsonToken prepareArrayFirst() throws MalformedJsonException, IOException {
+	private JsonState prepareArrayFirst() throws JsonSyntaxException, IOException {
 		switch (nextNonWhitespace("Unfinished array (expected value or '}')")) {
 		case ']':
 			pop();
-			return JsonToken.ARRAY_END;
+			return JsonState.ARRAY_END;
 		default:
 			buffer.revertCharacter();
 			path.peek().hint(null);
@@ -160,47 +160,46 @@ public final class JsonReader implements Closeable {
 		}
 	}
 
-	private JsonToken prepareArrayFollowing() throws MalformedJsonException, IOException {
-		char nonWhitespace = nextNonWhitespace("Unfinished array (expected ',' or ']')");
-		switch (nonWhitespace) {
+	private JsonState prepareArrayFollowing() throws JsonSyntaxException, IOException {
+		switch (nextNonWhitespace("Unfinished array (expected ',' or ']')")) {
 		case ']':
 			pop();
-			return JsonToken.ARRAY_END;
+			return JsonState.ARRAY_END;
 		case ',':
 			path.peek().hint(null);
 			return prepareNextValue("Unfinished array (expected value)");
 		default:
-			throw syntaxError("Unfinished array (expected ',' or ']' but found '" + nonWhitespace + "')");
+			throw syntaxError("Unfinished array (expected ',' or ']')");
 		}
 	}
 
-	private JsonToken prepareObjectFirst() throws MalformedJsonException, IOException {
+	private JsonState prepareObjectFirst() throws JsonSyntaxException, IOException {
 		switch (nextNonWhitespace("Unfinished object (expected key or '}')")) {
 		case '}':
 			pop();
-			return JsonToken.OBJECT_END;
+			return JsonState.OBJECT_END;
 		case '"':
 			prepareNextString();
 			path.peek().hint(stringValue);
 			stack.replace(Context.DANGLING_NAME);
-			return JsonToken.NAME;
+			return JsonState.NAME;
 		default:
 			throw syntaxError("Unfinished object (expected key or '}')");
 		}
 	}
 
-	private JsonToken prepareObjectFollowing() throws MalformedJsonException, IOException {
+	private JsonState prepareObjectFollowing() throws JsonSyntaxException, IOException {
 		switch (nextNonWhitespace("Unfinished object (expected ',' or '}')")) {
 		case '}':
 			pop();
-			return JsonToken.OBJECT_END;
+			return JsonState.OBJECT_END;
 		case ',':
 			switch (nextNonWhitespace("Unfinished object (expected '\"key\"')")) {
 			case '"':
 				prepareNextString();
 				path.peek().hint(stringValue);
 				stack.replace(Context.DANGLING_NAME);
-				return JsonToken.NAME;
+				return JsonState.NAME;
 			default:
 				throw syntaxError("Unfinished object (expected '\"key\"')");
 			}
@@ -217,7 +216,7 @@ public final class JsonReader implements Closeable {
 		}
 	}
 
-	private JsonToken prepareObjectValue() throws MalformedJsonException, IOException {
+	private JsonState prepareObjectValue() throws JsonSyntaxException, IOException {
 		switch (nextNonWhitespace("Unfinished object value (expected ':')")) {
 		case ':':
 			stack.replace(Context.NONEMPTY_OBJECT);
@@ -227,17 +226,17 @@ public final class JsonReader implements Closeable {
 		}
 	}
 
-	private JsonToken prepareNextValue(String errorMessage) throws MalformedJsonException, IOException {
+	private JsonState prepareNextValue(String errorMessage) throws JsonSyntaxException, IOException {
 		int c = nextNonWhitespace(errorMessage);
 		switch (c) {
 		case '{':
 			path.push(new ObjectKey());
 			stack.push(Context.EMPTY_OBJECT);
-			return JsonToken.OBJECT_BEGIN;
+			return JsonState.OBJECT_BEGIN;
 		case '[':
 			path.push(new ArrayKey());
 			stack.push(Context.EMPTY_ARRAY);
-			return JsonToken.ARRAY_BEGIN;
+			return JsonState.ARRAY_BEGIN;
 		case '"':
 			return prepareNextString();
 		default:
@@ -246,7 +245,7 @@ public final class JsonReader implements Closeable {
 		}
 	}
 
-	private char nextNonWhitespace(String errorMessage) throws MalformedJsonException, IOException {
+	private char nextNonWhitespace(String errorMessage) throws JsonSyntaxException, IOException {
 		while (buffer.ensure(1)) {
 			char c = buffer.nextCharacter();
 			switch (c) {
@@ -262,7 +261,7 @@ public final class JsonReader implements Closeable {
 		throw syntaxError(errorMessage);
 	}
 
-	private JsonToken prepareNextString() throws MalformedJsonException, IOException {
+	private JsonState prepareNextString() throws JsonSyntaxException, IOException {
 		builder.setLength(0);
 		while (buffer.ensure(1)) {
 			int offset = 0;
@@ -272,7 +271,7 @@ public final class JsonReader implements Closeable {
 					buffer.appendNextString(builder, offset - 1);
 					buffer.nextCharacter();
 					stringValue = builder.toString();
-					return JsonToken.STRING;
+					return JsonState.STRING;
 				case '\\':
 					buffer.appendNextString(builder, offset - 1);
 					buffer.nextCharacter();
@@ -287,7 +286,7 @@ public final class JsonReader implements Closeable {
 		throw syntaxError("Unterminated string");
 	}
 
-	private char readEscaped() throws MalformedJsonException, IOException {
+	private char readEscaped() throws JsonSyntaxException, IOException {
 		if (!buffer.ensure(1)) {
 			throw syntaxError("Unterminated escape sequence");
 		} else {
@@ -316,7 +315,7 @@ public final class JsonReader implements Closeable {
 		}
 	}
 
-	private char readUnicodeEscaped() throws MalformedJsonException, IOException {
+	private char readUnicodeEscaped() throws JsonSyntaxException, IOException {
 		if (!buffer.ensure(4)) {
 			throw syntaxError("Unterminated unicode escape sequence");
 		} else {
@@ -329,7 +328,7 @@ public final class JsonReader implements Closeable {
 		}
 	}
 
-	private JsonToken prepareNextLiteral() throws MalformedJsonException, IOException {
+	private JsonState prepareNextLiteral() throws JsonSyntaxException, IOException {
 		int offset = 0;
 		while (buffer.ensure(offset + 1)) {
 			switch (buffer.peekCharacter(offset++)) {
@@ -351,35 +350,35 @@ public final class JsonReader implements Closeable {
 		throw syntaxError("Invald literal");
 	}
 
-	private JsonToken decodeLiteral(String literal) throws MalformedJsonException {
+	private JsonState decodeLiteral(String literal) throws JsonSyntaxException {
 		if (NULL.equalsIgnoreCase(literal)) {
-			return JsonToken.NULL;
+			return JsonState.NULL;
 		} else if (FALSE.equalsIgnoreCase(literal)) {
 			booleanValue = false;
-			return JsonToken.BOOLEAN;
+			return JsonState.BOOLEAN;
 		} else if (TRUE.equalsIgnoreCase(literal)) {
 			booleanValue = true;
-			return JsonToken.BOOLEAN;
+			return JsonState.BOOLEAN;
 		} else {
 			return decodeNumber(literal);
 		}
 	}
 
-	private JsonToken decodeNumber(String literal) throws MalformedJsonException {
+	private JsonState decodeNumber(String literal) throws JsonSyntaxException {
 		try {
 			longValue = Long.parseLong(literal);
-			return JsonToken.LONG;
+			return JsonState.LONG;
 		} catch (NumberFormatException ignored) {
 			try {
 				doubleValue = Double.parseDouble(literal);
-				return JsonToken.DOUBLE;
+				return JsonState.DOUBLE;
 			} catch (NumberFormatException e) {
 				throw syntaxError("Invald literal");
 			}
 		}
 	}
 
-	private MalformedJsonException syntaxError(String message) {
+	private JsonSyntaxException syntaxError(String message) {
 		return buffer.syntaxError(message, getPath());
 	}
 
@@ -391,17 +390,17 @@ public final class JsonReader implements Closeable {
 		return Collections.unmodifiableList(path);
 	}
 
-	public void nextNull() throws MalformedJsonException, IOException {
-		consume(JsonToken.NULL);
+	public void nextNull() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.NULL);
 	}
 
-	public boolean nextBoolean() throws MalformedJsonException, IOException {
-		consume(JsonToken.BOOLEAN);
+	public boolean nextBoolean() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.BOOLEAN);
 		return booleanValue;
 	}
 
-	public byte nextByte() throws MalformedJsonException, IOException {
-		consume(JsonToken.LONG);
+	public byte nextByte() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.LONG);
 		if (longValue < Byte.MIN_VALUE) {
 			throw new ArithmeticException("Value is too small to be a byte");
 		}
@@ -411,8 +410,8 @@ public final class JsonReader implements Closeable {
 		return (byte) longValue;
 	}
 
-	public char nextCharacter() throws MalformedJsonException, IOException {
-		consume(JsonToken.LONG);
+	public char nextCharacter() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.LONG);
 		if (longValue < Character.MIN_VALUE) {
 			throw new ArithmeticException("Value is too small to be a character");
 		}
@@ -422,8 +421,8 @@ public final class JsonReader implements Closeable {
 		return (char) longValue;
 	}
 
-	public short nextShort() throws MalformedJsonException, IOException {
-		consume(JsonToken.LONG);
+	public short nextShort() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.LONG);
 		if (longValue < Short.MIN_VALUE) {
 			throw new ArithmeticException("Value is too small to be a short");
 		}
@@ -433,8 +432,8 @@ public final class JsonReader implements Closeable {
 		return (short) longValue;
 	}
 
-	public int nextInteger() throws MalformedJsonException, IOException {
-		consume(JsonToken.LONG);
+	public int nextInteger() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.LONG);
 		if (longValue < Integer.MIN_VALUE) {
 			throw new ArithmeticException("Value is too small to be an integer");
 		}
@@ -444,38 +443,38 @@ public final class JsonReader implements Closeable {
 		return (int) longValue;
 	}
 
-	public long nextLong() throws MalformedJsonException, IOException {
-		consume(JsonToken.LONG);
+	public long nextLong() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.LONG);
 		return longValue;
 	}
 
-	public float nextFloat() throws MalformedJsonException, IOException {
-		consume(JsonToken.DOUBLE);
+	public float nextFloat() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.DOUBLE);
 		return (float) doubleValue;
 	}
 
-	public double nextDouble() throws MalformedJsonException, IOException {
-		consume(JsonToken.DOUBLE);
+	public double nextDouble() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.DOUBLE);
 		return doubleValue;
 	}
 
-	public String nextString() throws MalformedJsonException, IOException {
-		consume(JsonToken.STRING);
+	public String nextString() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.STRING);
 		return stringValue;
 	}
 
-	public String nextName() throws MalformedJsonException, IOException {
-		consume(JsonToken.NAME);
+	public String nextName() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.NAME);
 		return stringValue;
 	}
 
-	public void skipValue() throws MalformedJsonException, IOException {
-		if (JsonToken.NAME == currentToken()) {
+	public void skipValue() throws IllegalStateException, JsonSyntaxException, IOException {
+		if (JsonState.NAME == currentState()) {
 			nextName();
 		}
 		int depth = 0;
 		do {
-			switch (currentToken()) {
+			switch (currentState()) {
 			case ARRAY_BEGIN:
 			case OBJECT_BEGIN:
 				depth++;
@@ -486,11 +485,11 @@ public final class JsonReader implements Closeable {
 				break;
 			default:
 			}
-			System.out.println("skipping " + token);
-			token = null;
+			System.out.println("skipping " + state);
+			state = null;
 		} while (0 != depth);
-		currentToken();
-		System.out.println("skipped till " + token);
+		currentState();
+		System.out.println("skipped till " + state);
 	}
 
 	public void close() throws IOException {

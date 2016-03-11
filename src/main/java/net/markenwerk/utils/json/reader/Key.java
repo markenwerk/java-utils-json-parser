@@ -21,10 +21,10 @@
  */
 package net.markenwerk.utils.json.reader;
 
-public interface Key {
+interface Key {
 
 	public void hint(String hint);
 
 	public void unhint();
-	
+
 }

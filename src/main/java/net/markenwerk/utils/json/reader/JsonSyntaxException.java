@@ -25,7 +25,14 @@ import java.util.List;
 
 import net.markenwerk.commons.iterables.InfixedIterable;
 
-public final class MalformedJsonException extends Exception {
+/**
+ * A {@link JsonSyntaxException} indicates that a {@link JsonReader} encountered
+ * a JSON syntax error while parsing a JSON document.
+ *
+ * @author Torsten Krause (tk at markenwerk dot net)
+ * @since 1.0.0
+ */
+public final class JsonSyntaxException extends Exception {
 
 	private static final long serialVersionUID = 4648280170907086815L;
 
@@ -41,7 +48,7 @@ public final class MalformedJsonException extends Exception {
 
 	private final List<String> path;
 
-	public MalformedJsonException(String message, int line, int column, String past, String future, List<String> path) {
+	JsonSyntaxException(String message, int line, int column, String past, String future, List<String> path) {
 		this.message = message;
 		this.line = line;
 		this.column = column;
@@ -69,26 +76,59 @@ public final class MalformedJsonException extends Exception {
 		return builder.toString();
 	}
 
+	/**
+	 * Returns a description of the actual syntax error.
+	 * 
+	 * @return The error description.
+	 */
 	public String getErrorMessage() {
 		return message;
 	}
 
+	/**
+	 * Returns the line in the JSON document, where the syntax error occurred.
+	 * 
+	 * @return The line.
+	 */
 	public int getLine() {
 		return line;
 	}
 
+	/**
+	 * Returns the column in the JSON document, where the syntax error occurred.
+	 * 
+	 * @return The columns.
+	 */
 	public int getColumn() {
 		return column;
 	}
 
+	/**
+	 * Returns a few characters in the parsed character stream, that came before
+	 * the syntax error, if still cached.
+	 * 
+	 * @return The snippet from the character stream.
+	 */
 	public String getPast() {
 		return past;
 	}
 
+	/**
+	 * Returns a few characters in the parsed character stream, that come after
+	 * the syntax error, if already cached.
+	 * 
+	 * @return The snippet from the character stream.
+	 */
 	public String getFuture() {
 		return future;
 	}
 
+	/**
+	 * Returns the path in the JSON document (e.g <tt>/foo/0/bar</tt> for
+	 * <tt>{"foo":[{"bar":ERROR}]}</tt>), where the syntax error occurred.
+	 * 
+	 * @return The path.
+	 */
 	public List<String> getPath() {
 		return path;
 	}

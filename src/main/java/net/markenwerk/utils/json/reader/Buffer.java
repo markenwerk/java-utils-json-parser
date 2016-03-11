@@ -129,8 +129,8 @@ final class Buffer {
 		}
 	}
 
-	public MalformedJsonException syntaxError(String message, List<String> path) {
-		return new MalformedJsonException(message, line, column, pastSnipper(), futureSnippet(), path);
+	public JsonSyntaxException syntaxError(String message, List<String> path) {
+		return new JsonSyntaxException(message, line, column, pastSnipper(), futureSnippet(), path);
 	}
 
 	public int getLine() {
