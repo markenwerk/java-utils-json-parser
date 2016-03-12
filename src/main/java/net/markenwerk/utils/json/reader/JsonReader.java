@@ -815,11 +815,9 @@ public final class JsonReader implements Closeable {
 				break;
 			default:
 			}
-			System.out.println("skipping " + state);
 			state = null;
 		} while (0 != depth);
 		currentState();
-		System.out.println("skipped till " + state);
 	}
 
 	public void close() throws IOException {
