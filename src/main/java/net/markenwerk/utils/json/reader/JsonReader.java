@@ -66,9 +66,9 @@ public final class JsonReader implements Closeable {
 	 * Creates a new {@link JsonReader} for the given {@link Reader}.
 	 * 
 	 * @param reader
-	 *            The {@link Reader} to read from.
+	 *           The {@link Reader} to read from.
 	 * @throws IllegalArgumentException
-	 *             If the given {@link Reader} is {@literal null}.
+	 *            If the given {@link Reader} is {@literal null}.
 	 */
 	public JsonReader(Reader reader) throws IllegalArgumentException {
 		if (null == reader) {
@@ -85,10 +85,10 @@ public final class JsonReader implements Closeable {
 	 * 
 	 * @return The current {@link JsonState}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public JsonState currentState() throws JsonSyntaxException, IOException {
 		if (null == state) {
@@ -394,17 +394,17 @@ public final class JsonReader implements Closeable {
 	/**
 	 * Ensures that the {@link JsonReader#currentState() current}
 	 * {@link JsonState} is {@link JsonState#ARRAY_BEGIN} and consumes the
-	 * beginning of a JSON array. The next {@link JsonState} describes either
-	 * the first value of this JSON array or the end of this JSON array.
+	 * beginning of a JSON array. The next {@link JsonState} describes either the
+	 * first value of this JSON array or the end of this JSON array.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#ARRAY_BEGIN}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#ARRAY_BEGIN}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public void beginArray() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.ARRAY_BEGIN);
@@ -417,13 +417,13 @@ public final class JsonReader implements Closeable {
 	 * sibling value of this JSON array or the end of the JSON document.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#ARRAY_END}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#ARRAY_END}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public void endArray() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.ARRAY_END);
@@ -437,13 +437,13 @@ public final class JsonReader implements Closeable {
 	 * or the end of this JSON object.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#OBJECT_BEGIN}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#OBJECT_BEGIN}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public void beginObject() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.OBJECT_BEGIN);
@@ -456,13 +456,13 @@ public final class JsonReader implements Closeable {
 	 * sibling value of this JSON object or the end of the JSON document.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#OBJECT_END}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#OBJECT_END}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public void endObject() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.OBJECT_END);
@@ -474,13 +474,13 @@ public final class JsonReader implements Closeable {
 	 * of the JSON document. The next {@link JsonState} will be {@literal null}.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#DOCUMENT_END}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#DOCUMENT_END}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public void endDocumnet() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOCUMENT_END);
@@ -492,10 +492,10 @@ public final class JsonReader implements Closeable {
 	 * @return Whether the current JSON array or JSON object has more elements.
 	 * 
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public boolean hasNext() throws JsonSyntaxException, IOException {
 		currentState();
@@ -510,13 +510,12 @@ public final class JsonReader implements Closeable {
 	 * JSON object.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#NULL}.
+	 *            If the current {@link JsonState} is not {@link JsonState#NULL}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public void nextNull() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.NULL);
@@ -526,19 +525,19 @@ public final class JsonReader implements Closeable {
 	 * Ensures that the {@link JsonReader#currentState() current}
 	 * {@link JsonState} is {@link JsonState#BOOLEAN} and consumes and returns
 	 * the corresponding value. The next {@link JsonState} describes either the
-	 * next sibling value of this JSON value or the end of surrounding JSON
-	 * array or JSON object.
+	 * next sibling value of this JSON value or the end of surrounding JSON array
+	 * or JSON object.
 	 * 
 	 * @return The {@code boolean} value.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#BOOLEAN}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#BOOLEAN}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public boolean nextBoolean() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.BOOLEAN);
@@ -555,16 +554,15 @@ public final class JsonReader implements Closeable {
 	 * @return The {@code byte} value.
 	 * 
 	 * @throws ArithmeticException
-	 *             If the value is too large or too small to fit into a
-	 *             {@code byte}.
+	 *            If the value is too large or too small to fit into a
+	 *            {@code byte}.
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#LONG}.
+	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public byte nextByte() throws ArithmeticException, IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -587,16 +585,15 @@ public final class JsonReader implements Closeable {
 	 * @return The {@code char} value.
 	 * 
 	 * @throws ArithmeticException
-	 *             If the value is too large or too small to fit into a
-	 *             {@code char}.
+	 *            If the value is too large or too small to fit into a
+	 *            {@code char}.
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#LONG}.
+	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public char nextCharacter() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -619,16 +616,15 @@ public final class JsonReader implements Closeable {
 	 * @return The {@code short} value.
 	 * 
 	 * @throws ArithmeticException
-	 *             If the value is too large or too small to fit into a
-	 *             {@code short}.
+	 *            If the value is too large or too small to fit into a
+	 *            {@code short}.
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#LONG}.
+	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public short nextShort() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -644,23 +640,22 @@ public final class JsonReader implements Closeable {
 	/**
 	 * Ensures that the {@link JsonReader#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
-	 * corresponding value as a {@code int}. The next {@link JsonState}
-	 * describes either the next sibling value of this JSON value or the end of
-	 * surrounding JSON array or JSON object.
+	 * corresponding value as a {@code int}. The next {@link JsonState} describes
+	 * either the next sibling value of this JSON value or the end of surrounding
+	 * JSON array or JSON object.
 	 * 
 	 * @return The {@code int} value.
 	 * 
 	 * @throws ArithmeticException
-	 *             If the value is too large or too small to fit into a
-	 *             {@code int}.
+	 *            If the value is too large or too small to fit into a
+	 *            {@code int}.
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#LONG}.
+	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public int nextInteger() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -683,13 +678,12 @@ public final class JsonReader implements Closeable {
 	 * @return The {@code long} value.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#LONG}.
+	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public long nextLong() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -698,21 +692,21 @@ public final class JsonReader implements Closeable {
 
 	/**
 	 * Ensures that the {@link JsonReader#currentState() current}
-	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns
-	 * the corresponding value as a {@code float}. The next {@link JsonState}
+	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns the
+	 * corresponding value as a {@code float}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
 	 * surrounding JSON array or JSON object.
 	 * 
 	 * @return The {@code float} value.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#DOUBLE}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#DOUBLE}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public float nextFloat() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOUBLE);
@@ -721,21 +715,21 @@ public final class JsonReader implements Closeable {
 
 	/**
 	 * Ensures that the {@link JsonReader#currentState() current}
-	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns
-	 * the corresponding value. The next {@link JsonState} describes either the
-	 * next sibling value of this JSON value or the end of surrounding JSON
-	 * array or JSON object.
+	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns the
+	 * corresponding value. The next {@link JsonState} describes either the next
+	 * sibling value of this JSON value or the end of surrounding JSON array or
+	 * JSON object.
 	 * 
 	 * @return The {@code double} value.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#DOUBLE}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#DOUBLE}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public double nextDouble() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOUBLE);
@@ -744,21 +738,21 @@ public final class JsonReader implements Closeable {
 
 	/**
 	 * Ensures that the {@link JsonReader#currentState() current}
-	 * {@link JsonState} is {@link JsonState#STRING} and consumes and returns
-	 * the corresponding value. The next {@link JsonState} describes either the
-	 * next sibling value of this JSON value or the end of surrounding JSON
-	 * array or JSON object.
+	 * {@link JsonState} is {@link JsonState#STRING} and consumes and returns the
+	 * corresponding value. The next {@link JsonState} describes either the next
+	 * sibling value of this JSON value or the end of surrounding JSON array or
+	 * JSON object.
 	 * 
 	 * @return The string value.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#STRING}.
+	 *            If the current {@link JsonState} is not
+	 *            {@link JsonState#STRING}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public String nextString() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.STRING);
@@ -774,13 +768,12 @@ public final class JsonReader implements Closeable {
 	 * @return The name.
 	 * 
 	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#NAME}.
+	 *            If the current {@link JsonState} is not {@link JsonState#NAME}.
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public String nextName() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.NAME);
@@ -793,14 +786,20 @@ public final class JsonReader implements Closeable {
 	 * array or JSON object.
 	 * 
 	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
+	 *            If the read {@link JsonSyntaxException} document contains a
+	 *            syntax error.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *            If reading from the underlying {@link Reader} failed.
 	 */
 	public void skipValue() throws JsonSyntaxException, IOException {
-		if (JsonState.NAME == currentState()) {
+		switch (currentState()) {
+		case ARRAY_END:
+		case OBJECT_END:
+		case DOCUMENT_END:
+			return;
+		case NAME:
 			nextName();
+		default:
 		}
 		int depth = 0;
 		do {
