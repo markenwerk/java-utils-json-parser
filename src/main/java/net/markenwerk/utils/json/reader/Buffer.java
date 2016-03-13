@@ -52,7 +52,7 @@ final class Buffer {
 	public Buffer(Reader reader, int size) {
 		// buffer of size 2^^size
 		this.buffer = new char[1 << size];
-		// sizeMask like 00...01...11 
+		// sizeMask like 00...01...11
 		this.sizeMask = buffer.length - 1;
 		this.reader = reader;
 	}
@@ -71,8 +71,12 @@ final class Buffer {
 			int maximum = buffer.length - available;
 			int writePosition = position + available;
 			if (writePosition < buffer.length) {
+				// read no further than end of buffer
 				maximum = buffer.length - writePosition;
 			} else {
+				// write position is left of read position
+				// calculate actual write position and read
+				// no further than read mark
 				writePosition -= buffer.length;
 			}
 			int read = reader.read(buffer, writePosition, maximum);
@@ -80,14 +84,14 @@ final class Buffer {
 				return false;
 			} else {
 				available += read;
-				if (!firstCharacterRead && available >= 1) {
-					if (buffer[0] == BYTE_ORDER_MARK) {
-						position++;
-						column++;
-					}
-					firstCharacterRead = true;
-				}
 			}
+		}
+		if (!firstCharacterRead && available >= 1) {
+			if (buffer[0] == BYTE_ORDER_MARK) {
+				position++;
+				column++;
+			}
+			firstCharacterRead = true;
 		}
 		return true;
 	}
