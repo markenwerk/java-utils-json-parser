@@ -68,7 +68,7 @@ public final class JsonReader implements Closeable {
 		if (null == reader) {
 			throw new IllegalArgumentException("reader is null");
 		}
-		this.buffer = new Buffer(reader, 512);
+		this.buffer = new Buffer(reader);
 		stack.push(Context.EMPTY_DOCUMENT);
 	}
 

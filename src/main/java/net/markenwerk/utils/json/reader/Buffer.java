@@ -33,6 +33,8 @@ final class Buffer {
 
 	private final char[] buffer;
 
+	private final int sizeMask;
+
 	private int position;
 
 	private int available;
@@ -43,8 +45,15 @@ final class Buffer {
 
 	private boolean firstCharacterRead;
 
+	public Buffer(Reader reader) {
+		this(reader, 8);
+	}
+
 	public Buffer(Reader reader, int size) {
-		this.buffer = new char[size];
+		// buffer of size 2^^size
+		this.buffer = new char[1 << size];
+		// sizeMask like 00...01...11 
+		this.sizeMask = buffer.length - 1;
 		this.reader = reader;
 	}
 
@@ -71,7 +80,7 @@ final class Buffer {
 				return false;
 			} else {
 				available += read;
-				if (!firstCharacterRead && available >=1) {
+				if (!firstCharacterRead && available >= 1) {
 					if (buffer[0] == BYTE_ORDER_MARK) {
 						position++;
 						column++;
@@ -85,10 +94,7 @@ final class Buffer {
 
 	public char nextCharacter() {
 		char result = buffer[position];
-		position += 1;
-		if (buffer.length == position) {
-			position = 0;
-		}
+		position = (position + 1) & sizeMask;
 		available -= 1;
 		if ('\n' == result) {
 			line += 1;
@@ -101,7 +107,7 @@ final class Buffer {
 
 	public char peekCharacter(int offset) {
 		assert available(offset);
-		return buffer[(position + offset) % buffer.length];
+		return buffer[(position + offset) & sizeMask];
 	}
 
 	public String nextString(int length) {
