@@ -38,12 +38,6 @@ import java.util.List;
  */
 public final class JsonReader implements Closeable {
 
-	private static final String NULL = "null";
-
-	private static final String FALSE = "false";
-
-	private static final String TRUE = "true";
-
 	private final StringBuilder builder = new StringBuilder();
 
 	private final Stack<Context> stack = new Stack<Context>();
@@ -143,15 +137,15 @@ public final class JsonReader implements Closeable {
 	}
 
 	private JsonState prepareArrayFirst() throws JsonSyntaxException, IOException {
-		switch (nextNonWhitespace("Unfinished array (expected value or '}')")) {
+		char character = nextNonWhitespace("Unfinished array (expected value or '}')");
+		switch (character) {
 		case ']':
 			pop();
 			return JsonState.ARRAY_END;
 		default:
-			buffer.revertCharacter();
 			path.peek().hint(null);
 			stack.replace(Context.NONEMPTY_ARRAY);
-			return prepareNextValue("Unfinished array (expected value)");
+			return prepareNextValue(character, "Unfinished array (expected value)");
 		}
 	}
 
@@ -222,7 +216,12 @@ public final class JsonReader implements Closeable {
 	}
 
 	private JsonState prepareNextValue(String errorMessage) throws JsonSyntaxException, IOException {
-		switch (nextNonWhitespace(errorMessage)) {
+		return prepareNextValue(nextNonWhitespace(errorMessage), errorMessage);
+	}
+
+	private JsonState prepareNextValue(char firstCharacter, String errorMessage)
+			throws JsonSyntaxException, IOException {
+		switch (firstCharacter) {
 		case '{':
 			path.push(new ObjectKey());
 			stack.push(Context.EMPTY_OBJECT);
@@ -234,8 +233,7 @@ public final class JsonReader implements Closeable {
 		case '"':
 			return prepareNextString();
 		default:
-			buffer.revertCharacter();
-			return prepareNextLiteral();
+			return prepareNextLiteral(firstCharacter);
 		}
 	}
 
@@ -322,35 +320,32 @@ public final class JsonReader implements Closeable {
 		}
 	}
 
-	private JsonState prepareNextLiteral() throws JsonSyntaxException, IOException {
+	private JsonState prepareNextLiteral(char firstCharacter) throws JsonSyntaxException, IOException {
 		int offset = 0;
 		while (buffer.ensure(offset + 1)) {
 			switch (buffer.peekCharacter(offset++)) {
-			case '{':
 			case '}':
-			case '[':
 			case ']':
-			case ':':
 			case ',':
 			case ' ':
-			case '\t':
 			case '\b':
 			case '\f':
 			case '\r':
 			case '\n':
-				return decodeLiteral(buffer.nextString(offset - 1));
+			case '\t':
+				return decodeLiteral(firstCharacter + buffer.nextString(offset - 1));
 			}
 		}
 		throw syntaxError("Invald literal");
 	}
 
 	private JsonState decodeLiteral(String literal) throws JsonSyntaxException {
-		if (NULL.equalsIgnoreCase(literal)) {
+		if ("null".equalsIgnoreCase(literal)) {
 			return JsonState.NULL;
-		} else if (FALSE.equalsIgnoreCase(literal)) {
+		} else if ("false".equalsIgnoreCase(literal)) {
 			booleanValue = false;
 			return JsonState.BOOLEAN;
-		} else if (TRUE.equalsIgnoreCase(literal)) {
+		} else if ("true".equalsIgnoreCase(literal)) {
 			booleanValue = true;
 			return JsonState.BOOLEAN;
 		} else {

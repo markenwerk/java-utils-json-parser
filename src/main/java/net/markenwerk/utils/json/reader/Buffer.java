@@ -41,7 +41,7 @@ final class Buffer {
 
 	private int column = 1;
 
-	private boolean firstCharRead;
+	private boolean firstCharacterRead;
 
 	public Buffer(Reader reader, int size) {
 		this.buffer = new char[size];
@@ -71,12 +71,12 @@ final class Buffer {
 				return false;
 			} else {
 				available += read;
-				if (!firstCharRead && 1 <= available) {
-					char firstChar = nextCharacter();
-					if (firstChar != BYTE_ORDER_MARK) {
-						revertCharacter();
+				if (!firstCharacterRead && available >=1) {
+					if (buffer[0] == BYTE_ORDER_MARK) {
+						position++;
+						column++;
 					}
-					firstCharRead = true;
+					firstCharacterRead = true;
 				}
 			}
 		}
@@ -97,15 +97,6 @@ final class Buffer {
 			column += 1;
 		}
 		return result;
-	}
-
-	public void revertCharacter() {
-		assert !available(buffer.length);
-		position -= 1;
-		if (position < 0) {
-			position = buffer.length - 1;
-		}
-		available += 1;
 	}
 
 	public char peekCharacter(int offset) {
