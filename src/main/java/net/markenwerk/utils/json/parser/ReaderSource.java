@@ -21,7 +21,6 @@
  */
 package net.markenwerk.utils.json.parser;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -124,7 +123,7 @@ public final class ReaderSource implements JsonSource {
 			}
 			int read = reader.read(buffer, writePosition, maximum);
 			if (-1 == read) {
-				throw new EOFException();
+				return false;
 			} else {
 				available += read;
 			}

@@ -68,7 +68,7 @@ public interface JsonSource extends Closeable {
 	 *           The desired minimum.
 	 * 
 	 * @return Whether the desired amount of available characters could be
-	 *         ensured.
+	 *         ensured or the end of the character sequence has been reached.
 	 * @throws IOException
 	 *            If something went wrong while ensuring that the desired amount
 	 *            of available characters.
