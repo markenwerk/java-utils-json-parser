@@ -21,13 +21,23 @@
  */
 package net.markenwerk.utils.json.parser;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.List;
 
-final class Buffer {
+/**
+ * A {@link StringSource} is a {@link JsonSource} that is backed by a given
+ * {@link Reader} and buffers a small portion of the read characters in a
+ * {@code char[]}.
+ * 
+ * @author Torsten Krause (tk at markenwerk dot net)
+ * @since 1.0.0
+ */
+public final class ReaderSource implements JsonSource {
 
-	private static final char BYTE_ORDER_MARK = '\uFEFF';
+	private static final int MINIMUM_BUFFER_SIZE = 5;
+
+	private static final int MAXIMUM_BUFFER_SIZE = 16;
 
 	private final Reader reader;
 
@@ -45,22 +55,55 @@ final class Buffer {
 
 	private boolean firstCharacterRead;
 
-	public Buffer(Reader reader) {
+	/**
+	 * Creates a new {@link StringSource} for the given {@link Reader}.
+	 * 
+	 * @param reader
+	 *           The {@link Reader} to be used.
+	 * @throws IllegalArgumentException
+	 *            If the given {@link Reader} is {@literal null}.
+	 */
+	public ReaderSource(Reader reader) {
 		this(reader, 8);
 	}
 
-	public Buffer(Reader reader, int size) {
+	/**
+	 * Creates a new {@link StringSource} for the given {@link Reader}.
+	 * 
+	 * @param reader
+	 *           The {@link Reader} to be used.
+	 * @param size
+	 *           The logarithm of the buffer size to be used.
+	 * @throws IllegalArgumentException
+	 *            If the given {@link Reader} is {@literal null} or if the given
+	 *            size is smaller than the
+	 *            {@link ReaderSource#MINIMUM_BUFFER_SIZE minimum} buffer size or
+	 *            larger than the {@link ReaderSource#MAXIMUM_BUFFER_SIZE
+	 *            maximum} buffer size.
+	 */
+	public ReaderSource(Reader reader, int size) {
+		if (null == reader) {
+			throw new IllegalArgumentException("reader is null");
+		}
+		if (size < MINIMUM_BUFFER_SIZE) {
+			throw new IllegalArgumentException("sizes is too small");
+		}
+		if (size > MAXIMUM_BUFFER_SIZE) {
+			throw new IllegalArgumentException("sizes is too large");
+		}
+		this.reader = reader;
 		// buffer of size 2^^size
 		this.buffer = new char[1 << size];
 		// sizeMask like 00...01...11
 		this.sizeMask = buffer.length - 1;
-		this.reader = reader;
 	}
 
+	@Override
 	public boolean available(int minimum) {
 		return minimum <= available;
 	}
 
+	@Override
 	public boolean ensure(int minimum) throws IOException {
 		return minimum < available || fillBuffer(minimum);
 	}
@@ -81,7 +124,7 @@ final class Buffer {
 			}
 			int read = reader.read(buffer, writePosition, maximum);
 			if (-1 == read) {
-				return false;
+				throw new EOFException();
 			} else {
 				available += read;
 			}
@@ -96,6 +139,7 @@ final class Buffer {
 		return true;
 	}
 
+	@Override
 	public char nextCharacter() {
 		char result = buffer[position];
 		position = (position + 1) & sizeMask;
@@ -109,11 +153,13 @@ final class Buffer {
 		return result;
 	}
 
+	@Override
 	public char peekCharacter(int offset) {
 		assert available(offset);
 		return buffer[(position + offset) & sizeMask];
 	}
 
+	@Override
 	public String nextString(int length) {
 		assert available(length);
 		char[] buffer = new char[length];
@@ -123,6 +169,7 @@ final class Buffer {
 		return new String(buffer);
 	}
 
+	@Override
 	public void appendNextString(StringBuilder builder, int length) {
 		assert available(length);
 		for (int i = 0; i < length; i++) {
@@ -130,39 +177,33 @@ final class Buffer {
 		}
 	}
 
-	public JsonSyntaxException syntaxError(String message, List<String> path) {
-		return new JsonSyntaxException(message, line, column, pastSnipper(), futureSnippet(), path);
-	}
-
+	@Override
 	public int getLine() {
 		return line;
 	}
 
+	@Override
 	public int getColumn() {
 		return column;
 	}
 
-	public String getSnippet() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(pastSnipper());
-		builder.append(futureSnippet());
-		return builder.toString();
-	}
-
-	private String pastSnipper() {
+	@Override
+	public String getPast(int maximum) {
 		// int beforePos = Math.min(position, 20);
 		// return getString(position - beforePos,
 		// beforePos).replaceAll(Pattern.quote("\n"), "\\\\n");
 		return "PAST";
 	}
 
-	private String futureSnippet() {
+	@Override
+	public String getFuture(int maximum) {
 		// int afterPos = Math.min(limit - position, 20);
 		// return getString(position, afterPos).replaceAll(Pattern.quote("\n"),
 		// "\\\\n");
 		return "FUTURE";
 	}
 
+	@Override
 	public void close() throws IOException {
 		reader.close();
 	}

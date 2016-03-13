@@ -65,11 +65,11 @@ public final class JsonSyntaxException extends Exception {
 		builder.append(line);
 		builder.append(", column ");
 		builder.append(column);
-		builder.append(", after '...");
+		builder.append(", after '");
 		builder.append(past);
 		builder.append("', before '");
 		builder.append(future);
-		builder.append("...', at /");
+		builder.append("', at /");
 		for (String part : new InfixedIterable<String>(path, "/")) {
 			builder.append(part);
 		}

@@ -44,7 +44,7 @@ public final class JsonReader implements Closeable {
 
 	private final Stack<Key> path = new Stack<Key>();
 
-	private final Buffer buffer;
+	private final JsonSource source;
 
 	private JsonState state;
 
@@ -57,6 +57,18 @@ public final class JsonReader implements Closeable {
 	private String stringValue;
 
 	/**
+	 * Creates a new {@link JsonReader} for the given {@link String}.
+	 * 
+	 * @param string
+	 *           The {@link String} to read from.
+	 * @throws IllegalArgumentException
+	 *            If the given {@link String} is {@literal null}.
+	 */
+	public JsonReader(String string) throws IllegalArgumentException {
+		this(new StringSource(string));
+	}
+
+	/**
 	 * Creates a new {@link JsonReader} for the given {@link Reader}.
 	 * 
 	 * @param reader
@@ -65,10 +77,22 @@ public final class JsonReader implements Closeable {
 	 *            If the given {@link Reader} is {@literal null}.
 	 */
 	public JsonReader(Reader reader) throws IllegalArgumentException {
-		if (null == reader) {
-			throw new IllegalArgumentException("reader is null");
+		this(new ReaderSource(reader));
+	}
+
+	/**
+	 * Creates a new {@link JsonReader} for the given {@link JsonSource}.
+	 * 
+	 * @param source
+	 *           The {@link JsonSource} to read from.
+	 * @throws IllegalArgumentException
+	 *            If the given {@link JsonSource} is {@literal null}.
+	 */
+	public JsonReader(JsonSource source) throws IllegalArgumentException {
+		if (null == source) {
+			throw new IllegalArgumentException("source is null");
 		}
-		this.buffer = new Buffer(reader);
+		this.source = source;
 		stack.push(Context.EMPTY_DOCUMENT);
 	}
 
@@ -238,8 +262,8 @@ public final class JsonReader implements Closeable {
 	}
 
 	private char nextNonWhitespace(String errorMessage) throws JsonSyntaxException, IOException {
-		while (buffer.ensure(1)) {
-			char c = buffer.nextCharacter();
+		while (source.ensure(1)) {
+			char c = source.nextCharacter();
 			switch (c) {
 			case '\t':
 			case ' ':
@@ -255,34 +279,34 @@ public final class JsonReader implements Closeable {
 
 	private JsonState prepareNextString() throws JsonSyntaxException, IOException {
 		builder.setLength(0);
-		while (buffer.ensure(1)) {
+		while (source.ensure(1)) {
 			int offset = 0;
-			while (buffer.available(offset + 1)) {
-				switch (buffer.peekCharacter(offset++)) {
+			while (source.available(offset + 1)) {
+				switch (source.peekCharacter(offset++)) {
 				case '"':
-					buffer.appendNextString(builder, offset - 1);
-					buffer.nextCharacter();
+					source.appendNextString(builder, offset - 1);
+					source.nextCharacter();
 					stringValue = builder.toString();
 					return JsonState.STRING;
 				case '\\':
-					buffer.appendNextString(builder, offset - 1);
-					buffer.nextCharacter();
+					source.appendNextString(builder, offset - 1);
+					source.nextCharacter();
 					builder.append(readEscaped());
 					offset = 0;
 					break;
 				default:
 				}
 			}
-			buffer.appendNextString(builder, offset);
+			source.appendNextString(builder, offset);
 		}
 		throw syntaxError("Unterminated string");
 	}
 
 	private char readEscaped() throws JsonSyntaxException, IOException {
-		if (!buffer.ensure(1)) {
+		if (!source.ensure(1)) {
 			throw syntaxError("Unterminated escape sequence");
 		} else {
-			switch (buffer.nextCharacter()) {
+			switch (source.nextCharacter()) {
 			case '"':
 				return '"';
 			case '\\':
@@ -308,11 +332,11 @@ public final class JsonReader implements Closeable {
 	}
 
 	private char readUnicodeEscaped() throws JsonSyntaxException, IOException {
-		if (!buffer.ensure(4)) {
+		if (!source.ensure(4)) {
 			throw syntaxError("Unterminated unicode escape sequence");
 		} else {
 			try {
-				String hex = buffer.nextString(4);
+				String hex = source.nextString(4);
 				return (char) Integer.parseInt(hex, 16);
 			} catch (NumberFormatException e) {
 				throw syntaxError("Invalid unicode escape sequence");
@@ -322,8 +346,8 @@ public final class JsonReader implements Closeable {
 
 	private JsonState prepareNextLiteral(char firstCharacter) throws JsonSyntaxException, IOException {
 		int offset = 0;
-		while (buffer.ensure(offset + 1)) {
-			switch (buffer.peekCharacter(offset++)) {
+		while (source.ensure(offset + 1)) {
+			switch (source.peekCharacter(offset++)) {
 			case '}':
 			case ']':
 			case ',':
@@ -333,7 +357,7 @@ public final class JsonReader implements Closeable {
 			case '\r':
 			case '\n':
 			case '\t':
-				return decodeLiteral(firstCharacter + buffer.nextString(offset - 1));
+				return decodeLiteral(firstCharacter + source.nextString(offset - 1));
 			}
 		}
 		throw syntaxError("Invald literal");
@@ -368,7 +392,8 @@ public final class JsonReader implements Closeable {
 	}
 
 	private JsonSyntaxException syntaxError(String message) {
-		return buffer.syntaxError(message, getPath());
+		return new JsonSyntaxException(message, source.getLine(), source.getColumn(), source.getPast(15),
+				source.getFuture(15), getPath());
 	}
 
 	/**
@@ -816,13 +841,13 @@ public final class JsonReader implements Closeable {
 	public void close() throws IOException {
 		stack.clear();
 		stack.push(Context.CLOSED);
-		buffer.close();
+		source.close();
 	}
 
 	@Override
 	public String toString() {
-		return "JsonReader [line=" + buffer.getLine() + ", column=" + buffer.getColumn() + ", near='"
-				+ buffer.getSnippet() + "']";
+		return "JsonReader [line=" + source.getLine() + ", column=" + source.getColumn() + ", near='" + source.getPast(15)
+				+ source.getFuture(15) + "']";
 	}
 
 }
