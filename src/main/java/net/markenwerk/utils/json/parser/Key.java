@@ -19,30 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.markenwerk.utils.json.reader;
+package net.markenwerk.utils.json.parser;
 
-class ArrayKey implements Key {
+interface Key {
 
-	public static final String NO_HINT = "<inside array>";
+	public void hint(String hint);
 
-	private boolean hasHint;
-
-	private int index = -1;
-
-	@Override
-	public void hint(String hint) {
-		hasHint = true;
-		index++;
-	}
-
-	@Override
-	public String toString() {
-		return hasHint ? Integer.toString(index) : NO_HINT;
-	}
-
-	@Override
-	public void unhint() {
-		hasHint = false;
-	}
+	public void unhint();
 
 }

@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.markenwerk.utils.json.reader;
+package net.markenwerk.utils.json.parser;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -28,6 +28,12 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.markenwerk.utils.json.parser.ArrayKey;
+import net.markenwerk.utils.json.parser.JsonReader;
+import net.markenwerk.utils.json.parser.JsonState;
+import net.markenwerk.utils.json.parser.JsonSyntaxException;
+import net.markenwerk.utils.json.parser.ObjectKey;
 
 /**
  * JUnit test for {@link JsonReader}.

@@ -19,12 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.markenwerk.utils.json.reader;
+package net.markenwerk.utils.json.parser;
 
-interface Key {
+class ObjectKey implements Key {
 
-	public void hint(String hint);
+	public static final String NO_HINT = "<inside object>";
+	
+	private String key;
 
-	public void unhint();
+	public ObjectKey() {
+	}
+
+	@Override
+	public void hint(String hint) {
+		key = hint;
+	}
+
+	@Override
+	public String toString() {
+		return null == key ? NO_HINT : key;
+	}
+
+	@Override
+	public void unhint() {
+		key = null;
+	}
 
 }

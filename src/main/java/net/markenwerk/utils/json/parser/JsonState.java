@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.markenwerk.utils.json.reader;
+package net.markenwerk.utils.json.parser;
 
 /**
  * A {@link JsonState} describes the current state of a {@link JsonReader} and

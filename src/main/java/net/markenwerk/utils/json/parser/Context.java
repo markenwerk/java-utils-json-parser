@@ -19,30 +19,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.markenwerk.utils.json.reader;
+package net.markenwerk.utils.json.parser;
 
-class ObjectKey implements Key {
+enum Context {
 
-	public static final String NO_HINT = "<inside object>";
-	
-	private String key;
+	EMPTY_DOCUMENT,
 
-	public ObjectKey() {
-	}
+	NONEMPTY_DOCUMENT,
 
-	@Override
-	public void hint(String hint) {
-		key = hint;
-	}
+	EMPTY_ARRAY,
 
-	@Override
-	public String toString() {
-		return null == key ? NO_HINT : key;
-	}
+	NONEMPTY_ARRAY,
 
-	@Override
-	public void unhint() {
-		key = null;
-	}
+	EMPTY_OBJECT,
+
+	DANGLING_NAME,
+
+	NONEMPTY_OBJECT,
+
+	CLOSED;
 
 }
