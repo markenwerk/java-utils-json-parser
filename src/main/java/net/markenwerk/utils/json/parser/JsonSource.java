@@ -26,7 +26,7 @@ import java.io.IOException;
 
 /**
  * A {@link JsonSource} represents access to a sequence of characters to be used
- * used by a {@link JsonReader}. Characters may be consumed
+ * used by a {@link JsonParser}. Characters may be consumed
  * {@link JsonSource#nextCharacter() one by one}, or, for convenience,
  * {@link JsonSource#nextString(int) multiple at a time}, or
  * {@link JsonSource#appendNextString(StringBuilder, int) appended } to a

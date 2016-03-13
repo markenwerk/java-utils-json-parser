@@ -26,7 +26,7 @@ import java.util.List;
 import net.markenwerk.commons.iterables.InfixedIterable;
 
 /**
- * A {@link JsonSyntaxException} indicates that a {@link JsonReader} encountered
+ * A {@link JsonSyntaxException} indicates that a {@link JsonParser} encountered
  * a JSON syntax error while parsing a JSON document.
  *
  * @author Torsten Krause (tk at markenwerk dot net)

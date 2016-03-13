@@ -22,7 +22,7 @@
 package net.markenwerk.utils.json.parser;
 
 /**
- * A {@link JsonState} describes the current state of a {@link JsonReader} and
+ * A {@link JsonState} describes the current state of a {@link JsonParser} and
  * determines which methods may be called successfully next.
  *
  * @author Torsten Krause (tk at markenwerk dot net)
@@ -31,81 +31,81 @@ package net.markenwerk.utils.json.parser;
 public enum JsonState {
 
 	/**
-	 * The {@link JsonReader} has encountered the beginning of a JSON array. It
-	 * is possible to {@link JsonReader#beginArray() begin} an array or
-	 * {@link JsonReader#skipValue() skip} the array.
+	 * The {@link JsonParser} has encountered the beginning of a JSON array. It
+	 * is possible to {@link JsonParser#beginArray() begin} an array or
+	 * {@link JsonParser#skipValue() skip} the array.
 	 */
 	ARRAY_BEGIN,
 
 	/**
-	 * The {@link JsonReader} has encountered the end of a JSON array. It is
-	 * possible to {@link JsonReader#endArray() end} the array.
+	 * The {@link JsonParser} has encountered the end of a JSON array. It is
+	 * possible to {@link JsonParser#endArray() end} the array.
 	 */
 	ARRAY_END,
 
 	/**
-	 * The {@link JsonReader} has encountered the beginning of a JSON object. It
-	 * is possible to {@link JsonReader#beginObject() begin} an object or
-	 * {@link JsonReader#skipValue() skip} the object.
+	 * The {@link JsonParser} has encountered the beginning of a JSON object. It
+	 * is possible to {@link JsonParser#beginObject() begin} an object or
+	 * {@link JsonParser#skipValue() skip} the object.
 	 */
 	OBJECT_BEGIN,
 
 	/**
-	 * The {@link JsonReader} has encountered the name of a JSON object element.
-	 * It is possible to {@link JsonReader#nextName() obtain} the name or
-	 * {@link JsonReader#skipValue() skip} the name and the corresponding value.
+	 * The {@link JsonParser} has encountered the name of a JSON object element.
+	 * It is possible to {@link JsonParser#nextName() obtain} the name or
+	 * {@link JsonParser#skipValue() skip} the name and the corresponding value.
 	 */
 	NAME,
 
 	/**
-	 * The {@link JsonReader} has encountered the end of a JSON object. It is
-	 * possible to {@link JsonReader#endObject() end} the object.
+	 * The {@link JsonParser} has encountered the end of a JSON object. It is
+	 * possible to {@link JsonParser#endObject() end} the object.
 	 */
 	OBJECT_END,
 
 	/**
-	 * The {@link JsonReader} has encountered a JSON null. It is possible to
-	 * {@link JsonReader#nextNull() obtain} the value or
-	 * {@link JsonReader#skipValue() skip} the value.
+	 * The {@link JsonParser} has encountered a JSON null. It is possible to
+	 * {@link JsonParser#nextNull() obtain} the value or
+	 * {@link JsonParser#skipValue() skip} the value.
 	 */
 	NULL,
 
 	/**
-	 * The {@link JsonReader} has encountered a JSON boolean. It is possible to
-	 * {@link JsonReader#nextBoolean() obtain} the value or
-	 * {@link JsonReader#skipValue() skip} the value.
+	 * The {@link JsonParser} has encountered a JSON boolean. It is possible to
+	 * {@link JsonParser#nextBoolean() obtain} the value or
+	 * {@link JsonParser#skipValue() skip} the value.
 	 */
 	BOOLEAN,
 
 	/**
-	 * The {@link JsonReader} has encountered a JSON integer. It is possible to
-	 * obtain the value as a {@link JsonReader#nextLong() <tt>long</tt>},
-	 * {@link JsonReader#nextInteger() <tt>int</tt>},
-	 * {@link JsonReader#nextShort() <tt>short</tt>},
-	 * {@link JsonReader#nextCharacter() <tt>char</tt>},
-	 * {@link JsonReader#nextByte() <tt>byte</tt>} or
-	 * {@link JsonReader#skipValue() skip} the value.
+	 * The {@link JsonParser} has encountered a JSON integer. It is possible to
+	 * obtain the value as a {@link JsonParser#nextLong() <tt>long</tt>},
+	 * {@link JsonParser#nextInteger() <tt>int</tt>},
+	 * {@link JsonParser#nextShort() <tt>short</tt>},
+	 * {@link JsonParser#nextCharacter() <tt>char</tt>},
+	 * {@link JsonParser#nextByte() <tt>byte</tt>} or
+	 * {@link JsonParser#skipValue() skip} the value.
 	 */
 	LONG,
 
 	/**
-	 * The {@link JsonReader} has encountered a JSON real. It is possible to
-	 * obtain the value as a {@link JsonReader#nextDouble() <tt>double</tt>},
-	 * {@link JsonReader#nextFloat() <tt>float</tt>} or
-	 * {@link JsonReader#skipValue() skip} the value.
+	 * The {@link JsonParser} has encountered a JSON real. It is possible to
+	 * obtain the value as a {@link JsonParser#nextDouble() <tt>double</tt>},
+	 * {@link JsonParser#nextFloat() <tt>float</tt>} or
+	 * {@link JsonParser#skipValue() skip} the value.
 	 */
 	DOUBLE,
 
 	/**
-	 * The {@link JsonReader} has encountered a JSON string. It is possible to
-	 * {@link JsonReader#nextString() obtain} the value or
-	 * {@link JsonReader#skipValue() skip} the value.
+	 * The {@link JsonParser} has encountered a JSON string. It is possible to
+	 * {@link JsonParser#nextString() obtain} the value or
+	 * {@link JsonParser#skipValue() skip} the value.
 	 */
 	STRING,
 
 	/**
-	 * The {@link JsonReader} has encountered the end of a JSON document. It is
-	 * possible to {@link JsonReader#endDocumnet() end} the document.
+	 * The {@link JsonParser} has encountered the end of a JSON document. It is
+	 * possible to {@link JsonParser#endDocumnet() end} the document.
 	 */
 	DOCUMENT_END
 }
