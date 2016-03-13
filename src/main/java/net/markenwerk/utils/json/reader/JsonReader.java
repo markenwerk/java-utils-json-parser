@@ -222,8 +222,7 @@ public final class JsonReader implements Closeable {
 	}
 
 	private JsonState prepareNextValue(String errorMessage) throws JsonSyntaxException, IOException {
-		int c = nextNonWhitespace(errorMessage);
-		switch (c) {
+		switch (nextNonWhitespace(errorMessage)) {
 		case '{':
 			path.push(new ObjectKey());
 			stack.push(Context.EMPTY_OBJECT);
