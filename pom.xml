@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>${project.groupId}:${project.artifactId}</name>
-	<description>A JSON stream parser for Java</description>
+	<description>A JSON parser for Java</description>
 	<url>${urls.github}</url>
 	<inceptionYear>2016</inceptionYear>
 
@@ -91,7 +91,7 @@
 				<version>2.19.1</version>
 				<configuration>
 					<includes>
-						<exclude>**/*Tests.java</exclude>
+						<include>**/*Tests.java</include>
 					</includes>
 				</configuration>
 			</plugin>
