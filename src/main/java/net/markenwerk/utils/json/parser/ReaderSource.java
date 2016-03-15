@@ -100,11 +100,6 @@ public final class ReaderSource implements JsonSource {
 	}
 
 	@Override
-	public boolean isAvailable(int minimum) {
-		return minimum <= end - position;
-	}
-
-	@Override
 	public boolean makeAvailable(int minimum) throws IOException {
 		return minimum <= end - position || fillBuffer(minimum);
 	}
@@ -131,7 +126,6 @@ public final class ReaderSource implements JsonSource {
 			}
 			firstCharacterRead = true;
 		}
-		assert isAvailable(minimum);
 		return true;
 	}
 
@@ -148,13 +142,11 @@ public final class ReaderSource implements JsonSource {
 
 	@Override
 	public char peekCharacter(int offset) {
-		assert isAvailable(offset);
 		return buffer[position + offset];
 	}
 
 	@Override
 	public String nextString(int length) {
-		assert isAvailable(length);
 		for (int i = 0; i < length; i++) {
 			nextCharacter();
 		}
@@ -163,7 +155,6 @@ public final class ReaderSource implements JsonSource {
 
 	@Override
 	public void appendNextString(StringBuilder builder, int length) {
-		assert isAvailable(length);
 		for (int i = 0; i < length; i++) {
 			builder.append(nextCharacter());
 		}

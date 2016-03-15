@@ -33,9 +33,8 @@ import java.io.IOException;
  * {@link StringBuilder}.
  * 
  * <p>
- * Callers must {@link JsonSource#isAvailable(int) check} or
- * {@link JsonSource#makeAvailable(int) ensure}, that the desired amount of characters
- * is available, before consuming them.
+ * Callers must or {@link JsonSource#makeAvailable(int) ensure}, that the
+ * desired amount of characters is available, before consuming them.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
@@ -55,18 +54,6 @@ public interface JsonSource extends Closeable {
 	 * @return The amount of currently available characters.
 	 */
 	public int getAvailable();
-
-	/**
-	 * Checks whether a given minimum of characters is currently available to be
-	 * consumed.
-	 * 
-	 * @param minimum
-	 *            The desired minimum. Must be non-negative.
-	 * 
-	 * @return Whether a given minimum of characters is currently available to
-	 *         be consumed.
-	 */
-	public boolean isAvailable(int minimum);
 
 	/**
 	 * Ensures that a given minimum of characters is available to be consumed.
@@ -95,9 +82,8 @@ public interface JsonSource extends Closeable {
 	 * it.
 	 * 
 	 * <p>
-	 * Callers must {@link JsonSource#isAvailable(int) check} or
-	 * {@link JsonSource#makeAvailable(int) ensure}, that the desired amount of
-	 * characters is available.
+	 * Callers must {@link JsonSource#makeAvailable(int) ensure}, that the
+	 * desired amount of characters is available.
 	 * 
 	 * @param offset
 	 *            The amount of characters to look ahead. Must be non-negative.
@@ -110,9 +96,8 @@ public interface JsonSource extends Closeable {
 	 * Consumes and returns the next characters in the character sequence.
 	 * 
 	 * <p>
-	 * Callers must {@link JsonSource#isAvailable(int) check} or
-	 * {@link JsonSource#makeAvailable(int) ensure}, that the desired amount of
-	 * characters is available.
+	 * Callers must {@link JsonSource#makeAvailable(int) ensure}, that the
+	 * desired amount of characters is available.
 	 * 
 	 * @param length
 	 *            The amount of characters to be consumed. Must be non-negative.
@@ -126,9 +111,8 @@ public interface JsonSource extends Closeable {
 	 * given {@link StringBuilder}.
 	 * 
 	 * <p>
-	 * Callers must {@link JsonSource#isAvailable(int) check} or
-	 * {@link JsonSource#makeAvailable(int) ensure}, that the desired amount of
-	 * characters is available.
+	 * Callers must {@link JsonSource#makeAvailable(int) ensure}, that the
+	 * desired amount of characters is available.
 	 * 
 	 * @param builder
 	 *            The string builder to add the characters to. Must be
