@@ -36,9 +36,9 @@ public final class StringSource implements JsonSource {
 
 	private int position;
 
-	private int line;
+	private int line = 1;
 
-	private int column;
+	private int column = 1;
 
 	private int lastNewLinePosition;
 
@@ -81,7 +81,7 @@ public final class StringSource implements JsonSource {
 		char result = string.charAt(position++);
 		if ('\n' == result) {
 			lastNewLinePosition = position;
-			column = 0;
+			column = 1;
 			line += 1;
 		}
 		return result;
@@ -111,10 +111,10 @@ public final class StringSource implements JsonSource {
 
 	@Override
 	public String getPast(int maximum) {
-		if (0 != position) {
-			return string.substring(Math.max(0, position - 1 - maximum), position - 1);
-		} else {
+		if (0 == position) {
 			return "";
+		} else {
+			return string.substring(Math.max(0, position - maximum), position);
 		}
 	}
 

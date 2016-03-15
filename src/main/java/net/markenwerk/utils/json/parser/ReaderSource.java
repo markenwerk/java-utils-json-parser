@@ -44,8 +44,6 @@ public final class ReaderSource implements JsonSource {
 
 	private int position;
 
-	// private int available;
-
 	private int end;
 
 	private int line = 1;
@@ -142,7 +140,7 @@ public final class ReaderSource implements JsonSource {
 		char result = buffer[position++];
 		if ('\n' == result) {
 			lastNewLinePosition = position;
-			column = 0;
+			column = 1;
 			line += 1;
 		}
 		return result;
@@ -183,18 +181,18 @@ public final class ReaderSource implements JsonSource {
 
 	@Override
 	public String getPast(int maximum) {
-		// int beforePos = Math.min(position, 20);
-		// return getString(position - beforePos,
-		// beforePos).replaceAll(Pattern.quote("\n"), "\\\\n");
-		return "PAST";
+		if (0 == position) {
+			return "";
+		} else {
+			int stillAvailable = Math.min(position, maximum);
+			return new String(buffer, position - stillAvailable, stillAvailable);
+		}
 	}
 
 	@Override
 	public String getFuture(int maximum) {
-		// int afterPos = Math.min(limit - position, 20);
-		// return getString(position, afterPos).replaceAll(Pattern.quote("\n"),
-		// "\\\\n");
-		return "FUTURE";
+		int alreadyAvailable = Math.min(end - position, maximum);
+		return new String(buffer, position, alreadyAvailable);
 	}
 
 	@Override

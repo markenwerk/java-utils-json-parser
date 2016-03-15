@@ -113,16 +113,7 @@ public final class JsonParser implements Closeable {
 	private JsonState nextState() throws JsonSyntaxException, IOException {
 		switch (stack.peek()) {
 		case EMPTY_DOCUMENT:
-			stack.replace(Context.NONEMPTY_DOCUMENT);
-			try {
-				JsonState initialState = prepareNextValue("Invalid document start (expected '[' or '{')");
-				if (JsonState.ARRAY_BEGIN != initialState && JsonState.OBJECT_BEGIN != initialState) {
-					throw syntaxError("Invalid document start (expected '[' or '{')");
-				}
-				return initialState;
-			} catch (JsonSyntaxException e) {
-				throw syntaxError("Invalid document start (expected '[' or '{')");
-			}
+			return prepareDocument();
 		case EMPTY_ARRAY:
 			return prepareArrayFirst();
 		case NONEMPTY_ARRAY:
@@ -155,8 +146,22 @@ public final class JsonParser implements Closeable {
 		state = null;
 	}
 
+	private JsonState prepareDocument() throws JsonSyntaxException, IOException {
+		stack.replace(Context.NONEMPTY_DOCUMENT);
+		char firstCharacter = nextNonWhitespace("Invalid document start (expected '[' or '{')");
+		if (firstCharacter == '{') {
+			stack.push(Context.EMPTY_OBJECT);
+			return JsonState.OBJECT_BEGIN;
+		} else if (firstCharacter == '[') {
+			stack.push(Context.EMPTY_ARRAY);
+			return JsonState.ARRAY_BEGIN;
+		} else {
+			throw syntaxError("Invalid document start (expected '[' or '{')");
+		}
+	}
+
 	private JsonState prepareArrayFirst() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace(/* "Unfinished array (expected value or '}')" */);
+		char nextCharacter = nextNonWhitespace("Unfinished array (expected value or '}')");
 		if (nextCharacter == ']') {
 			stack.pop();
 			return JsonState.ARRAY_END;
@@ -167,7 +172,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	private JsonState prepareArrayFollowing() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace(/* "Unfinished array (expected ',' or ']')" */);
+		char nextCharacter = nextNonWhitespace("Unfinished array (expected ',' or ']')");
 		if (nextCharacter == ']') {
 			stack.pop();
 			return JsonState.ARRAY_END;
@@ -179,7 +184,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	private JsonState prepareObjectFirst() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace(/* "Unfinished object (expected key or '}')" */);
+		char nextCharacter = nextNonWhitespace("Unfinished object (expected key or '}')");
 		if (nextCharacter == '}') {
 			stack.pop();
 			return JsonState.OBJECT_END;
@@ -193,12 +198,12 @@ public final class JsonParser implements Closeable {
 	}
 
 	private JsonState prepareObjectFollowing() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace(/* "Unfinished object (expected ',' or '}')" */);
+		char nextCharacter = nextNonWhitespace("Unfinished object (expected ',' or '}')");
 		if (nextCharacter == '}') {
 			stack.pop();
 			return JsonState.OBJECT_END;
 		} else if (nextCharacter == ',') {
-			nextCharacter = nextNonWhitespace(/* "Unfinished object (expected '\"key\"')" */);
+			nextCharacter = nextNonWhitespace("Unfinished object (expected '\"key\"')");
 			if (nextCharacter == '"') {
 				prepareNextString();
 				stack.replace(Context.DANGLING_NAME);
@@ -212,7 +217,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	private JsonState prepareObjectValue() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace(/* "Unfinished object value (expected ':')" */);
+		char nextCharacter = nextNonWhitespace("Unfinished object value (expected ':')");
 		if (nextCharacter == ':') {
 			stack.replace(Context.NONEMPTY_OBJECT);
 			return prepareNextValue("Unfinished object value (expected value)");
@@ -222,7 +227,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	private JsonState prepareNextValue(String errorMessage) throws JsonSyntaxException, IOException {
-		return prepareNextValue(nextNonWhitespace(), errorMessage);
+		return prepareNextValue(nextNonWhitespace(errorMessage), errorMessage);
 	}
 
 	private JsonState prepareNextValue(char firstCharacter, String errorMessage) throws JsonSyntaxException,
@@ -240,7 +245,7 @@ public final class JsonParser implements Closeable {
 		}
 	}
 
-	private char nextNonWhitespace() throws JsonSyntaxException, IOException {
+	private char nextNonWhitespace(String errorMessage) throws JsonSyntaxException, IOException {
 		while (source.makeAvailable(1)) {
 			for (int i = 0, n = source.getAvailable(); i < n; i++) {
 				char nextCharacter = source.nextCharacter();
@@ -249,7 +254,7 @@ public final class JsonParser implements Closeable {
 				}
 			}
 		}
-		throw syntaxError("errorMessage");
+		throw syntaxError(errorMessage);
 	}
 
 	private JsonState prepareNextString() throws JsonSyntaxException, IOException {
@@ -398,8 +403,8 @@ public final class JsonParser implements Closeable {
 	}
 
 	private JsonSyntaxException syntaxError(String message) {
-		return new JsonSyntaxException(message, source.getLine(), source.getColumn(), source.getPast(15),
-				source.getFuture(15));
+		return new JsonSyntaxException(message, source.getLine(), source.getColumn() - 1, source.getPast(5),
+				source.getFuture(5));
 	}
 
 	/**

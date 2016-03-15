@@ -22,8 +22,6 @@
 package net.markenwerk.utils.json.parser;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,13 +31,7 @@ import org.junit.Test;
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  */
-public class JsonReaderTests {
-
-	@SuppressWarnings({ "resource", "javadoc" })
-	@Test(expected = IllegalArgumentException.class)
-	public void create_nullReader() {
-		new JsonParser((Reader) null);
-	}
+public abstract class AbstractJsonParserTests {
 
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
@@ -1324,8 +1316,28 @@ public class JsonReaderTests {
 		}
 	}
 
-	private JsonSource getSource(String string) {
-		return new ReaderSource(new StringReader(string));
+	@Test
+	@SuppressWarnings("javadoc")
+	public void syntaxError_position() throws JsonSyntaxException, IOException {
+
+		JsonParser jsonReader = new JsonParser(getSource("  \n  \n  \n   Xfoobar"));
+
+		try {
+
+			jsonReader.beginObject();
+
+			throw new IllegalStateException();
+		} catch (JsonSyntaxException e) {
+
+			Assert.assertEquals(4, e.getLine());
+			Assert.assertEquals(4, e.getColumn());
+
+		} finally {
+			jsonReader.close();
+		}
 	}
+
+	@SuppressWarnings("javadoc")
+	protected abstract JsonSource getSource(String string);
 
 }
