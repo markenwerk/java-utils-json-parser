@@ -1072,72 +1072,58 @@ public abstract class AbstractJsonParserTests {
 			Assert.assertTrue(jsonReader.hasNext());
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
 				jsonReader.beginObject();
-				assertPath(jsonReader, ObjectKey.NO_HINT);
 				
 				Assert.assertTrue(jsonReader.hasNext());
 				Assert.assertEquals(JsonState.NAME, jsonReader.currentState());
 				Assert.assertEquals("foo", jsonReader.nextName());
-				assertPath(jsonReader, "foo");
 				
 				Assert.assertTrue(jsonReader.hasNext());
 				Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
 					jsonReader.beginArray();
-					assertPath(jsonReader, "foo", ArrayKey.NO_HINT);
 					
 					Assert.assertTrue(jsonReader.hasNext());
 					Assert.assertEquals(JsonState.STRING, jsonReader.currentState());
 					Assert.assertEquals("bar\n", jsonReader.nextString());
-					assertPath(jsonReader, "foo", "0");
 
 					Assert.assertTrue(jsonReader.hasNext());
 					Assert.assertEquals(JsonState.BOOLEAN, jsonReader.currentState());
 					Assert.assertEquals(true, jsonReader.nextBoolean());
-					assertPath(jsonReader, "foo", "1");
 					
 					Assert.assertTrue(jsonReader.hasNext());
 					Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
 						jsonReader.beginObject();
-						assertPath(jsonReader, "foo", "2", ObjectKey.NO_HINT);
 					
 						Assert.assertFalse(jsonReader.hasNext());
 						Assert.assertEquals(JsonState.OBJECT_END, jsonReader.currentState());
 						jsonReader.endObject();
-						assertPath(jsonReader, "foo", ArrayKey.NO_HINT);
 						
 					Assert.assertFalse(jsonReader.hasNext());
 					Assert.assertEquals(JsonState.ARRAY_END, jsonReader.currentState());
 					jsonReader.endArray();
-					assertPath(jsonReader, ObjectKey.NO_HINT);
 					
 				Assert.assertTrue(jsonReader.hasNext());
 				Assert.assertEquals(JsonState.NAME, jsonReader.currentState());
 				Assert.assertEquals("baz", jsonReader.nextName());
-				assertPath(jsonReader, "baz");
 				
 				Assert.assertTrue(jsonReader.hasNext());
 				Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
 					jsonReader.beginObject();
-					assertPath(jsonReader, "baz", ObjectKey.NO_HINT);
 					
 					Assert.assertTrue(jsonReader.hasNext());
 					Assert.assertEquals(JsonState.NAME, jsonReader.currentState());
 					Assert.assertEquals("foo", jsonReader.nextName());
-					assertPath(jsonReader, "baz", "foo");
 					
 					Assert.assertTrue(jsonReader.hasNext());
 					Assert.assertEquals(JsonState.LONG, jsonReader.currentState());
 					Assert.assertEquals(42, jsonReader.nextLong());
-					assertPath(jsonReader, "baz", "foo");
 					
 					Assert.assertFalse(jsonReader.hasNext());
 					Assert.assertEquals(JsonState.OBJECT_END, jsonReader.currentState());
 					jsonReader.endObject();
-					assertPath(jsonReader, ObjectKey.NO_HINT);
 
 				Assert.assertFalse(jsonReader.hasNext());
 				Assert.assertEquals(JsonState.OBJECT_END, jsonReader.currentState());
 				jsonReader.endObject();
-				assertPath(jsonReader);
 				
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonReader.currentState());
 			jsonReader.endDocumnet();
@@ -1146,10 +1132,6 @@ public abstract class AbstractJsonParserTests {
 		} finally {
 			jsonReader.close();
 		}
-	}
-
-	private void assertPath(JsonParser jsonReader, String... path) {
-		// Assert.assertEquals(jsonReader.getPath(), Arrays.asList(path));
 	}
 
 	@Test
