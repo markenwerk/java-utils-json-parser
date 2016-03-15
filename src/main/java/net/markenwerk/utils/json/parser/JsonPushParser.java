@@ -26,9 +26,9 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * A {@link JsonPushParser} is a stream based JSON parser. It reads characters from
- * a given {@link Reader} as far as necessary to calculate a {@link JsonState}
- * or to yield the next value.
+ * A {@link JsonPushParser} is a stream based JSON parser. It reads characters
+ * from a given {@link Reader} as far as necessary to calculate a
+ * {@link JsonState} or to yield the next value.
  *
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
@@ -44,16 +44,16 @@ public final class JsonPushParser implements Closeable {
 	/**
 	 * Creates a new {@link JsonPushParser} for the given {@link String}.
 	 *
-	 * @param string
-	 *           The {@link String} to read from.
 	 * @param handler
 	 *           The {@link JsonHandler} to report to.
+	 * @param string
+	 *           The {@link String} to read from.
 	 * @throws IllegalArgumentException
 	 *            If the given {@link String} is {@literal null} or if the given
 	 *            {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonPushParser(String string, JsonHandler handler) throws IllegalArgumentException {
-		this(new StringJsonSource(string), handler);
+	public JsonPushParser(JsonHandler handler, String string) throws IllegalArgumentException {
+		this(handler, new StringJsonSource(string));
 	}
 
 	/**
@@ -67,23 +67,42 @@ public final class JsonPushParser implements Closeable {
 	 *            If the given {@link String} is {@literal null} or if the given
 	 *            {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonPushParser(char[] characters, JsonHandler handler) throws IllegalArgumentException {
-		this(new CharacterArrayJsonSource(characters), handler);
+	public JsonPushParser(JsonHandler handler, char[] characters) throws IllegalArgumentException {
+		this(handler, new CharacterArrayJsonSource(characters));
 	}
 
 	/**
 	 * Creates a new {@link JsonPushParser} for the given {@link Reader}.
 	 * 
-	 * @param reader
-	 *           The {@link Reader} to read from.
 	 * @param handler
 	 *           The {@link JsonHandler} to report to.
+	 * @param reader
+	 *           The {@link Reader} to read from.
 	 * @throws IllegalArgumentException
 	 *            If the given {@link String} is {@literal null} or if the given
 	 *            {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonPushParser(Reader reader, JsonHandler handler) throws IllegalArgumentException {
-		this(new ReaderJsonSource(reader), handler);
+	public JsonPushParser(JsonHandler handler, Reader reader) throws IllegalArgumentException {
+		this(handler, new ReaderJsonSource(reader));
+	}
+
+	/**
+	 * Creates a new {@link JsonPushParser} for the given {@link Reader}.
+	 * 
+	 * @param handler
+	 *           The {@link JsonHandler} to report to.
+	 * @param reader
+	 *           The {@link Reader} to read from.
+	 * @param size
+	 *           The buffer size to be used.
+	 * @throws IllegalArgumentException
+	 *            If the given {@link String} is {@literal null} or if the given
+	 *            {@link JsonHandler} is {@literal null} or if the given size is
+	 *            smaller than the {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE
+	 *            minimum} buffer size.
+	 */
+	public JsonPushParser(JsonHandler handler, Reader reader, int size) throws IllegalArgumentException {
+		this(handler, new ReaderJsonSource(reader, size));
 	}
 
 	/**
@@ -97,15 +116,15 @@ public final class JsonPushParser implements Closeable {
 	 *            If the given {@link String} is {@literal null} or if the given
 	 *            {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonPushParser(JsonSource source, JsonHandler handler) throws IllegalArgumentException {
-		if (null == source) {
-			throw new IllegalArgumentException("source is null");
-		}
+	public JsonPushParser(JsonHandler handler, JsonSource source) throws IllegalArgumentException {
 		if (null == handler) {
 			throw new IllegalArgumentException("handler  is null");
 		}
-		this.source = source;
+		if (null == source) {
+			throw new IllegalArgumentException("source is null");
+		}
 		this.handler = handler;
+		this.source = source;
 	}
 
 	/**

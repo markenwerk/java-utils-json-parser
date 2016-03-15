@@ -34,9 +34,7 @@ import java.io.Reader;
  */
 public final class ReaderJsonSource implements JsonSource {
 
-	private static final int MINIMUM_BUFFER_SIZE = 5;
-
-	private static final int MAXIMUM_BUFFER_SIZE = 16;
+	private static final int MINIMUM_BUFFER_SIZE = 128;
 
 	private final Reader reader;
 
@@ -58,9 +56,9 @@ public final class ReaderJsonSource implements JsonSource {
 	 * Creates a new {@link StringJsonSource} for the given {@link Reader}.
 	 * 
 	 * @param reader
-	 *            The {@link Reader} to be used.
+	 *           The {@link Reader} to be used.
 	 * @throws IllegalArgumentException
-	 *             If the given {@link Reader} is {@literal null}.
+	 *            If the given {@link Reader} is {@literal null}.
 	 */
 	public ReaderJsonSource(Reader reader) {
 		this(reader, 10);
@@ -70,15 +68,14 @@ public final class ReaderJsonSource implements JsonSource {
 	 * Creates a new {@link StringJsonSource} for the given {@link Reader}.
 	 * 
 	 * @param reader
-	 *            The {@link Reader} to be used.
+	 *           The {@link Reader} to be used.
 	 * @param size
-	 *            The logarithm of the buffer size to be used.
+	 *           The buffer size to be used.
 	 * @throws IllegalArgumentException
-	 *             If the given {@link Reader} is {@literal null} or if the
-	 *             given size is smaller than the
-	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer size
-	 *             or larger than the {@link ReaderJsonSource#MAXIMUM_BUFFER_SIZE
-	 *             maximum} buffer size.
+	 *            If the given {@link Reader} is {@literal null} or if the given
+	 *            size is smaller than the
+	 *            {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
+	 *            size.
 	 */
 	public ReaderJsonSource(Reader reader, int size) {
 		if (null == reader) {
@@ -87,11 +84,8 @@ public final class ReaderJsonSource implements JsonSource {
 		if (size < MINIMUM_BUFFER_SIZE) {
 			throw new IllegalArgumentException("sizes is too small");
 		}
-		if (size > MAXIMUM_BUFFER_SIZE) {
-			throw new IllegalArgumentException("sizes is too large");
-		}
 		this.reader = reader;
-		this.buffer = new char[1 << size];
+		this.buffer = new char[size];
 	}
 
 	@Override
