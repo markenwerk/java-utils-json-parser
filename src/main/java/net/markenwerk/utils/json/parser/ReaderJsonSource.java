@@ -25,14 +25,14 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * A {@link StringSource} is a {@link JsonSource} that is backed by a given
+ * A {@link StringJsonSource} is a {@link JsonSource} that is backed by a given
  * {@link Reader} and buffers a small portion of the read characters in a
  * {@code char[]}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
  */
-public final class ReaderSource implements JsonSource {
+public final class ReaderJsonSource implements JsonSource {
 
 	private static final int MINIMUM_BUFFER_SIZE = 5;
 
@@ -55,19 +55,19 @@ public final class ReaderSource implements JsonSource {
 	private int lastNewLinePosition;
 
 	/**
-	 * Creates a new {@link StringSource} for the given {@link Reader}.
+	 * Creates a new {@link StringJsonSource} for the given {@link Reader}.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to be used.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link Reader} is {@literal null}.
 	 */
-	public ReaderSource(Reader reader) {
+	public ReaderJsonSource(Reader reader) {
 		this(reader, 10);
 	}
 
 	/**
-	 * Creates a new {@link StringSource} for the given {@link Reader}.
+	 * Creates a new {@link StringJsonSource} for the given {@link Reader}.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to be used.
@@ -76,11 +76,11 @@ public final class ReaderSource implements JsonSource {
 	 * @throws IllegalArgumentException
 	 *             If the given {@link Reader} is {@literal null} or if the
 	 *             given size is smaller than the
-	 *             {@link ReaderSource#MINIMUM_BUFFER_SIZE minimum} buffer size
-	 *             or larger than the {@link ReaderSource#MAXIMUM_BUFFER_SIZE
+	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer size
+	 *             or larger than the {@link ReaderJsonSource#MAXIMUM_BUFFER_SIZE
 	 *             maximum} buffer size.
 	 */
-	public ReaderSource(Reader reader, int size) {
+	public ReaderJsonSource(Reader reader, int size) {
 		if (null == reader) {
 			throw new IllegalArgumentException("reader is null");
 		}

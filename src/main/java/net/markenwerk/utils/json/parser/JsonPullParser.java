@@ -26,14 +26,14 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * A {@link JsonParser} is a stream based JSON parser. It reads characters from
+ * A {@link JsonPullParser} is a stream based JSON parser. It reads characters from
  * a given {@link Reader} as far as necessary to calculate a {@link JsonState}
  * or to yield the next value.
  *
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
  */
-public final class JsonParser implements Closeable {
+public final class JsonPullParser implements Closeable {
 
 	private final StringBuilder builder = new StringBuilder();
 
@@ -52,50 +52,50 @@ public final class JsonParser implements Closeable {
 	private String stringValue;
 
 	/**
-	 * Creates a new {@link JsonParser} for the given {@link String}.
+	 * Creates a new {@link JsonPullParser} for the given {@link String}.
 	 *
 	 * @param string
 	 *            The {@link String} to read from.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null}.
 	 */
-	public JsonParser(String string) throws IllegalArgumentException {
-		this(new StringSource(string));
+	public JsonPullParser(String string) throws IllegalArgumentException {
+		this(new StringJsonSource(string));
 	}
 
 	/**
-	 * Creates a new {@link JsonParser} for the given {@code char[]}.
+	 * Creates a new {@link JsonPullParser} for the given {@code char[]}.
 	 *
 	 * @param characters
 	 *            The {@code char[]} to read from.
 	 * @throws IllegalArgumentException
 	 *             If the given {@code char[]} is {@literal null}.
 	 */
-	public JsonParser(char[] characters) throws IllegalArgumentException {
-		this(new CharacterArraySource(characters));
+	public JsonPullParser(char[] characters) throws IllegalArgumentException {
+		this(new CharacterArrayJsonSource(characters));
 	}
 
 	/**
-	 * Creates a new {@link JsonParser} for the given {@link Reader}.
+	 * Creates a new {@link JsonPullParser} for the given {@link Reader}.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to read from.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link Reader} is {@literal null}.
 	 */
-	public JsonParser(Reader reader) throws IllegalArgumentException {
-		this(new ReaderSource(reader));
+	public JsonPullParser(Reader reader) throws IllegalArgumentException {
+		this(new ReaderJsonSource(reader));
 	}
 
 	/**
-	 * Creates a new {@link JsonParser} for the given {@link JsonSource}.
+	 * Creates a new {@link JsonPullParser} for the given {@link JsonSource}.
 	 * 
 	 * @param source
 	 *            The {@link JsonSource} to read from.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
-	public JsonParser(JsonSource source) throws IllegalArgumentException {
+	public JsonPullParser(JsonSource source) throws IllegalArgumentException {
 		if (null == source) {
 			throw new IllegalArgumentException("source is null");
 		}
@@ -105,7 +105,7 @@ public final class JsonParser implements Closeable {
 
 	/**
 	 * Reads, if necessary, from the underlying Reader and describes the current
-	 * {@link JsonState} of this {@link JsonParser}, which describes the next
+	 * {@link JsonState} of this {@link JsonPullParser}, which describes the next
 	 * type of value or structural element of the JSON document.
 	 * 
 	 * @return The current {@link JsonState}.
@@ -420,7 +420,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#ARRAY_BEGIN} and consumes the
 	 * beginning of a JSON array. The next {@link JsonState} describes either
 	 * the first value of this JSON array or the end of this JSON array.
@@ -439,7 +439,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#ARRAY_END} and consumes the end of
 	 * the JSON array. The next {@link JsonState} describes either the next
 	 * sibling value of this JSON array or the end of the JSON document.
@@ -458,10 +458,10 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#OBJECT_BEGIN} and consumes the
 	 * beginning of a JSON object. The next {@link JsonState} describes either
-	 * the {@link JsonParser#nextName()} of the first value of this JSON object
+	 * the {@link JsonPullParser#nextName()} of the first value of this JSON object
 	 * or the end of this JSON object.
 	 * 
 	 * @throws IllegalStateException
@@ -478,7 +478,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#OBJECT_END} and consumes the end of
 	 * the JSON object. The next {@link JsonState} describes either the next
 	 * sibling value of this JSON object or the end of the JSON document.
@@ -497,7 +497,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOCUMENT_END} and consumes the end
 	 * of the JSON document. The next {@link JsonState} will be {@literal null}.
 	 * 
@@ -531,7 +531,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#NULL} and consumes the
 	 * {@literal null} The next {@link JsonState} describes either the next
 	 * sibling value of this JSON value or the end of surrounding JSON array or
@@ -551,7 +551,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#BOOLEAN} and consumes and returns
 	 * the corresponding value. The next {@link JsonState} describes either the
 	 * next sibling value of this JSON value or the end of surrounding JSON
@@ -574,7 +574,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value as a {@code byte}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -606,7 +606,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value as a {@code char}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -638,7 +638,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value as a {@code short}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -670,7 +670,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value as a {@code int}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -702,7 +702,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value. The next {@link JsonState} describes either the next
 	 * sibling value of this JSON value or the end of surrounding JSON array or
@@ -725,7 +725,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns
 	 * the corresponding value as a {@code float}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -748,7 +748,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns
 	 * the corresponding value. The next {@link JsonState} describes either the
 	 * next sibling value of this JSON value or the end of surrounding JSON
@@ -771,7 +771,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#STRING} and consumes and returns
 	 * the corresponding value. The next {@link JsonState} describes either the
 	 * next sibling value of this JSON value or the end of surrounding JSON
@@ -794,7 +794,7 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
-	 * Ensures that the {@link JsonParser#currentState() current}
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#NAME} and consumes and returns the
 	 * corresponding name of a JSON object entry. The next {@link JsonState}
 	 * describes the corresponding value.

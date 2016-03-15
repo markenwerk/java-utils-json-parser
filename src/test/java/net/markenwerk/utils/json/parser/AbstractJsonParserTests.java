@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * JUnit test for {@link JsonParser}.
+ * JUnit test for {@link JsonPullParser}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  */
@@ -36,13 +36,13 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
 	public void create_nullSource() {
-		new JsonParser((JsonSource) null);
+		new JsonPullParser((JsonSource) null);
 	}
 
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void emptyDocument() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource(""));
+		JsonPullParser jsonReader = new JsonPullParser(getSource(""));
 		try {
 
 			jsonReader.currentState();
@@ -55,7 +55,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmpty_invalidStart() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("\""));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("\""));
 		try {
 
 			jsonReader.currentState();
@@ -68,7 +68,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[]"));
 		try {
 
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
@@ -86,7 +86,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_afterBom() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource(JsonSource.BYTE_ORDER_MARK + "[]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource(JsonSource.BYTE_ORDER_MARK + "[]"));
 		try {
 
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
@@ -104,7 +104,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void emptyArray_unfinished() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("["));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("["));
 		try {
 
 			jsonReader.beginArray();
@@ -118,7 +118,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void emptyArray_wrongFinish() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[}"));
 		try {
 
 			jsonReader.beginArray();
@@ -132,7 +132,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNull() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[null]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[null]"));
 		try {
 
 			jsonReader.beginArray();
@@ -149,7 +149,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleFalse() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[false]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[false]"));
 		try {
 
 			jsonReader.beginArray();
@@ -166,7 +166,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleTrue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[true]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[true]"));
 		try {
 
 			jsonReader.beginArray();
@@ -183,7 +183,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleEmptyString() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -200,7 +200,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyString() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"foo\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"foo\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -218,7 +218,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyVeryLargeString() throws JsonSyntaxException, IOException {
 		String value = createVeryLargeString();
-		JsonParser jsonReader = new JsonParser(getSource("[\"" + value + "\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"" + value + "\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -244,7 +244,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithEscapeSequences() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\\"\\\\\\/\\b\\f\\r\\n\\t\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\\"\\\\\\/\\b\\f\\r\\n\\t\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -261,7 +261,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithUnicodeEscapeSequences() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\uBEEF\\ubeef\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\uBEEF\\ubeef\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -279,7 +279,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithSurrogateUnicodeEscapeSequences() throws JsonSyntaxException,
 			IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\uD834\\uDD1E\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\uD834\\uDD1E\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -296,7 +296,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_singleNonEmptyStringDangelingEscapeSequences() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\"));
 		try {
 
 			jsonReader.beginArray();
@@ -310,7 +310,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_singleNonEmptyStringUnterminatedEscapeSequences() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -324,7 +324,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_singleNonEmptyStringInvalidEscapeSequences() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\x\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\x\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -339,7 +339,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_singleNonEmptyStringDangelingUnicodeEscapeSequences() throws JsonSyntaxException,
 			IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\u"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\u"));
 		try {
 
 			jsonReader.beginArray();
@@ -354,7 +354,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_singleNonEmptyStringUnterminatedUnicodeEscapeSequences() throws JsonSyntaxException,
 			IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\u\",null]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\u\",null]"));
 		try {
 
 			jsonReader.beginArray();
@@ -369,7 +369,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_singleNonEmptyStringInvalidUnicodeEscapeSequences() throws JsonSyntaxException,
 			IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[\"\\uNOPE\"]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\uNOPE\"]"));
 		try {
 
 			jsonReader.beginArray();
@@ -383,7 +383,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleLong() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[0]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[0]"));
 		try {
 
 			jsonReader.beginArray();
@@ -400,7 +400,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveLong() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
 			jsonReader.beginArray();
@@ -417,7 +417,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNegativeLong() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[-42]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[-42]"));
 		try {
 
 			jsonReader.beginArray();
@@ -434,7 +434,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleInteger() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
 			jsonReader.beginArray();
@@ -452,7 +452,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooLargeInteger() throws JsonSyntaxException, IOException {
 		long value = ((long) Integer.MAX_VALUE) + 1;
-		JsonParser jsonReader = new JsonParser(getSource("[" + value + "]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
 			jsonReader.beginArray();
@@ -467,7 +467,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooSmallInteger() throws JsonSyntaxException, IOException {
 		long value = ((long) Integer.MIN_VALUE) - 1;
-		JsonParser jsonReader = new JsonParser(getSource("[" + value + "]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
 			jsonReader.beginArray();
@@ -481,7 +481,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleShort() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
 			jsonReader.beginArray();
@@ -499,7 +499,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooLargeShort() throws JsonSyntaxException, IOException {
 		long value = ((long) Short.MAX_VALUE) + 1;
-		JsonParser jsonReader = new JsonParser(getSource("[" + value + "]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
 			jsonReader.beginArray();
@@ -514,7 +514,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooSmallShort() throws JsonSyntaxException, IOException {
 		long value = ((long) Short.MIN_VALUE) - 1;
-		JsonParser jsonReader = new JsonParser(getSource("[" + value + "]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
 			jsonReader.beginArray();
@@ -528,7 +528,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleCharacter() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
 			jsonReader.beginArray();
@@ -546,7 +546,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooLargeCharacter() throws JsonSyntaxException, IOException {
 		long value = ((long) Character.MAX_VALUE) + 1;
-		JsonParser jsonReader = new JsonParser(getSource("[" + value + "]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
 			jsonReader.beginArray();
@@ -561,7 +561,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooSmallCharacter() throws JsonSyntaxException, IOException {
 		long value = ((long) Character.MIN_VALUE) - 1;
-		JsonParser jsonReader = new JsonParser(getSource("[" + value + "]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
 			jsonReader.beginArray();
@@ -575,7 +575,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleByte() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
 			jsonReader.beginArray();
@@ -593,7 +593,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooLargeByte() throws JsonSyntaxException, IOException {
 		long value = ((long) Byte.MAX_VALUE) + 1;
-		JsonParser jsonReader = new JsonParser(getSource("[" + value + "]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
 			jsonReader.beginArray();
@@ -608,7 +608,7 @@ public abstract class AbstractJsonParserTests {
 	@Test(expected = ArithmeticException.class)
 	public void nonEmptyArray_singleTooSmallByte() throws JsonSyntaxException, IOException {
 		long value = ((long) Byte.MIN_VALUE) - 1;
-		JsonParser jsonReader = new JsonParser(getSource("[" + value + "]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
 			jsonReader.beginArray();
@@ -622,7 +622,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleDouble() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[0.0]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[0.0]"));
 		try {
 
 			jsonReader.beginArray();
@@ -639,7 +639,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDouble() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42.23]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42.23]"));
 		try {
 
 			jsonReader.beginArray();
@@ -656,7 +656,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNegativeDouble() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[-42.23]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[-42.23]"));
 		try {
 
 			jsonReader.beginArray();
@@ -673,7 +673,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDoubleWithPositiveExponent() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42.0e7]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42.0e7]"));
 		try {
 
 			jsonReader.beginArray();
@@ -690,7 +690,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDoubleWithNegativeExponent() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42.0e-7]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42.0e-7]"));
 		try {
 
 			jsonReader.beginArray();
@@ -707,7 +707,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleFloat() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[42.23]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[42.23]"));
 		try {
 
 			jsonReader.beginArray();
@@ -724,7 +724,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_singleInvalidLiteal() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[x]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[x]"));
 		try {
 
 			jsonReader.beginArray();
@@ -738,7 +738,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_multipleValues() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[null,null]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[null,null]"));
 		try {
 
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
@@ -763,7 +763,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_nestedArray() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[[]]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[[]]"));
 		try {
 
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
@@ -788,7 +788,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_unfinishedDangelingValue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[null"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[null"));
 		try {
 
 			jsonReader.beginArray();
@@ -803,7 +803,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_wrongFinish() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[null}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[null}"));
 		try {
 
 			jsonReader.beginArray();
@@ -818,7 +818,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyArray_unfinishedDangelingComma() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[null,"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[null,"));
 		try {
 
 			jsonReader.beginArray();
@@ -833,7 +833,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyObject() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{}"));
 		try {
 
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
@@ -851,7 +851,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void emptyObject_unfinished() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{"));
 		try {
 
 			jsonReader.beginObject();
@@ -865,7 +865,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void emptyObject_wrongFinish() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{]"));
 		try {
 
 			jsonReader.beginObject();
@@ -879,7 +879,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_singleValue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\":null}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null}"));
 		try {
 
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
@@ -903,7 +903,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_multipleValues() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\":null,\"bar\":null}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null,\"bar\":null}"));
 		try {
 
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
@@ -932,7 +932,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_nestedValue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\":{}}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":{}}"));
 		try {
 
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
@@ -959,7 +959,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyObject_unfinishedNoName() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{null}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{null}"));
 		try {
 
 			jsonReader.beginObject();
@@ -974,7 +974,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyObject_unfinishedDangelingName() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\""));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\""));
 		try {
 
 			jsonReader.beginObject();
@@ -989,7 +989,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyObject_unfinishedDangelingColon() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\":"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":"));
 		try {
 
 			jsonReader.beginObject();
@@ -1004,7 +1004,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyObject_unfinishedDangelingValue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\":null"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null"));
 		try {
 
 			jsonReader.beginObject();
@@ -1020,7 +1020,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyObject_unfinishedDangelingComma() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\":null,"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null,"));
 		try {
 
 			jsonReader.beginObject();
@@ -1036,7 +1036,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyObject_unfinishedNoValue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\",null}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\",null}"));
 		try {
 
 			jsonReader.beginObject();
@@ -1051,7 +1051,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyObject_unfinishedKeyafterComma() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\":null,null}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null,null}"));
 		try {
 
 			jsonReader.beginObject();
@@ -1067,7 +1067,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void nonEmptyObject_wrongFinish() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"foo\":null]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null]"));
 		try {
 
 			jsonReader.beginObject();
@@ -1083,7 +1083,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_complexValue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(
+		JsonPullParser jsonReader = new JsonPullParser(
 				getSource(" \n { \"foo\" : [ \"bar\\n\" , true , { \n } ] , \"baz\" : { \"foo\" \t : \t 42 } } \n "));
 		try {
 			//@formatter:off
@@ -1155,7 +1155,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyDocument_skipRootArray() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[]"));
 		try {
 
 			jsonReader.skipValue();
@@ -1171,7 +1171,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_skipSingleValue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[null,\"keep\" ]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[null,\"keep\" ]"));
 		try {
 
 			jsonReader.beginArray();
@@ -1190,7 +1190,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_skipBeforeEnd() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[]"));
 		try {
 
 			jsonReader.beginArray();
@@ -1208,7 +1208,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_skipComplexValue() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("[[{\"skipped\":[true]}],\"keep\" ]"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("[[{\"skipped\":[true]}],\"keep\" ]"));
 		try {
 
 			jsonReader.beginArray();
@@ -1227,7 +1227,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyDocument_skipRootObject() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{}"));
 		try {
 
 			jsonReader.skipValue();
@@ -1243,7 +1243,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_skipBeforeEnd() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{}"));
 		try {
 
 			jsonReader.beginObject();
@@ -1261,7 +1261,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_skipSingleValueBeforeName() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"skip\":null,\"keep\":null}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"skip\":null,\"keep\":null}"));
 		try {
 
 			jsonReader.beginObject();
@@ -1281,7 +1281,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_skipSingleValueAfterName() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{\"skip\":null,\"keep\":null}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"skip\":null,\"keep\":null}"));
 		try {
 
 			jsonReader.beginObject();
@@ -1302,7 +1302,7 @@ public abstract class AbstractJsonParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyDocumentBeforeEnd() throws JsonSyntaxException, IOException {
-		JsonParser jsonReader = new JsonParser(getSource("{}"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("{}"));
 		try {
 
 			jsonReader.beginObject();
@@ -1320,7 +1320,7 @@ public abstract class AbstractJsonParserTests {
 	@SuppressWarnings("javadoc")
 	public void syntaxError_position() throws JsonSyntaxException, IOException {
 
-		JsonParser jsonReader = new JsonParser(getSource("  \n  \n  \n   Xfoobar"));
+		JsonPullParser jsonReader = new JsonPullParser(getSource("  \n  \n  \n   Xfoobar"));
 
 		try {
 

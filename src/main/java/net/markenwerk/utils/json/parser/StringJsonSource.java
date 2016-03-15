@@ -24,15 +24,15 @@ package net.markenwerk.utils.json.parser;
 import java.io.IOException;
 
 /**
- * A {@link CharacterArraySource} is a {@link JsonSource} that is backed by a
- * given {@code char[]}.
+ * A {@link StringJsonSource} is a {@link JsonSource} that is backed by a given
+ * {@link String}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
  */
-public final class CharacterArraySource implements JsonSource {
+public final class StringJsonSource implements JsonSource {
 
-	private char[] characters;
+	private String string;
 
 	private int position;
 
@@ -43,19 +43,19 @@ public final class CharacterArraySource implements JsonSource {
 	private int lastNewLinePosition;
 
 	/**
-	 * Creates a new {@link CharacterArraySource} for the given {@link String}.
+	 * Creates a new {@link StringJsonSource} for the given {@link String}.
 	 * 
-	 * @param characters
-	 *            The {@code char[]} to be used.
+	 * @param string
+	 *            The {@link String} to be used.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null}.
 	 */
-	public CharacterArraySource(char[] characters) throws IllegalArgumentException {
-		if (null == characters) {
-			throw new IllegalArgumentException("characters is null");
+	public StringJsonSource(String string) throws IllegalArgumentException {
+		if (null == string) {
+			throw new IllegalArgumentException("string is null");
 		}
-		this.characters = characters;
-		if (0 != characters.length && JsonSource.BYTE_ORDER_MARK == characters[0]) {
+		this.string = string;
+		if (0 != string.length() && JsonSource.BYTE_ORDER_MARK == string.charAt(0)) {
 			position++;
 			column++;
 		}
@@ -63,17 +63,17 @@ public final class CharacterArraySource implements JsonSource {
 
 	@Override
 	public int getAvailable() {
-		return characters.length - position;
+		return string.length() - position;
 	}
 
 	@Override
 	public boolean makeAvailable(int minimum) throws IOException {
-		return position + minimum <= characters.length;
+		return position + minimum <= string.length();
 	}
 
 	@Override
 	public char nextCharacter() {
-		char result = characters[position++];
+		char result = string.charAt(position++);
 		if ('\n' == result) {
 			lastNewLinePosition = position;
 			column = 1;
@@ -84,21 +84,21 @@ public final class CharacterArraySource implements JsonSource {
 
 	@Override
 	public char peekCharacter(int offset) {
-		return characters[position + offset];
+		return string.charAt(position + offset);
 	}
 
 	@Override
 	public String nextString(int length) {
-		String string = new String(characters, position, length);
+		String substring = string.substring(position, position + length);
 		for (int i = 0; i < length; i++) {
 			nextCharacter();
 		}
-		return string;
+		return substring;
 	}
 
 	@Override
 	public void appendNextString(StringBuilder builder, int length) {
-		builder.append(characters, position, length);
+		builder.append(string, position, position + length);
 		for (int i = 0; i < length; i++) {
 			nextCharacter();
 		}
@@ -109,15 +109,13 @@ public final class CharacterArraySource implements JsonSource {
 		if (0 == position) {
 			return "";
 		} else {
-			int availableLength = Math.min(maximum, position);
-			return new String(characters, position - availableLength, availableLength);
+			return string.substring(Math.max(0, position - maximum), position);
 		}
 	}
 
 	@Override
 	public String getFuture(int maximum) {
-		int availableLength = Math.min(maximum, characters.length - position);
-		return new String(characters, position, availableLength);
+		return string.substring(position, Math.min(position + maximum, string.length()));
 	}
 
 	@Override
