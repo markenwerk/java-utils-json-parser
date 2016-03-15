@@ -40,32 +40,39 @@ public final class StringSource implements JsonSource {
 
 	private int column;
 
+	private int lastNewLinePosition;
+
 	/**
 	 * Creates a new {@link StringSource} for the given {@link String}.
 	 * 
 	 * @param string
-	 *           The {@link String} to be used.
+	 *            The {@link String} to be used.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link String} is {@literal null}.
+	 *             If the given {@link String} is {@literal null}.
 	 */
 	public StringSource(String string) throws IllegalArgumentException {
 		if (null == string) {
 			throw new IllegalArgumentException("string is null");
 		}
 		this.string = string;
-		if (0 != string.length() && BYTE_ORDER_MARK == string.charAt(0)) {
+		if (0 != string.length() && JsonSource.BYTE_ORDER_MARK == string.charAt(0)) {
 			position++;
 			column++;
 		}
 	}
 
 	@Override
-	public boolean available(int minimum) {
+	public int getAvailable() {
+		return string.length() - position;
+	}
+
+	@Override
+	public boolean isAvailable(int minimum) {
 		return position + minimum <= string.length();
 	}
 
 	@Override
-	public boolean ensure(int minimum) throws IOException {
+	public boolean makeAvailable(int minimum) throws IOException {
 		return position + minimum <= string.length();
 	}
 
@@ -73,10 +80,9 @@ public final class StringSource implements JsonSource {
 	public char nextCharacter() {
 		char result = string.charAt(position++);
 		if ('\n' == result) {
-			line += 1;
+			lastNewLinePosition = position;
 			column = 0;
-		} else {
-			column += 1;
+			line += 1;
 		}
 		return result;
 	}
@@ -88,17 +94,18 @@ public final class StringSource implements JsonSource {
 
 	@Override
 	public String nextString(int length) {
-		char[] buffer = new char[length];
+		String substring = string.substring(position, position + length);
 		for (int i = 0; i < length; i++) {
-			buffer[i] = nextCharacter();
+			nextCharacter();
 		}
-		return new String(buffer);
+		return substring;
 	}
 
 	@Override
 	public void appendNextString(StringBuilder builder, int length) {
+		builder.append(string, position, position + length);
 		for (int i = 0; i < length; i++) {
-			builder.append(nextCharacter());
+			nextCharacter();
 		}
 	}
 
@@ -123,7 +130,7 @@ public final class StringSource implements JsonSource {
 
 	@Override
 	public int getColumn() {
-		return column;
+		return column + (position - lastNewLinePosition);
 	}
 
 	@Override

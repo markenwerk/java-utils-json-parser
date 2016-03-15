@@ -21,10 +21,6 @@
  */
 package net.markenwerk.utils.json.parser;
 
-import java.util.List;
-
-import net.markenwerk.commons.iterables.InfixedIterable;
-
 /**
  * A {@link JsonSyntaxException} indicates that a {@link JsonParser} encountered
  * a JSON syntax error while parsing a JSON document.
@@ -46,15 +42,28 @@ public final class JsonSyntaxException extends Exception {
 
 	private final String future;
 
-	private final List<String> path;
-
-	JsonSyntaxException(String message, int line, int column, String past, String future, List<String> path) {
+	/**
+	 * Creates a new {@link JsonSyntaxException} for the given components.
+	 * 
+	 * @param message
+	 *            The description of the actual syntax error.
+	 * @param line
+	 *            The line of the syntax error.
+	 * @param column
+	 *            The column of the syntax error
+	 * @param past
+	 *            A few characters from the parsed character stream, that came
+	 *            before the syntax error.
+	 * @param future
+	 *            a few characters from the parsed character stream, that come
+	 *            after the syntax error.
+	 */
+	public JsonSyntaxException(String message, int line, int column, String past, String future) {
 		this.message = message;
 		this.line = line;
 		this.column = column;
 		this.past = past;
 		this.future = future;
-		this.path = path;
 	}
 
 	@Override
@@ -69,10 +78,7 @@ public final class JsonSyntaxException extends Exception {
 		builder.append(past);
 		builder.append("', before '");
 		builder.append(future);
-		builder.append("', at /");
-		for (String part : new InfixedIterable<String>(path, "/")) {
-			builder.append(part);
-		}
+		builder.append("'");
 		return builder.toString();
 	}
 
@@ -104,8 +110,8 @@ public final class JsonSyntaxException extends Exception {
 	}
 
 	/**
-	 * Returns a few characters in the parsed character stream, that came before
-	 * the syntax error, if still cached.
+	 * Returns a few characters from the parsed character stream, that came
+	 * before the syntax error, if still cached.
 	 * 
 	 * @return The snippet from the character stream.
 	 */
@@ -114,23 +120,13 @@ public final class JsonSyntaxException extends Exception {
 	}
 
 	/**
-	 * Returns a few characters in the parsed character stream, that come after
-	 * the syntax error, if already cached.
+	 * Returns a few characters from the parsed character stream, that come
+	 * after the syntax error, if already cached.
 	 * 
 	 * @return The snippet from the character stream.
 	 */
 	public String getFuture() {
 		return future;
-	}
-
-	/**
-	 * Returns the path in the JSON document (e.g <tt>/foo/0/bar</tt> for
-	 * <tt>{"foo":[{"bar":ERROR}]}</tt>), where the syntax error occurred.
-	 * 
-	 * @return The path.
-	 */
-	public List<String> getPath() {
-		return path;
 	}
 
 	@Override

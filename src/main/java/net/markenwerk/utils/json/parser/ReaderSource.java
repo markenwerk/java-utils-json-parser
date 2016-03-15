@@ -42,11 +42,11 @@ public final class ReaderSource implements JsonSource {
 
 	private final char[] buffer;
 
-	private final int sizeMask;
-
 	private int position;
 
-	private int available;
+	// private int available;
+
+	private int end;
 
 	private int line = 1;
 
@@ -54,31 +54,33 @@ public final class ReaderSource implements JsonSource {
 
 	private boolean firstCharacterRead;
 
+	private int lastNewLinePosition;
+
 	/**
 	 * Creates a new {@link StringSource} for the given {@link Reader}.
 	 * 
 	 * @param reader
-	 *           The {@link Reader} to be used.
+	 *            The {@link Reader} to be used.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link Reader} is {@literal null}.
+	 *             If the given {@link Reader} is {@literal null}.
 	 */
 	public ReaderSource(Reader reader) {
-		this(reader, 8);
+		this(reader, 10);
 	}
 
 	/**
 	 * Creates a new {@link StringSource} for the given {@link Reader}.
 	 * 
 	 * @param reader
-	 *           The {@link Reader} to be used.
+	 *            The {@link Reader} to be used.
 	 * @param size
-	 *           The logarithm of the buffer size to be used.
+	 *            The logarithm of the buffer size to be used.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link Reader} is {@literal null} or if the given
-	 *            size is smaller than the
-	 *            {@link ReaderSource#MINIMUM_BUFFER_SIZE minimum} buffer size or
-	 *            larger than the {@link ReaderSource#MAXIMUM_BUFFER_SIZE
-	 *            maximum} buffer size.
+	 *             If the given {@link Reader} is {@literal null} or if the
+	 *             given size is smaller than the
+	 *             {@link ReaderSource#MINIMUM_BUFFER_SIZE minimum} buffer size
+	 *             or larger than the {@link ReaderSource#MAXIMUM_BUFFER_SIZE
+	 *             maximum} buffer size.
 	 */
 	public ReaderSource(Reader reader, int size) {
 		if (null == reader) {
@@ -91,86 +93,79 @@ public final class ReaderSource implements JsonSource {
 			throw new IllegalArgumentException("sizes is too large");
 		}
 		this.reader = reader;
-		// buffer of size 2^^size
 		this.buffer = new char[1 << size];
-		// sizeMask like 00...01...11
-		this.sizeMask = buffer.length - 1;
 	}
 
 	@Override
-	public boolean available(int minimum) {
-		return minimum <= available;
+	public int getAvailable() {
+		return end - position;
 	}
 
 	@Override
-	public boolean ensure(int minimum) throws IOException {
-		return minimum < available || fillBuffer(minimum);
+	public boolean isAvailable(int minimum) {
+		return minimum <= end - position;
+	}
+
+	@Override
+	public boolean makeAvailable(int minimum) throws IOException {
+		return minimum <= end - position || fillBuffer(minimum);
 	}
 
 	private boolean fillBuffer(int minimum) throws IOException {
-		assert minimum <= buffer.length;
-		while (available < minimum) {
-			int maximum = buffer.length - available;
-			int writePosition = position + available;
-			if (writePosition < buffer.length) {
-				// read no further than end of buffer
-				maximum = buffer.length - writePosition;
-			} else {
-				// write position is left of read position
-				// calculate actual write position and read
-				// no further than read mark
-				writePosition -= buffer.length;
-			}
-			int read = reader.read(buffer, writePosition, maximum);
+		if (0 != position && 0 != end) {
+			System.arraycopy(buffer, position, buffer, 0, getAvailable());
+			column += (position - lastNewLinePosition);
+			lastNewLinePosition = 0;
+			end -= position;
+		}
+		position = 0;
+		while (getAvailable() < minimum) {
+			int read = reader.read(buffer, end, buffer.length - end);
 			if (-1 == read) {
 				return false;
 			} else {
-				available += read;
+				end += read;
 			}
 		}
-		if (!firstCharacterRead && available >= 1) {
-			if (buffer[0] == BYTE_ORDER_MARK) {
+		if (!firstCharacterRead && end >= 1) {
+			if (buffer[0] == JsonSource.BYTE_ORDER_MARK) {
 				position++;
-				column++;
 			}
 			firstCharacterRead = true;
 		}
+		assert isAvailable(minimum);
 		return true;
 	}
 
 	@Override
 	public char nextCharacter() {
-		char result = buffer[position];
-		position = (position + 1) & sizeMask;
-		available -= 1;
+		char result = buffer[position++];
 		if ('\n' == result) {
-			line += 1;
+			lastNewLinePosition = position;
 			column = 0;
-		} else {
-			column += 1;
+			line += 1;
 		}
 		return result;
 	}
 
 	@Override
 	public char peekCharacter(int offset) {
-		assert available(offset);
-		return buffer[(position + offset) & sizeMask];
+		assert isAvailable(offset);
+		return buffer[position + offset];
 	}
 
 	@Override
 	public String nextString(int length) {
-		assert available(length);
-		char[] buffer = new char[length];
+		assert isAvailable(length);
 		for (int i = 0; i < length; i++) {
-			buffer[i] = nextCharacter();
+			nextCharacter();
 		}
-		return new String(buffer);
+		return new String(buffer, position - length, length);
 	}
 
 	@Override
 	public void appendNextString(StringBuilder builder, int length) {
-		assert available(length);
+		assert isAvailable(length);
 		for (int i = 0; i < length; i++) {
 			builder.append(nextCharacter());
 		}
@@ -183,7 +178,7 @@ public final class ReaderSource implements JsonSource {
 
 	@Override
 	public int getColumn() {
-		return column;
+		return column + (position - lastNewLinePosition);
 	}
 
 	@Override

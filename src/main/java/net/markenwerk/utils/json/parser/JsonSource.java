@@ -33,8 +33,8 @@ import java.io.IOException;
  * {@link StringBuilder}.
  * 
  * <p>
- * Callers must {@link JsonSource#available(int) check} or
- * {@link JsonSource#ensure(int) ensure}, that the desired amount of characters
+ * Callers must {@link JsonSource#isAvailable(int) check} or
+ * {@link JsonSource#makeAvailable(int) ensure}, that the desired amount of characters
  * is available, before consuming them.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
@@ -43,37 +43,44 @@ import java.io.IOException;
 public interface JsonSource extends Closeable {
 
 	/**
-	 * A {@code char} that represents the unicode byte order mark. A leading byte
-	 * order mark in a character sequence should be ignored by a
+	 * A {@code char} that represents the Unicode byte order mark. A leading
+	 * byte order mark in a character sequence should be ignored by a
 	 * {@link JsonSource}.
 	 */
 	public static final char BYTE_ORDER_MARK = '\uFEFF';
+
+	/**
+	 * Returns the amount of currently available characters.
+	 * 
+	 * @return The amount of currently available characters.
+	 */
+	public int getAvailable();
 
 	/**
 	 * Checks whether a given minimum of characters is currently available to be
 	 * consumed.
 	 * 
 	 * @param minimum
-	 *           The desired minimum. Must be non-negative.
+	 *            The desired minimum. Must be non-negative.
 	 * 
-	 * @return Whether a given minimum of characters is currently available to be
-	 *         consumed.
+	 * @return Whether a given minimum of characters is currently available to
+	 *         be consumed.
 	 */
-	public boolean available(int minimum);
+	public boolean isAvailable(int minimum);
 
 	/**
 	 * Ensures that a given minimum of characters is available to be consumed.
 	 * 
 	 * @param minimum
-	 *           The desired minimum.
+	 *            The desired minimum.
 	 * 
 	 * @return Whether the desired amount of available characters could be
 	 *         ensured or the end of the character sequence has been reached.
 	 * @throws IOException
-	 *            If something went wrong while ensuring that the desired amount
-	 *            of available characters.
+	 *             If something went wrong while ensuring that the desired
+	 *             amount of available characters.
 	 */
-	public boolean ensure(int minimum) throws IOException;
+	public boolean makeAvailable(int minimum) throws IOException;
 
 	/**
 	 * Consumes and returns the next character in the character sequence.
@@ -88,12 +95,12 @@ public interface JsonSource extends Closeable {
 	 * it.
 	 * 
 	 * <p>
-	 * Callers must {@link JsonSource#available(int) check} or
-	 * {@link JsonSource#ensure(int) ensure}, that the desired amount of
+	 * Callers must {@link JsonSource#isAvailable(int) check} or
+	 * {@link JsonSource#makeAvailable(int) ensure}, that the desired amount of
 	 * characters is available.
 	 * 
 	 * @param offset
-	 *           The amount of characters to look ahead. Must be non-negative.
+	 *            The amount of characters to look ahead. Must be non-negative.
 	 * 
 	 * @return The future character in the character sequence.
 	 */
@@ -103,12 +110,12 @@ public interface JsonSource extends Closeable {
 	 * Consumes and returns the next characters in the character sequence.
 	 * 
 	 * <p>
-	 * Callers must {@link JsonSource#available(int) check} or
-	 * {@link JsonSource#ensure(int) ensure}, that the desired amount of
+	 * Callers must {@link JsonSource#isAvailable(int) check} or
+	 * {@link JsonSource#makeAvailable(int) ensure}, that the desired amount of
 	 * characters is available.
 	 * 
 	 * @param length
-	 *           The amount of characters to be consumed. Must be non-negative.
+	 *            The amount of characters to be consumed. Must be non-negative.
 	 * 
 	 * @return The next characters in the character sequence.
 	 */
@@ -119,16 +126,16 @@ public interface JsonSource extends Closeable {
 	 * given {@link StringBuilder}.
 	 * 
 	 * <p>
-	 * Callers must {@link JsonSource#available(int) check} or
-	 * {@link JsonSource#ensure(int) ensure}, that the desired amount of
+	 * Callers must {@link JsonSource#isAvailable(int) check} or
+	 * {@link JsonSource#makeAvailable(int) ensure}, that the desired amount of
 	 * characters is available.
 	 * 
 	 * @param builder
-	 *           The string builder to add the characters to. Must be
-	 *           non-negative.
+	 *            The string builder to add the characters to. Must be
+	 *            non-negative.
 	 * 
 	 * @param length
-	 *           The amount of characters to be consumed.
+	 *            The amount of characters to be consumed.
 	 */
 	public void appendNextString(StringBuilder builder, int length);
 
@@ -163,7 +170,7 @@ public interface JsonSource extends Closeable {
 	 * {@link String} otherwise.
 	 * 
 	 * @param maximum
-	 *           The maximum amount of characters. Must be non-negative.
+	 *            The maximum amount of characters. Must be non-negative.
 	 * 
 	 * @return The past characters.
 	 */
@@ -175,7 +182,7 @@ public interface JsonSource extends Closeable {
 	 * {@link String} otherwise.
 	 * 
 	 * @param maximum
-	 *           The maximum amount of characters. Must be non-negative.
+	 *            The maximum amount of characters. Must be non-negative.
 	 * 
 	 * @return The future characters.
 	 */
