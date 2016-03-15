@@ -64,6 +64,18 @@ public final class JsonParser implements Closeable {
 	}
 
 	/**
+	 * Creates a new {@link JsonParser} for the given {@code char[]}.
+	 *
+	 * @param characters
+	 *            The {@code char[]} to read from.
+	 * @throws IllegalArgumentException
+	 *             If the given {@code char[]} is {@literal null}.
+	 */
+	public JsonParser(char[] characters) throws IllegalArgumentException {
+		this(new CharacterArraySource(characters));
+	}
+
+	/**
 	 * Creates a new {@link JsonParser} for the given {@link Reader}.
 	 * 
 	 * @param reader

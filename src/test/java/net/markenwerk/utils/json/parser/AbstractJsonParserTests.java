@@ -83,6 +83,24 @@ public abstract class AbstractJsonParserTests {
 		}
 	}
 
+	@Test
+	@SuppressWarnings("javadoc")
+	public void emptyArray_afterBom() throws JsonSyntaxException, IOException {
+		JsonParser jsonReader = new JsonParser(getSource(JsonSource.BYTE_ORDER_MARK + "[]"));
+		try {
+
+			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
+			jsonReader.beginArray();
+			Assert.assertEquals(JsonState.ARRAY_END, jsonReader.currentState());
+			jsonReader.endArray();
+			Assert.assertEquals(JsonState.DOCUMENT_END, jsonReader.currentState());
+			jsonReader.endDocumnet();
+
+		} finally {
+			jsonReader.close();
+		}
+	}
+
 	@SuppressWarnings("javadoc")
 	@Test(expected = JsonSyntaxException.class)
 	public void emptyArray_unfinished() throws JsonSyntaxException, IOException {
