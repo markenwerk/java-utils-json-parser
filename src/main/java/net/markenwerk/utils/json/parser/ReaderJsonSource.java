@@ -36,6 +36,8 @@ public final class ReaderJsonSource implements JsonSource {
 
 	private static final int MINIMUM_BUFFER_SIZE = 128;
 
+	private static final int DEFAULT_BUFFER_SIZE = 512;
+
 	private final Reader reader;
 
 	private final char[] buffer;
@@ -53,29 +55,30 @@ public final class ReaderJsonSource implements JsonSource {
 	private int lastNewLinePosition;
 
 	/**
-	 * Creates a new {@link StringJsonSource} for the given {@link Reader}.
+	 * Creates a new {@link StringJsonSource} for the given {@link Reader} with
+	 * the {@link ReaderJsonSource#DEFAULT_BUFFER_SIZE default} buffer size.
 	 * 
 	 * @param reader
-	 *           The {@link Reader} to be used.
+	 *            The {@link Reader} to be used.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link Reader} is {@literal null}.
+	 *             If the given {@link Reader} is {@literal null}.
 	 */
 	public ReaderJsonSource(Reader reader) {
-		this(reader, 10);
+		this(reader, DEFAULT_BUFFER_SIZE);
 	}
 
 	/**
 	 * Creates a new {@link StringJsonSource} for the given {@link Reader}.
 	 * 
 	 * @param reader
-	 *           The {@link Reader} to be used.
+	 *            The {@link Reader} to be used.
 	 * @param size
-	 *           The buffer size to be used.
+	 *            The buffer size to be used.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link Reader} is {@literal null} or if the given
-	 *            size is smaller than the
-	 *            {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
-	 *            size.
+	 *             If the given {@link Reader} is {@literal null} or if the
+	 *             given size is smaller than the
+	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
+	 *             size.
 	 */
 	public ReaderJsonSource(Reader reader, int size) {
 		if (null == reader) {
