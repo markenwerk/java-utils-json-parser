@@ -10,7 +10,7 @@ import org.junit.Test;
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  */
-public class ReaderJsonParserTests extends AbstractJsonParserTests {
+public class ReaderJsonPullParserTests extends AbstractJsonPullParserTests {
 
 	
 	@SuppressWarnings({ "resource", "javadoc" })

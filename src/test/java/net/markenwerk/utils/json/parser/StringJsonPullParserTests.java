@@ -3,22 +3,21 @@ package net.markenwerk.utils.json.parser;
 import org.junit.Test;
 
 /**
- * JUnit test for {@link JsonPullParser} with an underlying
- * {@link CharacterArrayJsonSource}.
+ * JUnit test for {@link JsonPullParser} with an underlying {@link StringJsonSource}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  */
-public class CharacterArrayJsonParserTests extends AbstractJsonParserTests {
+public class StringJsonPullParserTests extends AbstractJsonPullParserTests {
 
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
 	public void create_nullString() {
-		new JsonPullParser((char[]) null);
+		new JsonPullParser((String) null);
 	}
 
 	@Override
 	protected JsonSource getSource(String string) {
-		return new CharacterArrayJsonSource(string.toCharArray());
+		return new StringJsonSource(string);
 	}
 
 }

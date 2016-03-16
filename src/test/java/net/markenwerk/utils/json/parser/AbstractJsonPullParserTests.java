@@ -31,7 +31,7 @@ import org.junit.Test;
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  */
-public abstract class AbstractJsonParserTests {
+public abstract class AbstractJsonPullParserTests {
 
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
