@@ -22,8 +22,9 @@
 package net.markenwerk.utils.json.parser;
 
 /**
- * A {@link JsonSyntaxException} indicates that a {@link JsonPullParser}
- * encountered a JSON syntax error while parsing a JSON document.
+ * A {@link JsonSyntaxException} indicates that a {@link JsonPullParser} or a
+ * {@link JsonPushParser} encountered a JSON syntax error while parsing a JSON
+ * document.
  *
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
