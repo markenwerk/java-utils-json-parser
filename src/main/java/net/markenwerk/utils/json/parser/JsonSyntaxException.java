@@ -22,8 +22,8 @@
 package net.markenwerk.utils.json.parser;
 
 /**
- * A {@link JsonSyntaxException} indicates that a {@link JsonPullParser} encountered
- * a JSON syntax error while parsing a JSON document.
+ * A {@link JsonSyntaxException} indicates that a {@link JsonPullParser}
+ * encountered a JSON syntax error while parsing a JSON document.
  *
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
@@ -32,7 +32,7 @@ public final class JsonSyntaxException extends Exception {
 
 	private static final long serialVersionUID = 4648280170907086815L;
 
-	private final String message;
+	private final JsonSyntaxError error;
 
 	private final int line;
 
@@ -45,8 +45,8 @@ public final class JsonSyntaxException extends Exception {
 	/**
 	 * Creates a new {@link JsonSyntaxException} for the given components.
 	 * 
-	 * @param message
-	 *            The description of the actual syntax error.
+	 * @param error
+	 *            The syntax error.
 	 * @param line
 	 *            The line of the syntax error.
 	 * @param column
@@ -58,8 +58,8 @@ public final class JsonSyntaxException extends Exception {
 	 *            a few characters from the parsed character stream, that come
 	 *            after the syntax error.
 	 */
-	public JsonSyntaxException(String message, int line, int column, String past, String future) {
-		this.message = message;
+	public JsonSyntaxException(JsonSyntaxError error, int line, int column, String past, String future) {
+		this.error = error;
 		this.line = line;
 		this.column = column;
 		this.past = past;
@@ -69,8 +69,10 @@ public final class JsonSyntaxException extends Exception {
 	@Override
 	public String getMessage() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(message);
-		builder.append(" at line ");
+		builder.append(error.getDescription());
+		builder.append(" (");
+		builder.append(error.getExpectation());
+		builder.append(") at line ");
 		builder.append(line);
 		builder.append(", column ");
 		builder.append(column);
@@ -83,12 +85,12 @@ public final class JsonSyntaxException extends Exception {
 	}
 
 	/**
-	 * Returns a description of the actual syntax error.
+	 * Returns the syntax error.
 	 * 
-	 * @return The error description.
+	 * @return The syntax error.
 	 */
-	public String getErrorMessage() {
-		return message;
+	public JsonSyntaxError getError() {
+		return error;
 	}
 
 	/**

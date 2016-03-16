@@ -97,6 +97,17 @@ public final class ReaderJsonSource implements JsonSource {
 	}
 
 	@Override
+	public int makeAvailable() throws IOException {
+		int available = getAvailable();
+		if (0 != available) {
+			return available;
+		} else {
+			fillBuffer(1);
+			return getAvailable();
+		}
+	}
+
+	@Override
 	public boolean makeAvailable(int minimum) throws IOException {
 		return minimum <= end - position || fillBuffer(minimum);
 	}

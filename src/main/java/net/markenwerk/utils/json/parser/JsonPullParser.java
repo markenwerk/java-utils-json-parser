@@ -55,9 +55,9 @@ public final class JsonPullParser implements Closeable {
 	 * Creates a new {@link JsonPullParser} for the given {@link String}.
 	 *
 	 * @param string
-	 *           The {@link String} to read from.
+	 *            The {@link String} to read from.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link String} is {@literal null}.
+	 *             If the given {@link String} is {@literal null}.
 	 */
 	public JsonPullParser(String string) throws IllegalArgumentException {
 		this(new StringJsonSource(string));
@@ -67,9 +67,9 @@ public final class JsonPullParser implements Closeable {
 	 * Creates a new {@link JsonPullParser} for the given {@code char[]}.
 	 *
 	 * @param characters
-	 *           The {@code char[]} to read from.
+	 *            The {@code char[]} to read from.
 	 * @throws IllegalArgumentException
-	 *            If the given {@code char[]} is {@literal null}.
+	 *             If the given {@code char[]} is {@literal null}.
 	 */
 	public JsonPullParser(char[] characters) throws IllegalArgumentException {
 		this(new CharacterArrayJsonSource(characters));
@@ -79,9 +79,9 @@ public final class JsonPullParser implements Closeable {
 	 * Creates a new {@link JsonPullParser} for the given {@link Reader}.
 	 * 
 	 * @param reader
-	 *           The {@link Reader} to read from.
+	 *            The {@link Reader} to read from.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link Reader} is {@literal null}.
+	 *             If the given {@link Reader} is {@literal null}.
 	 */
 	public JsonPullParser(Reader reader) throws IllegalArgumentException {
 		this(new ReaderJsonSource(reader));
@@ -91,14 +91,14 @@ public final class JsonPullParser implements Closeable {
 	 * Creates a new {@link JsonPullParser} for the given {@link Reader}.
 	 * 
 	 * @param reader
-	 *           The {@link Reader} to read from.
+	 *            The {@link Reader} to read from.
 	 * @param size
-	 *           The buffer size to be used.
+	 *            The buffer size to be used.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link Reader} is {@literal null} or if the given
-	 *            size is smaller than the
-	 *            {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
-	 *            size.
+	 *             If the given {@link Reader} is {@literal null} or if the
+	 *             given size is smaller than the
+	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
+	 *             size.
 	 */
 	public JsonPullParser(Reader reader, int size) throws IllegalArgumentException {
 		this(new ReaderJsonSource(reader, size));
@@ -108,9 +108,9 @@ public final class JsonPullParser implements Closeable {
 	 * Creates a new {@link JsonPullParser} for the given {@link JsonSource}.
 	 * 
 	 * @param source
-	 *           The {@link JsonSource} to read from.
+	 *            The {@link JsonSource} to read from.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link JsonSource} is {@literal null}.
+	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
 	public JsonPullParser(JsonSource source) throws IllegalArgumentException {
 		if (null == source) {
@@ -122,15 +122,15 @@ public final class JsonPullParser implements Closeable {
 
 	/**
 	 * Reads, if necessary, from the underlying Reader and describes the current
-	 * {@link JsonState} of this {@link JsonPullParser}, which describes the next
-	 * type of value or structural element of the JSON document.
+	 * {@link JsonState} of this {@link JsonPullParser}, which describes the
+	 * next type of value or structural element of the JSON document.
 	 * 
 	 * @return The current {@link JsonState}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public JsonState currentState() throws JsonSyntaxException, IOException {
 		if (null == state) {
@@ -155,8 +155,8 @@ public final class JsonPullParser implements Closeable {
 			return prepareObjectValue();
 		case NONEMPTY_DOCUMENT:
 			try {
-				prepareNextValue("Invalid document end (expected EOF)");
-				throw syntaxError("Expected EOF");
+				prepareNextValue(JsonSyntaxError.INVALID_DOCUMENT_END);
+				throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_END);
 			} catch (JsonSyntaxException e) {
 				return JsonState.DOCUMENT_END;
 			}
@@ -177,104 +177,108 @@ public final class JsonPullParser implements Closeable {
 
 	private JsonState prepareDocument() throws JsonSyntaxException, IOException {
 		stack.replace(Context.NONEMPTY_DOCUMENT);
-		char firstCharacter = nextNonWhitespace("Invalid document start (expected '[' or '{')");
-		if (firstCharacter == '{') {
-			stack.push(Context.EMPTY_OBJECT);
-			return JsonState.OBJECT_BEGIN;
-		} else if (firstCharacter == '[') {
+		char firstCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_DOCUMENT_START);
+		if ('[' == firstCharacter) {
 			stack.push(Context.EMPTY_ARRAY);
 			return JsonState.ARRAY_BEGIN;
+		} else if ('{' == firstCharacter) {
+			stack.push(Context.EMPTY_OBJECT);
+			return JsonState.OBJECT_BEGIN;
 		} else {
-			throw syntaxError("Invalid document start (expected '[' or '{')");
+			throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
 		}
 	}
 
 	private JsonState prepareArrayFirst() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace("Unfinished array (expected value or '}')");
-		if (nextCharacter == ']') {
+		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_ARRAY_FIRST);
+		if (']' == nextCharacter) {
 			stack.pop();
 			return JsonState.ARRAY_END;
 		} else {
 			stack.replace(Context.NONEMPTY_ARRAY);
-			return prepareNextValue(nextCharacter, "Unfinished array (expected value)");
+			return prepareNextValue(nextCharacter, JsonSyntaxError.INVALID_ARRAY_FIRST);
 		}
 	}
 
 	private JsonState prepareArrayFollowing() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace("Unfinished array (expected ',' or ']')");
-		if (nextCharacter == ']') {
+		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_ARRAY_FOLLOW);
+		if (',' == nextCharacter) {
+			return prepareNextValue(JsonSyntaxError.INVALID_ARRAY_VALUE);
+		} else if (']' == nextCharacter) {
 			stack.pop();
 			return JsonState.ARRAY_END;
-		} else if (nextCharacter == ',') {
-			return prepareNextValue("Unfinished array (expected value)");
 		} else {
-			throw syntaxError("Unfinished array (expected ',' or ']')");
+			throw syntaxError(JsonSyntaxError.INVALID_ARRAY_FOLLOW);
 		}
 	}
 
 	private JsonState prepareObjectFirst() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace("Unfinished object (expected key or '}')");
-		if (nextCharacter == '}') {
-			stack.pop();
-			return JsonState.OBJECT_END;
-		} else if (nextCharacter == '"') {
+		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FIRST);
+		if ('"' == nextCharacter) {
 			prepareNextString();
 			stack.replace(Context.DANGLING_NAME);
 			return JsonState.NAME;
+		} else if ('}' == nextCharacter) {
+			stack.pop();
+			return JsonState.OBJECT_END;
 		} else {
-			throw syntaxError("Unfinished object (expected key or '}')");
+			throw syntaxError(JsonSyntaxError.INVALID_OBJECT_FIRST);
 		}
 	}
 
 	private JsonState prepareObjectFollowing() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace("Unfinished object (expected ',' or '}')");
-		if (nextCharacter == '}') {
-			stack.pop();
-			return JsonState.OBJECT_END;
-		} else if (nextCharacter == ',') {
-			nextCharacter = nextNonWhitespace("Unfinished object (expected '\"key\"')");
-			if (nextCharacter == '"') {
+		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FOLLOW);
+		if (',' == nextCharacter) {
+			nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_NAME);
+			if ('"' == nextCharacter) {
 				prepareNextString();
 				stack.replace(Context.DANGLING_NAME);
 				return JsonState.NAME;
 			} else {
-				throw syntaxError("Unfinished object (expected '\"key\"')");
+				throw syntaxError(JsonSyntaxError.INVALID_OBJECT_NAME);
 			}
+		} else if ('}' == nextCharacter) {
+			stack.pop();
+			return JsonState.OBJECT_END;
 		} else {
-			throw syntaxError("Unfinished object (expected ',' or '}')");
+			throw syntaxError(JsonSyntaxError.INVALID_OBJECT_FOLLOW);
 		}
 	}
 
 	private JsonState prepareObjectValue() throws JsonSyntaxException, IOException {
-		char nextCharacter = nextNonWhitespace("Unfinished object value (expected ':')");
-		if (nextCharacter == ':') {
+		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_SEPARATION);
+		if (':' == nextCharacter) {
 			stack.replace(Context.NONEMPTY_OBJECT);
-			return prepareNextValue("Unfinished object value (expected value)");
+			return prepareNextValue(JsonSyntaxError.INVALID_OBJECT_VALUE);
 		} else {
-			throw syntaxError("Unfinished object value (expected ':')");
+			throw syntaxError(JsonSyntaxError.INVALID_OBJECT_SEPARATION);
 		}
 	}
 
-	private JsonState prepareNextValue(String errorMessage) throws JsonSyntaxException, IOException {
-		return prepareNextValue(nextNonWhitespace(errorMessage), errorMessage);
+	private JsonState prepareNextValue(JsonSyntaxError error) throws JsonSyntaxException, IOException {
+		return prepareNextValue(nextNonWhitespace(error), error);
 	}
 
-	private JsonState prepareNextValue(char firstCharacter, String errorMessage)
-			throws JsonSyntaxException, IOException {
-		if (firstCharacter == '{') {
-			stack.push(Context.EMPTY_OBJECT);
-			return JsonState.OBJECT_BEGIN;
-		} else if (firstCharacter == '[') {
+	private JsonState prepareNextValue(char firstCharacter, JsonSyntaxError error) throws JsonSyntaxException,
+			IOException {
+		if ('[' == firstCharacter) {
 			stack.push(Context.EMPTY_ARRAY);
 			return JsonState.ARRAY_BEGIN;
-		} else if (firstCharacter == '"') {
+		} else if ('{' == firstCharacter) {
+			stack.push(Context.EMPTY_OBJECT);
+			return JsonState.OBJECT_BEGIN;
+		} else if ('"' == firstCharacter) {
 			return prepareNextString();
+		} else if (']' == firstCharacter) {
+			throw syntaxError(error);
+		} else if ('}' == firstCharacter) {
+			throw syntaxError(error);
 		} else {
 			return prepareNextLiteral(firstCharacter);
 		}
 	}
 
-	private char nextNonWhitespace(String errorMessage) throws JsonSyntaxException, IOException {
+	private char nextNonWhitespace(JsonSyntaxError error) throws JsonSyntaxException, IOException {
 		while (source.makeAvailable(1)) {
 			for (int i = 0, n = source.getAvailable(); i < n; i++) {
 				char nextCharacter = source.nextCharacter();
@@ -283,7 +287,7 @@ public final class JsonPullParser implements Closeable {
 				}
 			}
 		}
-		throw syntaxError(errorMessage);
+		throw syntaxError(error);
 	}
 
 	private JsonState prepareNextString() throws JsonSyntaxException, IOException {
@@ -318,30 +322,12 @@ public final class JsonPullParser implements Closeable {
 				source.appendNextString(builder, offset);
 			}
 		}
-		throw syntaxError("Unterminated string");
-
-		// builder.setLength(0);
-		// while (source.ensure(1)) {
-		// available: for (int i = 0, n = source.getAvailable(); i < n; i++) {
-		// char nextCharacter = source.nextCharacter();
-		// switch (nextCharacter) {
-		// case '"':
-		// stringValue = builder.toString();
-		// return JsonState.STRING;
-		// case '\\':
-		// builder.append(readEscaped());
-		// break available;
-		// default:
-		// builder.append(nextCharacter);
-		// }
-		// }
-		// }
-		// throw syntaxError("Unterminated string");
+		throw syntaxError(JsonSyntaxError.UNTERMINATED_STRING);
 	}
 
 	private char readEscaped() throws JsonSyntaxException, IOException {
 		if (!source.makeAvailable(1)) {
-			throw syntaxError("Unterminated escape sequence");
+			throw syntaxError(JsonSyntaxError.UNFINISHED_ESCAPE_SEQUENCE);
 		} else {
 			switch (source.nextCharacter()) {
 			case '"':
@@ -363,20 +349,24 @@ public final class JsonPullParser implements Closeable {
 			case 'u':
 				return readUnicodeEscaped();
 			default:
-				throw syntaxError("Invalid escape sequence");
+				throw syntaxError(JsonSyntaxError.INVALID_ESCAPE_SEQUENCE);
 			}
 		}
 	}
 
 	private char readUnicodeEscaped() throws JsonSyntaxException, IOException {
 		if (!source.makeAvailable(4)) {
-			throw syntaxError("Unterminated unicode escape sequence");
+			throw syntaxError(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE);
 		} else {
+			String hex = source.nextString(4);
 			try {
-				String hex = source.nextString(4);
 				return (char) Integer.parseInt(hex, 16);
 			} catch (NumberFormatException e) {
-				throw syntaxError("Invalid unicode escape sequence");
+				if (hex.contains("\"")) {
+					throw syntaxError(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE);
+				} else {
+					throw syntaxError(JsonSyntaxError.INVALID_UNICODE_ESCAPE_SEQUENCE);
+				}
 			}
 		}
 	}
@@ -384,11 +374,10 @@ public final class JsonPullParser implements Closeable {
 	private JsonState prepareNextLiteral(char firstCharacter) throws JsonSyntaxException, IOException {
 		builder.setLength(0);
 		builder.append(firstCharacter);
-		int offset = 0;
-		while (source.makeAvailable(offset + 1)) {
-			switch (source.peekCharacter(offset++)) {
-			case '}':
+		while (0 != source.makeAvailable()) {
+			switch (source.peekCharacter(0)) {
 			case ']':
+			case '}':
 			case ',':
 			case ' ':
 			case '\b':
@@ -396,11 +385,12 @@ public final class JsonPullParser implements Closeable {
 			case '\r':
 			case '\n':
 			case '\t':
-				source.appendNextString(builder, offset - 1);
 				return decodeLiteral(builder.toString());
+			default:
+				builder.append(source.nextCharacter());
 			}
 		}
-		throw syntaxError("Invald literal");
+		return decodeLiteral(builder.toString());
 	}
 
 	private JsonState decodeLiteral(String literal) throws JsonSyntaxException {
@@ -426,30 +416,30 @@ public final class JsonPullParser implements Closeable {
 				doubleValue = Double.parseDouble(literal);
 				return JsonState.DOUBLE;
 			} catch (NumberFormatException e) {
-				throw syntaxError("Invald literal");
+				throw syntaxError(JsonSyntaxError.INVALID_LITERAL);
 			}
 		}
 	}
 
-	private JsonSyntaxException syntaxError(String message) {
-		return new JsonSyntaxException(message, source.getLine(), source.getColumn() - 1, source.getPast(5),
-				source.getFuture(5));
+	private JsonSyntaxException syntaxError(JsonSyntaxError error) {
+		return new JsonSyntaxException(error, source.getLine(), source.getColumn() - 1, source.getPast(15),
+				source.getFuture(15));
 	}
 
 	/**
 	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#ARRAY_BEGIN} and consumes the
-	 * beginning of a JSON array. The next {@link JsonState} describes either the
-	 * first value of this JSON array or the end of this JSON array.
+	 * beginning of a JSON array. The next {@link JsonState} describes either
+	 * the first value of this JSON array or the end of this JSON array.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#ARRAY_BEGIN}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#ARRAY_BEGIN}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public void beginArray() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.ARRAY_BEGIN);
@@ -462,13 +452,13 @@ public final class JsonPullParser implements Closeable {
 	 * sibling value of this JSON array or the end of the JSON document.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#ARRAY_END}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#ARRAY_END}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public void endArray() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.ARRAY_END);
@@ -482,13 +472,13 @@ public final class JsonPullParser implements Closeable {
 	 * object or the end of this JSON object.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#OBJECT_BEGIN}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#OBJECT_BEGIN}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public void beginObject() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.OBJECT_BEGIN);
@@ -501,13 +491,13 @@ public final class JsonPullParser implements Closeable {
 	 * sibling value of this JSON object or the end of the JSON document.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#OBJECT_END}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#OBJECT_END}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public void endObject() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.OBJECT_END);
@@ -519,13 +509,13 @@ public final class JsonPullParser implements Closeable {
 	 * of the JSON document. The next {@link JsonState} will be {@literal null}.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#DOCUMENT_END}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#DOCUMENT_END}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public void endDocumnet() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOCUMENT_END);
@@ -537,10 +527,10 @@ public final class JsonPullParser implements Closeable {
 	 * @return Whether the current JSON array or JSON object has more elements.
 	 * 
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public boolean hasNext() throws JsonSyntaxException, IOException {
 		currentState();
@@ -555,12 +545,13 @@ public final class JsonPullParser implements Closeable {
 	 * JSON object.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not {@link JsonState#NULL}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#NULL}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public void nextNull() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.NULL);
@@ -570,19 +561,19 @@ public final class JsonPullParser implements Closeable {
 	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#BOOLEAN} and consumes and returns
 	 * the corresponding value. The next {@link JsonState} describes either the
-	 * next sibling value of this JSON value or the end of surrounding JSON array
-	 * or JSON object.
+	 * next sibling value of this JSON value or the end of surrounding JSON
+	 * array or JSON object.
 	 * 
 	 * @return The {@code boolean} value.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#BOOLEAN}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#BOOLEAN}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public boolean nextBoolean() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.BOOLEAN);
@@ -599,15 +590,16 @@ public final class JsonPullParser implements Closeable {
 	 * @return The {@code byte} value.
 	 * 
 	 * @throws ArithmeticException
-	 *            If the value is too large or too small to fit into a
-	 *            {@code byte}.
+	 *             If the value is too large or too small to fit into a
+	 *             {@code byte}.
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public byte nextByte() throws ArithmeticException, IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -630,15 +622,16 @@ public final class JsonPullParser implements Closeable {
 	 * @return The {@code char} value.
 	 * 
 	 * @throws ArithmeticException
-	 *            If the value is too large or too small to fit into a
-	 *            {@code char}.
+	 *             If the value is too large or too small to fit into a
+	 *             {@code char}.
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public char nextCharacter() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -661,15 +654,16 @@ public final class JsonPullParser implements Closeable {
 	 * @return The {@code short} value.
 	 * 
 	 * @throws ArithmeticException
-	 *            If the value is too large or too small to fit into a
-	 *            {@code short}.
+	 *             If the value is too large or too small to fit into a
+	 *             {@code short}.
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public short nextShort() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -685,22 +679,23 @@ public final class JsonPullParser implements Closeable {
 	/**
 	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
-	 * corresponding value as a {@code int}. The next {@link JsonState} describes
-	 * either the next sibling value of this JSON value or the end of surrounding
-	 * JSON array or JSON object.
+	 * corresponding value as a {@code int}. The next {@link JsonState}
+	 * describes either the next sibling value of this JSON value or the end of
+	 * surrounding JSON array or JSON object.
 	 * 
 	 * @return The {@code int} value.
 	 * 
 	 * @throws ArithmeticException
-	 *            If the value is too large or too small to fit into a
-	 *            {@code int}.
+	 *             If the value is too large or too small to fit into a
+	 *             {@code int}.
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public int nextInteger() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -723,12 +718,13 @@ public final class JsonPullParser implements Closeable {
 	 * @return The {@code long} value.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not {@link JsonState#LONG}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#LONG}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public long nextLong() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
@@ -737,21 +733,21 @@ public final class JsonPullParser implements Closeable {
 
 	/**
 	 * Ensures that the {@link JsonPullParser#currentState() current}
-	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns the
-	 * corresponding value as a {@code float}. The next {@link JsonState}
+	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns
+	 * the corresponding value as a {@code float}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
 	 * surrounding JSON array or JSON object.
 	 * 
 	 * @return The {@code float} value.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#DOUBLE}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#DOUBLE}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public float nextFloat() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOUBLE);
@@ -760,21 +756,21 @@ public final class JsonPullParser implements Closeable {
 
 	/**
 	 * Ensures that the {@link JsonPullParser#currentState() current}
-	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns the
-	 * corresponding value. The next {@link JsonState} describes either the next
-	 * sibling value of this JSON value or the end of surrounding JSON array or
-	 * JSON object.
+	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns
+	 * the corresponding value. The next {@link JsonState} describes either the
+	 * next sibling value of this JSON value or the end of surrounding JSON
+	 * array or JSON object.
 	 * 
 	 * @return The {@code double} value.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#DOUBLE}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#DOUBLE}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public double nextDouble() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOUBLE);
@@ -783,21 +779,21 @@ public final class JsonPullParser implements Closeable {
 
 	/**
 	 * Ensures that the {@link JsonPullParser#currentState() current}
-	 * {@link JsonState} is {@link JsonState#STRING} and consumes and returns the
-	 * corresponding value. The next {@link JsonState} describes either the next
-	 * sibling value of this JSON value or the end of surrounding JSON array or
-	 * JSON object.
+	 * {@link JsonState} is {@link JsonState#STRING} and consumes and returns
+	 * the corresponding value. The next {@link JsonState} describes either the
+	 * next sibling value of this JSON value or the end of surrounding JSON
+	 * array or JSON object.
 	 * 
 	 * @return The string value.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not
-	 *            {@link JsonState#STRING}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#STRING}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public String nextString() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.STRING);
@@ -813,12 +809,13 @@ public final class JsonPullParser implements Closeable {
 	 * @return The name.
 	 * 
 	 * @throws IllegalStateException
-	 *            If the current {@link JsonState} is not {@link JsonState#NAME}.
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#NAME}.
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public String nextName() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.NAME);
@@ -831,10 +828,10 @@ public final class JsonPullParser implements Closeable {
 	 * array or JSON object.
 	 * 
 	 * @throws JsonSyntaxException
-	 *            If the read {@link JsonSyntaxException} document contains a
-	 *            syntax error.
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
 	 * @throws IOException
-	 *            If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
 	public void skipValue() throws JsonSyntaxException, IOException {
 		switch (currentState()) {
@@ -872,8 +869,8 @@ public final class JsonPullParser implements Closeable {
 
 	@Override
 	public String toString() {
-		return "JsonReader [line=" + source.getLine() + ", column=" + source.getColumn() + ", near='" + source.getPast(15)
-				+ source.getFuture(15) + "']";
+		return "JsonReader [line=" + source.getLine() + ", column=" + source.getColumn() + ", near='"
+				+ source.getPast(15) + source.getFuture(15) + "']";
 	}
 
 }

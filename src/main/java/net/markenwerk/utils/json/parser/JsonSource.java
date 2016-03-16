@@ -56,6 +56,18 @@ public interface JsonSource extends Closeable {
 	public int getAvailable();
 
 	/**
+	 * Ensures that characters are available to be consumed, unless the
+	 * character sequence has reached its end.
+	 * 
+	 * @return Returns the amount of currently available characters.
+	 * 
+	 * @throws IOException
+	 *             If something went wrong while ensuring that the desired
+	 *             amount of available characters.
+	 */
+	public int makeAvailable() throws IOException;
+
+	/**
 	 * Ensures that a given minimum of characters is available to be consumed.
 	 * 
 	 * @param minimum
@@ -63,6 +75,7 @@ public interface JsonSource extends Closeable {
 	 * 
 	 * @return Whether the desired amount of available characters could be
 	 *         ensured or the end of the character sequence has been reached.
+	 * 
 	 * @throws IOException
 	 *             If something went wrong while ensuring that the desired
 	 *             amount of available characters.

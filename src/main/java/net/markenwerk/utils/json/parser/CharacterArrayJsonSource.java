@@ -24,8 +24,8 @@ package net.markenwerk.utils.json.parser;
 import java.io.IOException;
 
 /**
- * A {@link CharacterArrayJsonSource} is a {@link JsonSource} that is backed by a
- * given {@code char[]}.
+ * A {@link CharacterArrayJsonSource} is a {@link JsonSource} that is backed by
+ * a given {@code char[]}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
@@ -43,7 +43,8 @@ public final class CharacterArrayJsonSource implements JsonSource {
 	private int lastNewLinePosition;
 
 	/**
-	 * Creates a new {@link CharacterArrayJsonSource} for the given {@link String}.
+	 * Creates a new {@link CharacterArrayJsonSource} for the given
+	 * {@link String}.
 	 * 
 	 * @param characters
 	 *            The {@code char[]} to be used.
@@ -63,6 +64,11 @@ public final class CharacterArrayJsonSource implements JsonSource {
 
 	@Override
 	public int getAvailable() {
+		return characters.length - position;
+	}
+
+	@Override
+	public int makeAvailable() throws IOException {
 		return characters.length - position;
 	}
 

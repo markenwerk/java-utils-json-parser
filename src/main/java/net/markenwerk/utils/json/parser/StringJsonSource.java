@@ -67,6 +67,11 @@ public final class StringJsonSource implements JsonSource {
 	}
 
 	@Override
+	public int makeAvailable() throws IOException {
+		return string.length() - position;
+	}
+
+	@Override
 	public boolean makeAvailable(int minimum) throws IOException {
 		return position + minimum <= string.length();
 	}

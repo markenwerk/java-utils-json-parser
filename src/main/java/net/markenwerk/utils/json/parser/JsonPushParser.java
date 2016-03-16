@@ -45,12 +45,12 @@ public final class JsonPushParser implements Closeable {
 	 * Creates a new {@link JsonPushParser} for the given {@link String}.
 	 *
 	 * @param handler
-	 *           The {@link JsonHandler} to report to.
+	 *            The {@link JsonHandler} to report to.
 	 * @param string
-	 *           The {@link String} to read from.
+	 *            The {@link String} to read from.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link String} is {@literal null} or if the given
-	 *            {@link JsonHandler} is {@literal null}.
+	 *             If the given {@link String} is {@literal null} or if the
+	 *             given {@link JsonHandler} is {@literal null}.
 	 */
 	public JsonPushParser(JsonHandler handler, String string) throws IllegalArgumentException {
 		this(handler, new StringJsonSource(string));
@@ -60,12 +60,12 @@ public final class JsonPushParser implements Closeable {
 	 * Creates a new {@link JsonPushParser} for the given {@code char[]}.
 	 *
 	 * @param characters
-	 *           The {@code char[]} to read from.
+	 *            The {@code char[]} to read from.
 	 * @param handler
-	 *           The {@link JsonHandler} to report to.
+	 *            The {@link JsonHandler} to report to.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link String} is {@literal null} or if the given
-	 *            {@link JsonHandler} is {@literal null}.
+	 *             If the given {@link String} is {@literal null} or if the
+	 *             given {@link JsonHandler} is {@literal null}.
 	 */
 	public JsonPushParser(JsonHandler handler, char[] characters) throws IllegalArgumentException {
 		this(handler, new CharacterArrayJsonSource(characters));
@@ -75,12 +75,12 @@ public final class JsonPushParser implements Closeable {
 	 * Creates a new {@link JsonPushParser} for the given {@link Reader}.
 	 * 
 	 * @param handler
-	 *           The {@link JsonHandler} to report to.
+	 *            The {@link JsonHandler} to report to.
 	 * @param reader
-	 *           The {@link Reader} to read from.
+	 *            The {@link Reader} to read from.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link String} is {@literal null} or if the given
-	 *            {@link JsonHandler} is {@literal null}.
+	 *             If the given {@link String} is {@literal null} or if the
+	 *             given {@link JsonHandler} is {@literal null}.
 	 */
 	public JsonPushParser(JsonHandler handler, Reader reader) throws IllegalArgumentException {
 		this(handler, new ReaderJsonSource(reader));
@@ -90,16 +90,17 @@ public final class JsonPushParser implements Closeable {
 	 * Creates a new {@link JsonPushParser} for the given {@link Reader}.
 	 * 
 	 * @param handler
-	 *           The {@link JsonHandler} to report to.
+	 *            The {@link JsonHandler} to report to.
 	 * @param reader
-	 *           The {@link Reader} to read from.
+	 *            The {@link Reader} to read from.
 	 * @param size
-	 *           The buffer size to be used.
+	 *            The buffer size to be used.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link String} is {@literal null} or if the given
-	 *            {@link JsonHandler} is {@literal null} or if the given size is
-	 *            smaller than the {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE
-	 *            minimum} buffer size.
+	 *             If the given {@link String} is {@literal null} or if the
+	 *             given {@link JsonHandler} is {@literal null} or if the given
+	 *             size is smaller than the
+	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
+	 *             size.
 	 */
 	public JsonPushParser(JsonHandler handler, Reader reader, int size) throws IllegalArgumentException {
 		this(handler, new ReaderJsonSource(reader, size));
@@ -109,12 +110,12 @@ public final class JsonPushParser implements Closeable {
 	 * Creates a new {@link JsonPushParser} for the given {@link JsonSource}.
 	 * 
 	 * @param source
-	 *           The {@link JsonSource} to read from.
+	 *            The {@link JsonSource} to read from.
 	 * @param handler
-	 *           The {@link JsonHandler} to report to.
+	 *            The {@link JsonHandler} to report to.
 	 * @throws IllegalArgumentException
-	 *            If the given {@link String} is {@literal null} or if the given
-	 *            {@link JsonHandler} is {@literal null}.
+	 *             If the given {@link String} is {@literal null} or if the
+	 *             given {@link JsonHandler} is {@literal null}.
 	 */
 	public JsonPushParser(JsonHandler handler, JsonSource source) throws IllegalArgumentException {
 		if (null == handler) {
@@ -143,89 +144,89 @@ public final class JsonPushParser implements Closeable {
 
 	private void handleDocument() throws JsonSyntaxException, IOException {
 		handler.onBeginDocument();
-		char firstCharacter = nextNonWhitespace("Invalid document start (expected '[' or '{')");
+		char firstCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_DOCUMENT_START);
 		if (firstCharacter == '{') {
 			handleObjectFirst();
 		} else if (firstCharacter == '[') {
 			handleArrayFirst();
 		} else {
-			throw syntaxError("Invalid document start (expected '[' or '{')");
+			throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
 		}
 		handler.onEndDocument();
 	}
 
 	private void handleArrayFirst() throws JsonSyntaxException, IOException {
 		handler.onBeginArray();
-		char nextCharacter = nextNonWhitespace("Unfinished array (expected value or ']')");
+		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_ARRAY_FIRST);
 		if (nextCharacter == ']') {
 			handler.onEndArray();
 		} else {
-			handleValue(nextCharacter, "Unfinished array (expected value or ']')");
+			handleValue(nextCharacter);
 			handleArrayFollowing();
 		}
 	}
 
 	private void handleArrayFollowing() throws JsonSyntaxException, IOException {
 		while (true) {
-			char nextCharacter = nextNonWhitespace("Unfinished array (expected ',' or ']')");
+			char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_ARRAY_FOLLOW);
 			if (nextCharacter == ']') {
 				handler.onEndArray();
 				break;
 			} else if (nextCharacter == ',') {
-				handleValue("Unfinished array (expected value)");
+				handleValue(JsonSyntaxError.INVALID_ARRAY_VALUE);
 			} else {
-				throw syntaxError("Unfinished array (expected ',' or ']')");
+				throw syntaxError(JsonSyntaxError.INVALID_ARRAY_FOLLOW);
 			}
 		}
 	}
 
 	private void handleObjectFirst() throws JsonSyntaxException, IOException {
 		handler.onBeginObject();
-		char nextCharacter = nextNonWhitespace("Unfinished object (expected key or '}')");
+		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FIRST);
 		if (nextCharacter == '}') {
 			handler.onEndObject();
 		} else if (nextCharacter == '"') {
 			handleObjectValue();
 			handleObjectFollowing();
 		} else {
-			throw syntaxError("Unfinished object (expected key or '}')");
+			throw syntaxError(JsonSyntaxError.INVALID_OBJECT_FIRST);
 		}
 	}
 
 	private void handleObjectFollowing() throws JsonSyntaxException, IOException {
 		while (true) {
-			char nextCharacter = nextNonWhitespace("Unfinished object (expected ',' or '}')");
+			char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FOLLOW);
 			if (nextCharacter == '}') {
 				handler.onEndObject();
 				break;
 			} else if (nextCharacter == ',') {
-				nextCharacter = nextNonWhitespace("Unfinished object (expected '\"key\"')");
+				nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_NAME);
 				if (nextCharacter == '"') {
 					handleObjectValue();
 				} else {
-					throw syntaxError("Unfinished object (expected '\"key\"')");
+					throw syntaxError(JsonSyntaxError.INVALID_OBJECT_NAME);
 				}
 			} else {
-				throw syntaxError("Unfinished object (expected ',' or '}')");
+				throw syntaxError(JsonSyntaxError.INVALID_OBJECT_FOLLOW);
 			}
 		}
 	}
 
 	private void handleObjectValue() throws JsonSyntaxException, IOException {
 		handler.onName(readNextString());
-		char nextCharacter = nextNonWhitespace("Unfinished object value (expected ':')");
+		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_SEPARATION);
 		if (nextCharacter == ':') {
-			handleValue("Unfinished object value (expected value)");
+			handleValue(JsonSyntaxError.INVALID_OBJECT_VALUE);
 		} else {
-			throw syntaxError("Unfinished object value (expected ':')");
+			throw syntaxError(JsonSyntaxError.INVALID_OBJECT_SEPARATION);
 		}
 	}
 
-	private void handleValue(String errorMessage) throws JsonSyntaxException, IOException {
-		handleValue(nextNonWhitespace(errorMessage), errorMessage);
+	private void handleValue(JsonSyntaxError error) throws JsonSyntaxException, IOException {
+		handleValue(nextNonWhitespace(error));
 	}
 
-	private void handleValue(char firstCharacter, String errorMessage) throws JsonSyntaxException, IOException {
+	private void handleValue(char firstCharacter) throws JsonSyntaxException, IOException {
 		if (firstCharacter == '{') {
 			handleObjectFirst();
 		} else if (firstCharacter == '[') {
@@ -237,7 +238,7 @@ public final class JsonPushParser implements Closeable {
 		}
 	}
 
-	private char nextNonWhitespace(String errorMessage) throws JsonSyntaxException, IOException {
+	private char nextNonWhitespace(JsonSyntaxError error) throws JsonSyntaxException, IOException {
 		while (source.makeAvailable(1)) {
 			for (int i = 0, n = source.getAvailable(); i < n; i++) {
 				char nextCharacter = source.nextCharacter();
@@ -246,7 +247,7 @@ public final class JsonPushParser implements Closeable {
 				}
 			}
 		}
-		throw syntaxError(errorMessage);
+		throw syntaxError(error);
 	}
 
 	private String readNextString() throws JsonSyntaxException, IOException {
@@ -282,12 +283,12 @@ public final class JsonPushParser implements Closeable {
 				source.appendNextString(builder, offset);
 			}
 		}
-		throw syntaxError("Unterminated string");
+		throw syntaxError(JsonSyntaxError.UNTERMINATED_STRING);
 	}
 
 	private char readEscaped() throws JsonSyntaxException, IOException {
 		if (!source.makeAvailable(1)) {
-			throw syntaxError("Unterminated escape sequence");
+			throw syntaxError(JsonSyntaxError.UNFINISHED_ESCAPE_SEQUENCE);
 		} else {
 			switch (source.nextCharacter()) {
 			case '"':
@@ -309,20 +310,24 @@ public final class JsonPushParser implements Closeable {
 			case 'u':
 				return readUnicodeEscaped();
 			default:
-				throw syntaxError("Invalid escape sequence");
+				throw syntaxError(JsonSyntaxError.INVALID_ESCAPE_SEQUENCE);
 			}
 		}
 	}
 
 	private char readUnicodeEscaped() throws JsonSyntaxException, IOException {
 		if (!source.makeAvailable(4)) {
-			throw syntaxError("Unterminated unicode escape sequence");
+			throw syntaxError(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE);
 		} else {
+			String hex = source.nextString(4);
 			try {
-				String hex = source.nextString(4);
 				return (char) Integer.parseInt(hex, 16);
 			} catch (NumberFormatException e) {
-				throw syntaxError("Invalid unicode escape sequence");
+				if (hex.contains("\"")) {
+					throw syntaxError(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE);
+				} else {
+					throw syntaxError(JsonSyntaxError.INVALID_UNICODE_ESCAPE_SEQUENCE);
+				}
 			}
 		}
 	}
@@ -330,11 +335,10 @@ public final class JsonPushParser implements Closeable {
 	private void handleLiteral(char firstCharacter) throws JsonSyntaxException, IOException {
 		builder.setLength(0);
 		builder.append(firstCharacter);
-		int offset = 0;
-		while (source.makeAvailable(offset + 1)) {
-			switch (source.peekCharacter(offset++)) {
-			case '}':
+		while (0 != source.makeAvailable()) {
+			switch (source.peekCharacter(0)) {
 			case ']':
+			case '}':
 			case ',':
 			case ' ':
 			case '\b':
@@ -342,12 +346,13 @@ public final class JsonPushParser implements Closeable {
 			case '\r':
 			case '\n':
 			case '\t':
-				source.appendNextString(builder, offset - 1);
 				handleLiteral(builder.toString());
 				return;
+			default:
+				builder.append(source.nextCharacter());
 			}
 		}
-		throw syntaxError("Invald literal");
+		handleLiteral(builder.toString());
 	}
 
 	private void handleLiteral(String literal) throws JsonSyntaxException {
@@ -369,13 +374,13 @@ public final class JsonPushParser implements Closeable {
 			try {
 				handler.onDouble(Double.parseDouble(literal));
 			} catch (NumberFormatException e) {
-				throw syntaxError("Invald literal");
+				throw syntaxError(JsonSyntaxError.INVALID_LITERAL);
 			}
 		}
 	}
 
-	private JsonSyntaxException syntaxError(String message) {
-		return new JsonSyntaxException(message, source.getLine(), source.getColumn() - 1, source.getPast(5),
+	private JsonSyntaxException syntaxError(JsonSyntaxError error) {
+		return new JsonSyntaxException(error, source.getLine(), source.getColumn() - 1, source.getPast(5),
 				source.getFuture(5));
 	}
 
@@ -385,8 +390,8 @@ public final class JsonPushParser implements Closeable {
 
 	@Override
 	public String toString() {
-		return "JsonReader [line=" + source.getLine() + ", column=" + source.getColumn() + ", near='" + source.getPast(15)
-				+ source.getFuture(15) + "']";
+		return "JsonReader [line=" + source.getLine() + ", column=" + source.getColumn() + ", near='"
+				+ source.getPast(15) + source.getFuture(15) + "']";
 	}
 
 }
