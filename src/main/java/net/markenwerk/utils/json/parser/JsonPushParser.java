@@ -143,7 +143,7 @@ public final class JsonPushParser implements Closeable {
 	}
 
 	private void handleDocument() throws JsonSyntaxException, IOException {
-		handler.onBeginDocument();
+		handler.onDocumentBegin();
 		char firstCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_DOCUMENT_START);
 		if (firstCharacter == '{') {
 			handleObjectFirst();
@@ -152,14 +152,14 @@ public final class JsonPushParser implements Closeable {
 		} else {
 			throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
 		}
-		handler.onEndDocument();
+		handler.onDocumentEnd();
 	}
 
 	private void handleArrayFirst() throws JsonSyntaxException, IOException {
-		handler.onBeginArray();
+		handler.onArrayBegin();
 		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_ARRAY_FIRST);
 		if (nextCharacter == ']') {
-			handler.onEndArray();
+			handler.onArrayEnd();
 		} else {
 			handleValue(nextCharacter);
 			handleArrayFollowing();
@@ -170,7 +170,7 @@ public final class JsonPushParser implements Closeable {
 		while (true) {
 			char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_ARRAY_FOLLOW);
 			if (nextCharacter == ']') {
-				handler.onEndArray();
+				handler.onArrayEnd();
 				break;
 			} else if (nextCharacter == ',') {
 				handleValue(JsonSyntaxError.INVALID_ARRAY_VALUE);
@@ -181,7 +181,7 @@ public final class JsonPushParser implements Closeable {
 	}
 
 	private void handleObjectFirst() throws JsonSyntaxException, IOException {
-		handler.onBeginObject();
+		handler.onObjectBegin();
 		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FIRST);
 		if (nextCharacter == '}') {
 			handler.onEndObject();

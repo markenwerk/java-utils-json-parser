@@ -35,29 +35,29 @@ public interface JsonHandler {
 	/**
 	 * Called when the parsing of a JSON document started.
 	 */
-	void onBeginDocument();
+	void onDocumentBegin();
 
 	/**
 	 * Called when the parsing of a JSON document ended.
 	 */
-	void onEndDocument();
+	void onDocumentEnd();
 
 	/**
 	 * Called when the parsing of a JSON array started. A corresponding call for
-	 * the {@link JsonHandler#onEndArray() end} will eventually be called.
+	 * the {@link JsonHandler#onArrayEnd() end} will eventually be called.
 	 */
-	void onBeginArray();
+	void onArrayBegin();
 
 	/**
 	 * Called when the parsing of a JSON array ended.
 	 */
-	void onEndArray();
+	void onArrayEnd();
 
 	/**
 	 * Called when the parsing of a JSON object started. A corresponding call
 	 * for the {@link JsonHandler#onEndObject() end} will eventually be called.
 	 */
-	void onBeginObject();
+	void onObjectBegin();
 
 	/**
 	 * Called when the parsing of a JSON object encountered the name for the
