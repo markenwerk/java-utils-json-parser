@@ -24,7 +24,8 @@ package net.markenwerk.utils.json.parser;
 import org.junit.Test;
 
 /**
- * JUnit test for {@link JsonPullParser} with an underlying {@link StringJsonSource}.
+ * JUnit test for {@link JsonPullParser} with an underlying
+ * {@link StringJsonSource}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  */

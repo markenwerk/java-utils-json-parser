@@ -39,21 +39,19 @@ public final class JsonPushParser implements Closeable {
 
 	private final JsonSource source;
 
-	private final JsonHandler handler;
+	private JsonHandler<?> handler;
 
 	/**
 	 * Creates a new {@link JsonPushParser} for the given {@link String}.
 	 *
-	 * @param handler
-	 *            The {@link JsonHandler} to report to.
 	 * @param string
 	 *            The {@link String} to read from.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null} or if the
 	 *             given {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonPushParser(JsonHandler handler, String string) throws IllegalArgumentException {
-		this(handler, new StringJsonSource(string));
+	public JsonPushParser(String string) throws IllegalArgumentException {
+		this(new StringJsonSource(string));
 	}
 
 	/**
@@ -61,36 +59,30 @@ public final class JsonPushParser implements Closeable {
 	 *
 	 * @param characters
 	 *            The {@code char[]} to read from.
-	 * @param handler
-	 *            The {@link JsonHandler} to report to.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null} or if the
 	 *             given {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonPushParser(JsonHandler handler, char[] characters) throws IllegalArgumentException {
-		this(handler, new CharacterArrayJsonSource(characters));
+	public JsonPushParser(char[] characters) throws IllegalArgumentException {
+		this(new CharacterArrayJsonSource(characters));
 	}
 
 	/**
 	 * Creates a new {@link JsonPushParser} for the given {@link Reader}.
 	 * 
-	 * @param handler
-	 *            The {@link JsonHandler} to report to.
+	 * 
 	 * @param reader
 	 *            The {@link Reader} to read from.
 	 * @throws IllegalArgumentException
-	 *             If the given {@link String} is {@literal null} or if the
-	 *             given {@link JsonHandler} is {@literal null}.
+	 *             If the given {@link String} is {@literal null}.
 	 */
-	public JsonPushParser(JsonHandler handler, Reader reader) throws IllegalArgumentException {
-		this(handler, new ReaderJsonSource(reader));
+	public JsonPushParser(Reader reader) throws IllegalArgumentException {
+		this(new ReaderJsonSource(reader));
 	}
 
 	/**
 	 * Creates a new {@link JsonPushParser} for the given {@link Reader}.
 	 * 
-	 * @param handler
-	 *            The {@link JsonHandler} to report to.
 	 * @param reader
 	 *            The {@link Reader} to read from.
 	 * @param size
@@ -102,8 +94,8 @@ public final class JsonPushParser implements Closeable {
 	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
 	 *             size.
 	 */
-	public JsonPushParser(JsonHandler handler, Reader reader, int size) throws IllegalArgumentException {
-		this(handler, new ReaderJsonSource(reader, size));
+	public JsonPushParser(Reader reader, int size) throws IllegalArgumentException {
+		this(new ReaderJsonSource(reader, size));
 	}
 
 	/**
@@ -111,34 +103,50 @@ public final class JsonPushParser implements Closeable {
 	 * 
 	 * @param source
 	 *            The {@link JsonSource} to read from.
-	 * @param handler
-	 *            The {@link JsonHandler} to report to.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null} or if the
 	 *             given {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonPushParser(JsonHandler handler, JsonSource source) throws IllegalArgumentException {
-		if (null == handler) {
-			throw new IllegalArgumentException("handler  is null");
-		}
+	public JsonPushParser(JsonSource source) throws IllegalArgumentException {
 		if (null == source) {
 			throw new IllegalArgumentException("source is null");
 		}
-		this.handler = handler;
 		this.source = source;
 	}
 
 	/**
 	 * Handle the character sequence from the {@link JsonSource} and report to
-	 * the {@link JsonHandler};
+	 * the {@link JsonHandler}.
+	 * 
+	 * <p>
+	 * Calling this method closes the underlying {@link JsonSource}, but it can
+	 * be {@link JsonPushParser#close() closed manually}.
+	 * 
+	 * @param handler
+	 *            The {@link JsonHandler} to report to.
+	 * 
+	 * @return The result that has been calculated by the given
+	 *         {@link JsonHandler}.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             If the given {@link JsonHandler} is {@literal null}.
+	 * @throws JsonSyntaxException
+	 *             If the {@link JsonSyntaxException} document contains a syntax
+	 *             error.
+	 * @throws IOException
+	 *             If reading from the underlying {@link Reader} failed.
 	 */
-	public void handle() {
+	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, JsonSyntaxException,
+			IOException {
+		if (null == handler) {
+			throw new IllegalArgumentException("handler is null");
+		}
 		try {
+			this.handler = handler;
 			handleDocument();
-		} catch (JsonSyntaxException e) {
-			handler.onException(e);
-		} catch (IOException e) {
-			handler.onException(e);
+			return handler.getResult();
+		} finally {
+			close();
 		}
 	}
 
@@ -161,7 +169,7 @@ public final class JsonPushParser implements Closeable {
 		if (nextCharacter == ']') {
 			handler.onArrayEnd();
 		} else {
-			handleValue(nextCharacter);
+			handleValue(nextCharacter, JsonSyntaxError.INVALID_ARRAY_FIRST);
 			handleArrayFollowing();
 		}
 	}
@@ -223,16 +231,20 @@ public final class JsonPushParser implements Closeable {
 	}
 
 	private void handleValue(JsonSyntaxError error) throws JsonSyntaxException, IOException {
-		handleValue(nextNonWhitespace(error));
+		handleValue(nextNonWhitespace(error), error);
 	}
 
-	private void handleValue(char firstCharacter) throws JsonSyntaxException, IOException {
+	private void handleValue(char firstCharacter, JsonSyntaxError error) throws JsonSyntaxException, IOException {
 		if (firstCharacter == '{') {
 			handleObjectFirst();
 		} else if (firstCharacter == '[') {
 			handleArrayFirst();
 		} else if (firstCharacter == '"') {
 			handler.onString(readNextString());
+		} else if (']' == firstCharacter) {
+			throw syntaxError(error);
+		} else if ('}' == firstCharacter) {
+			throw syntaxError(error);
 		} else {
 			handleLiteral(firstCharacter);
 		}

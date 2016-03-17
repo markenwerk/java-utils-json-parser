@@ -19,30 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.markenwerk.utils.json.parser;
+package net.markenwerk.utils.json.parser.events;
 
-import java.io.Reader;
-import java.io.StringReader;
+@SuppressWarnings("javadoc")
+public final class BooleanJsonEvent extends JsonEvent {
 
-import org.junit.Test;
+	private final boolean value;
 
-/**
- * JUnit test for {@link JsonPullParser} with an underlying
- * {@link ReaderJsonSource}.
- * 
- * @author Torsten Krause (tk at markenwerk dot net)
- */
-public class ReaderJsonPullParserTests extends AbstractJsonPullParserTests {
+	public BooleanJsonEvent(boolean value) {
+		this.value = value;
+	}
 
-	@SuppressWarnings({ "resource", "javadoc" })
-	@Test(expected = IllegalArgumentException.class)
-	public void create_nullReader() {
-		new JsonPullParser((Reader) null);
+	public boolean isValue() {
+		return value;
 	}
 
 	@Override
-	protected JsonSource getSource(String string) {
-		return new ReaderJsonSource(new StringReader(string));
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (value ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (null == object || !(object instanceof BooleanJsonEvent)) {
+			return false;
+		} else {
+			return value == ((BooleanJsonEvent) object).value;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "BooleanJsonEvent [value=" + value + "]";
 	}
 
 }

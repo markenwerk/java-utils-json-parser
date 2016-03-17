@@ -19,30 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.markenwerk.utils.json.parser;
+package net.markenwerk.utils.json.parser.events;
 
-import java.io.Reader;
-import java.io.StringReader;
+@SuppressWarnings("javadoc")
+public final class DocumentEndJsonEvent extends JsonEvent {
 
-import org.junit.Test;
-
-/**
- * JUnit test for {@link JsonPullParser} with an underlying
- * {@link ReaderJsonSource}.
- * 
- * @author Torsten Krause (tk at markenwerk dot net)
- */
-public class ReaderJsonPullParserTests extends AbstractJsonPullParserTests {
-
-	@SuppressWarnings({ "resource", "javadoc" })
-	@Test(expected = IllegalArgumentException.class)
-	public void create_nullReader() {
-		new JsonPullParser((Reader) null);
+	@Override
+	public boolean equals(Object object) {
+		return null != object && object instanceof DocumentEndJsonEvent;
 	}
 
 	@Override
-	protected JsonSource getSource(String string) {
-		return new ReaderJsonSource(new StringReader(string));
+	public String toString() {
+		return "DocumentEndJsonEvent []";
 	}
 
 }
