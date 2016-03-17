@@ -952,7 +952,7 @@ public abstract class AbstractJsonPullParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_dengelingCommaWrongFinish() throws IOException {
-		JsonPullParser jsonParser = new JsonPullParser(getSource("[null,}"));
+		JsonPullParser jsonParser = new JsonPullParser(getSource("[null,]"));
 		try {
 
 			jsonParser.beginDocumnet();

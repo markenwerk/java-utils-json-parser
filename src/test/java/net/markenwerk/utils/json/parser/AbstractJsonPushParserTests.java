@@ -56,6 +56,12 @@ public abstract class AbstractJsonPushParserTests {
 		new JsonPushParser((JsonSource) null);
 	}
 
+	@SuppressWarnings({ "resource", "javadoc" })
+	@Test(expected = IllegalArgumentException.class)
+	public void create_nullHandler() throws IllegalArgumentException, JsonSyntaxException, IOException {
+		new JsonPushParser(getSource("")).handle(null);
+	}
+
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyDocument() throws IOException {
@@ -674,7 +680,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_dengelingCommaWrongFinish() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[null,}"));
+		JsonPushParser jsonParser = new JsonPushParser(getSource("[null,]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
