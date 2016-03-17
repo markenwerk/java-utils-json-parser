@@ -23,6 +23,10 @@ package net.markenwerk.utils.json.parser;
 
 enum Context {
 
+	BEFORE_PARSE,
+
+	AFTER_PARSE,
+
 	EMPTY_DOCUMENT,
 
 	NONEMPTY_DOCUMENT,

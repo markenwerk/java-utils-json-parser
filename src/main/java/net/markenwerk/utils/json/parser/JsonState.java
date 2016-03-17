@@ -31,8 +31,21 @@ package net.markenwerk.utils.json.parser;
 public enum JsonState {
 
 	/**
-	 * The {@link JsonPullParser} has encountered the beginning of a JSON array.
+	 * The {@link JsonPullParser} has encountered the begin of a JSON document.
 	 * It is possible to {@link JsonPullParser#beginArray() begin} an array or
+	 * {@link JsonPullParser#skipValue() skip} the array.
+	 */
+	DOCUMENT_BEGIN,
+
+	/**
+	 * The {@link JsonPullParser} has encountered the end of a JSON document. It
+	 * is possible to {@link JsonPullParser#endDocumnet() end} the document.
+	 */
+	DOCUMENT_END,
+
+	/**
+	 * The {@link JsonPullParser} has encountered the begin of a JSON array. It
+	 * is possible to {@link JsonPullParser#beginArray() begin} an array or
 	 * {@link JsonPullParser#skipValue() skip} the array.
 	 */
 	ARRAY_BEGIN,
@@ -44,8 +57,8 @@ public enum JsonState {
 	ARRAY_END,
 
 	/**
-	 * The {@link JsonPullParser} has encountered the beginning of a JSON object.
-	 * It is possible to {@link JsonPullParser#beginObject() begin} an object or
+	 * The {@link JsonPullParser} has encountered the begin of a JSON object. It
+	 * is possible to {@link JsonPullParser#beginObject() begin} an object or
 	 * {@link JsonPullParser#skipValue() skip} the object.
 	 */
 	OBJECT_BEGIN,
@@ -59,8 +72,8 @@ public enum JsonState {
 	NAME,
 
 	/**
-	 * The {@link JsonPullParser} has encountered the end of a JSON object. It is
-	 * possible to {@link JsonPullParser#endObject() end} the object.
+	 * The {@link JsonPullParser} has encountered the end of a JSON object. It
+	 * is possible to {@link JsonPullParser#endObject() end} the object.
 	 */
 	OBJECT_END,
 
@@ -91,8 +104,8 @@ public enum JsonState {
 
 	/**
 	 * The {@link JsonPullParser} has encountered a JSON real. It is possible to
-	 * obtain the value as a {@link JsonPullParser#nextDouble() <tt>double</tt>},
-	 * {@link JsonPullParser#nextFloat() <tt>float</tt>} or
+	 * obtain the value as a {@link JsonPullParser#nextDouble() <tt>double</tt>}
+	 * , {@link JsonPullParser#nextFloat() <tt>float</tt>} or
 	 * {@link JsonPullParser#skipValue() skip} the value.
 	 */
 	DOUBLE,
@@ -102,11 +115,6 @@ public enum JsonState {
 	 * to {@link JsonPullParser#nextString() obtain} the value or
 	 * {@link JsonPullParser#skipValue() skip} the value.
 	 */
-	STRING,
+	STRING;
 
-	/**
-	 * The {@link JsonPullParser} has encountered the end of a JSON document. It
-	 * is possible to {@link JsonPullParser#endDocumnet() end} the document.
-	 */
-	DOCUMENT_END
 }

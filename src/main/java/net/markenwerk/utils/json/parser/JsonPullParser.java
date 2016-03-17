@@ -117,7 +117,7 @@ public final class JsonPullParser implements Closeable {
 			throw new IllegalArgumentException("source is null");
 		}
 		this.source = source;
-		stack.push(Context.EMPTY_DOCUMENT);
+		stack.push(Context.BEFORE_PARSE);
 	}
 
 	/**
@@ -141,6 +141,11 @@ public final class JsonPullParser implements Closeable {
 
 	private JsonState nextState() throws JsonSyntaxException, IOException {
 		switch (stack.peek()) {
+		case BEFORE_PARSE:
+			stack.push(Context.EMPTY_DOCUMENT);
+			return JsonState.DOCUMENT_BEGIN;
+		case AFTER_PARSE:
+			return null;
 		case EMPTY_DOCUMENT:
 			return prepareDocument();
 		case EMPTY_ARRAY:
@@ -158,6 +163,8 @@ public final class JsonPullParser implements Closeable {
 				prepareNextValue(JsonSyntaxError.INVALID_DOCUMENT_END);
 				throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_END);
 			} catch (JsonSyntaxException e) {
+				stack.pop();
+				stack.replace(Context.AFTER_PARSE);
 				return JsonState.DOCUMENT_END;
 			}
 		case CLOSED:
@@ -428,6 +435,43 @@ public final class JsonPullParser implements Closeable {
 
 	/**
 	 * Ensures that the {@link JsonPullParser#currentState() current}
+	 * {@link JsonState} is {@link JsonState#DOCUMENT_BEGIN} and consumes the
+	 * begin of the JSON document. The next {@link JsonState} will be
+	 * {@link JsonState#ARRAY_BEGIN} or {@link JsonState#OBJECT_BEGIN}.
+	 * 
+	 * @throws IllegalStateException
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#DOCUMENT_BEGIN}.
+	 * @throws JsonSyntaxException
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
+	 * @throws IOException
+	 *             If reading from the underlying {@link Reader} failed.
+	 */
+	public void beginDocumnet() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.DOCUMENT_BEGIN);
+	}
+
+	/**
+	 * Ensures that the {@link JsonPullParser#currentState() current}
+	 * {@link JsonState} is {@link JsonState#DOCUMENT_END} and consumes the end
+	 * of the JSON document. The next {@link JsonState} will be {@literal null}.
+	 * 
+	 * @throws IllegalStateException
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#DOCUMENT_END}.
+	 * @throws JsonSyntaxException
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
+	 * @throws IOException
+	 *             If reading from the underlying {@link Reader} failed.
+	 */
+	public void endDocumnet() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.DOCUMENT_END);
+	}
+
+	/**
+	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#ARRAY_BEGIN} and consumes the
 	 * beginning of a JSON array. The next {@link JsonState} describes either
 	 * the first value of this JSON array or the end of this JSON array.
@@ -501,24 +545,6 @@ public final class JsonPullParser implements Closeable {
 	 */
 	public void endObject() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.OBJECT_END);
-	}
-
-	/**
-	 * Ensures that the {@link JsonPullParser#currentState() current}
-	 * {@link JsonState} is {@link JsonState#DOCUMENT_END} and consumes the end
-	 * of the JSON document. The next {@link JsonState} will be {@literal null}.
-	 * 
-	 * @throws IllegalStateException
-	 *             If the current {@link JsonState} is not
-	 *             {@link JsonState#DOCUMENT_END}.
-	 * @throws JsonSyntaxException
-	 *             If the read {@link JsonSyntaxException} document contains a
-	 *             syntax error.
-	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
-	 */
-	public void endDocumnet() throws IllegalStateException, JsonSyntaxException, IOException {
-		consume(JsonState.DOCUMENT_END);
 	}
 
 	/**

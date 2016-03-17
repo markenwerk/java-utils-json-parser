@@ -45,6 +45,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource(""));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.currentState();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -63,6 +64,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("\""));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.currentState();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -81,6 +83,8 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[]"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.ARRAY_END, jsonReader.currentState());
@@ -99,6 +103,8 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource(JsonSource.BYTE_ORDER_MARK + "[]"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.ARRAY_END, jsonReader.currentState());
@@ -117,6 +123,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("["));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.currentState();
 
@@ -136,6 +143,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.currentState();
 
@@ -155,6 +163,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[null]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.NULL, jsonReader.currentState());
 			jsonReader.nextNull();
@@ -172,6 +181,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[false]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.BOOLEAN, jsonReader.currentState());
 			Assert.assertEquals(false, jsonReader.nextBoolean());
@@ -189,6 +199,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[true]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.BOOLEAN, jsonReader.currentState());
 			Assert.assertEquals(true, jsonReader.nextBoolean());
@@ -206,6 +217,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.STRING, jsonReader.currentState());
 			Assert.assertEquals("", jsonReader.nextString());
@@ -223,6 +235,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"foo\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.STRING, jsonReader.currentState());
 			Assert.assertEquals("foo", jsonReader.nextString());
@@ -241,6 +254,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"" + value + "\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.STRING, jsonReader.currentState());
 			Assert.assertEquals(value, jsonReader.nextString());
@@ -267,6 +281,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\\"\\\\\\/\\b\\f\\r\\n\\t\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.STRING, jsonReader.currentState());
 			Assert.assertEquals("\"\\/\b\f\r\n\t", jsonReader.nextString());
@@ -284,6 +299,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\uBEEF\\ubeef\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.STRING, jsonReader.currentState());
 			Assert.assertEquals("\ubeef\uBEEF", jsonReader.nextString());
@@ -302,6 +318,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\uD834\\uDD1E\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.STRING, jsonReader.currentState());
 			Assert.assertEquals("\uD834\uDD1E", jsonReader.nextString());
@@ -319,6 +336,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextString();
 
@@ -338,6 +356,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextString();
 
@@ -357,6 +376,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\x\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextString();
 
@@ -376,6 +396,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\u"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextString();
 
@@ -395,6 +416,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\u\",null]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextString();
 
@@ -414,6 +436,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[\"\\uNOPE\"]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextString();
 
@@ -433,6 +456,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[0]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.LONG, jsonReader.currentState());
 			Assert.assertEquals(0, jsonReader.nextLong());
@@ -450,6 +474,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.LONG, jsonReader.currentState());
 			Assert.assertEquals(42, jsonReader.nextLong());
@@ -467,6 +492,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[-42]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.LONG, jsonReader.currentState());
 			Assert.assertEquals(-42, jsonReader.nextLong());
@@ -484,6 +510,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.LONG, jsonReader.currentState());
 			Assert.assertEquals(42, jsonReader.nextInteger());
@@ -502,6 +529,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextInteger();
 
@@ -517,6 +545,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextInteger();
 
@@ -531,6 +560,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.LONG, jsonReader.currentState());
 			Assert.assertEquals(42, jsonReader.nextShort());
@@ -549,6 +579,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextShort();
 
@@ -564,6 +595,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextShort();
 
@@ -578,6 +610,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.LONG, jsonReader.currentState());
 			Assert.assertEquals(42, jsonReader.nextCharacter());
@@ -596,6 +629,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextCharacter();
 
@@ -611,6 +645,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextCharacter();
 
@@ -625,6 +660,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.LONG, jsonReader.currentState());
 			Assert.assertEquals(42, jsonReader.nextByte());
@@ -643,6 +679,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextByte();
 
@@ -658,6 +695,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[" + value + "]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextByte();
 
@@ -672,6 +710,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[0.0]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.DOUBLE, jsonReader.currentState());
 			Assert.assertEquals(0, jsonReader.nextDouble(), 0e-10);
@@ -689,6 +728,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42.23]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.DOUBLE, jsonReader.currentState());
 			Assert.assertEquals(42.23, jsonReader.nextDouble(), 0e-10);
@@ -706,6 +746,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[-42.23]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.DOUBLE, jsonReader.currentState());
 			Assert.assertEquals(-42.23, jsonReader.nextDouble(), 0e-10);
@@ -723,6 +764,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42.0e7]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.DOUBLE, jsonReader.currentState());
 			Assert.assertEquals(42.0e7, jsonReader.nextDouble(), 0e-10);
@@ -740,6 +782,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42.0e-7]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.DOUBLE, jsonReader.currentState());
 			Assert.assertEquals(42.0e-7, jsonReader.nextDouble(), 0e-10);
@@ -757,6 +800,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[42.23]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			Assert.assertEquals(JsonState.DOUBLE, jsonReader.currentState());
 			Assert.assertEquals(42.23f, jsonReader.nextFloat(), 0e-10f);
@@ -774,6 +818,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[x]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.currentState();
 
@@ -793,6 +838,8 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[null,null]"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
 			jsonReader.beginArray();
 			Assert.assertTrue(jsonReader.hasNext());
@@ -818,6 +865,8 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[[]]"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonReader.currentState());
 			jsonReader.beginArray();
 			Assert.assertTrue(jsonReader.hasNext());
@@ -843,6 +892,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[null"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextNull();
 			jsonReader.currentState();
@@ -863,6 +913,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[null}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextNull();
 			jsonReader.currentState();
@@ -883,6 +934,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[null,"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextNull();
 			jsonReader.currentState();
@@ -903,6 +955,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[null,}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.nextNull();
 			jsonReader.currentState();
@@ -923,6 +976,8 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{}"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
 			jsonReader.beginObject();
 			Assert.assertEquals(JsonState.OBJECT_END, jsonReader.currentState());
@@ -941,6 +996,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.currentState();
 
@@ -960,6 +1016,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.currentState();
 
@@ -979,6 +1036,8 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null}"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
 			jsonReader.beginObject();
 			Assert.assertTrue(jsonReader.hasNext());
@@ -1003,6 +1062,8 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null,\"bar\":null}"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
 			jsonReader.beginObject();
 			Assert.assertTrue(jsonReader.hasNext());
@@ -1032,6 +1093,8 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":{}}"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
 			jsonReader.beginObject();
 			Assert.assertTrue(jsonReader.hasNext());
@@ -1059,6 +1122,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{null}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.currentState();
@@ -1079,6 +1143,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\""));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.currentState();
@@ -1099,6 +1164,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.currentState();
@@ -1119,6 +1185,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.nextNull();
@@ -1140,6 +1207,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null,"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.nextNull();
@@ -1161,6 +1229,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\",null}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.currentState();
@@ -1181,6 +1250,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null,null}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.nextNull();
@@ -1202,6 +1272,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"foo\":null]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.nextNull();
@@ -1224,6 +1295,9 @@ public abstract class AbstractJsonPullParserTests {
 				getSource(" \n { \"foo\" : [ \"bar\\n\" , true , { \n } ] , \"baz\" : { \"foo\" \t : \t 42 } } \n "));
 		try {
 			//@formatter:off
+			Assert.assertTrue(jsonReader.hasNext());
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonReader.currentState());
+			jsonReader.beginDocumnet();
 			Assert.assertTrue(jsonReader.hasNext());
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonReader.currentState());
 				jsonReader.beginObject();
@@ -1295,6 +1369,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.skipValue();
 			Assert.assertTrue(jsonReader.hasNext());
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonReader.currentState());
@@ -1311,6 +1386,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[null,\"keep\" ]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.skipValue();
 			Assert.assertTrue(jsonReader.hasNext());
@@ -1330,6 +1406,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.skipValue();
 			Assert.assertFalse(jsonReader.hasNext());
@@ -1348,6 +1425,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("[[{\"skipped\":[true]}],\"keep\" ]"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginArray();
 			jsonReader.skipValue();
 			Assert.assertTrue(jsonReader.hasNext());
@@ -1367,6 +1445,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.skipValue();
 			Assert.assertTrue(jsonReader.hasNext());
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonReader.currentState());
@@ -1383,6 +1462,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.skipValue();
 			Assert.assertFalse(jsonReader.hasNext());
@@ -1401,6 +1481,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"skip\":null,\"keep\":null}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.skipValue();
 			Assert.assertTrue(jsonReader.hasNext());
@@ -1421,6 +1502,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{\"skip\":null,\"keep\":null}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.nextName();
 			jsonReader.skipValue();
@@ -1442,6 +1524,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonPullParser jsonReader = new JsonPullParser(getSource("{}"));
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 			jsonReader.endObject();
 			jsonReader.skipValue();
@@ -1461,6 +1544,7 @@ public abstract class AbstractJsonPullParserTests {
 
 		try {
 
+			jsonReader.beginDocumnet();
 			jsonReader.beginObject();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
