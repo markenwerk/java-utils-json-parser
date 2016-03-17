@@ -115,6 +115,12 @@ public enum JsonState {
 	 * to {@link JsonPullParser#nextString() obtain} the value or
 	 * {@link JsonPullParser#skipValue() skip} the value.
 	 */
-	STRING;
+	STRING,
+
+	/**
+	 * The underlying {@link JsonSource} used by the {@link JsonPullParser} has
+	 * no more tokens.
+	 */
+	SOURCE_END;
 
 }

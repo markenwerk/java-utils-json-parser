@@ -111,6 +111,7 @@ public abstract class AbstractJsonPushParserTests {
 			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
 			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(2));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+			Assert.assertEquals(4, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -130,6 +131,47 @@ public abstract class AbstractJsonPushParserTests {
 			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
 			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(2));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+			Assert.assertEquals(4, events.size());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void emptyArray_leadingWhitespace() throws IOException, JsonSyntaxException {
+		JsonPushParser jsonParser = new JsonPushParser(getSource(" \n []"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
+			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
+			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(2));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+			Assert.assertEquals(4, events.size());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void emptyArray_trailingWhitespace() throws IOException, JsonSyntaxException {
+		JsonPushParser jsonParser = new JsonPushParser(getSource("[] \n "));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
+			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
+			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(2));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+			Assert.assertEquals(4, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -596,6 +638,7 @@ public abstract class AbstractJsonPushParserTests {
 			Assert.assertEquals(new NullJsonEvent(), events.get(3));
 			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(4));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(5));
+			Assert.assertEquals(6, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -617,6 +660,7 @@ public abstract class AbstractJsonPushParserTests {
 			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(3));
 			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(4));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(5));
+			Assert.assertEquals(6, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -708,6 +752,7 @@ public abstract class AbstractJsonPushParserTests {
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
 			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(2));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+			Assert.assertEquals(4, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -765,6 +810,7 @@ public abstract class AbstractJsonPushParserTests {
 			Assert.assertEquals(new NullJsonEvent(), events.get(3));
 			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(4));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(5));
+			Assert.assertEquals(6, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -788,6 +834,7 @@ public abstract class AbstractJsonPushParserTests {
 			Assert.assertEquals(new NullJsonEvent(), events.get(5));
 			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(6));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(7));
+			Assert.assertEquals(8, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -810,6 +857,7 @@ public abstract class AbstractJsonPushParserTests {
 			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(4));
 			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(5));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(6));
+			Assert.assertEquals(7, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -987,7 +1035,34 @@ public abstract class AbstractJsonPushParserTests {
 					Assert.assertEquals(new ObjectEndJsonEvent(), events.get(13));
 				Assert.assertEquals(new ObjectEndJsonEvent(), events.get(14));
 			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(15));
+			Assert.assertEquals(16, events.size());
 			//@formatter:on
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void multipleDocumentMode() throws IOException, JsonSyntaxException {
+		JsonPushParser jsonParser = new JsonPushParser(getSource("{} \n []"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()), true);
+
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
+			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
+			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(2));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(4));
+			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(5));
+			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(6));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(7));
+
+			Assert.assertEquals(8, events.size());
 
 		} finally {
 			jsonParser.close();

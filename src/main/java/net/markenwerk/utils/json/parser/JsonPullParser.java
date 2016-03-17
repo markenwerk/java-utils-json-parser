@@ -51,6 +51,8 @@ public final class JsonPullParser implements Closeable {
 
 	private String stringValue;
 
+	private boolean multiDocumentMode;
+
 	/**
 	 * Creates a new {@link JsonPullParser} for the given {@link String}.
 	 *
@@ -60,7 +62,7 @@ public final class JsonPullParser implements Closeable {
 	 *             If the given {@link String} is {@literal null}.
 	 */
 	public JsonPullParser(String string) throws IllegalArgumentException {
-		this(new StringJsonSource(string));
+		this(new StringJsonSource(string), false);
 	}
 
 	/**
@@ -72,7 +74,7 @@ public final class JsonPullParser implements Closeable {
 	 *             If the given {@code char[]} is {@literal null}.
 	 */
 	public JsonPullParser(char[] characters) throws IllegalArgumentException {
-		this(new CharacterArrayJsonSource(characters));
+		this(new CharacterArrayJsonSource(characters), false);
 	}
 
 	/**
@@ -84,7 +86,7 @@ public final class JsonPullParser implements Closeable {
 	 *             If the given {@link Reader} is {@literal null}.
 	 */
 	public JsonPullParser(Reader reader) throws IllegalArgumentException {
-		this(new ReaderJsonSource(reader));
+		this(new ReaderJsonSource(reader), false);
 	}
 
 	/**
@@ -101,7 +103,7 @@ public final class JsonPullParser implements Closeable {
 	 *             size.
 	 */
 	public JsonPullParser(Reader reader, int size) throws IllegalArgumentException {
-		this(new ReaderJsonSource(reader, size));
+		this(new ReaderJsonSource(reader, size), false);
 	}
 
 	/**
@@ -113,10 +115,28 @@ public final class JsonPullParser implements Closeable {
 	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
 	public JsonPullParser(JsonSource source) throws IllegalArgumentException {
+		this(source, false);
+
+	}
+
+	/**
+	 * Creates a new {@link JsonPullParser} for the given {@link JsonSource}.
+	 * 
+	 * @param source
+	 *            The {@link JsonSource} to read from.
+	 * @param multiDocumentMode
+	 *            Whether to allow multiple JSON documents in the same
+	 *            {@link JsonSource}.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             If the given {@link JsonSource} is {@literal null}.
+	 */
+	public JsonPullParser(JsonSource source, boolean multiDocumentMode) throws IllegalArgumentException {
 		if (null == source) {
 			throw new IllegalArgumentException("source is null");
 		}
 		this.source = source;
+		this.multiDocumentMode = multiDocumentMode;
 		stack.push(Context.BEFORE_PARSE);
 	}
 
@@ -145,7 +165,7 @@ public final class JsonPullParser implements Closeable {
 			stack.push(Context.EMPTY_DOCUMENT);
 			return JsonState.DOCUMENT_BEGIN;
 		case AFTER_PARSE:
-			return null;
+			return JsonState.SOURCE_END;
 		case EMPTY_DOCUMENT:
 			return prepareDocument();
 		case EMPTY_ARRAY:
@@ -159,11 +179,15 @@ public final class JsonPullParser implements Closeable {
 		case DANGLING_NAME:
 			return prepareObjectValue();
 		case NONEMPTY_DOCUMENT:
-			try {
-				prepareNextValue(JsonSyntaxError.INVALID_DOCUMENT_END);
-				throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_END);
-			} catch (JsonSyntaxException e) {
-				stack.pop();
+			stack.pop();
+			if (hasNextNonWhitespace()) {
+				if (multiDocumentMode) {
+					stack.replace(Context.BEFORE_PARSE);
+					return JsonState.DOCUMENT_END;
+				} else {
+					throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_END);
+				}
+			} else {
 				stack.replace(Context.AFTER_PARSE);
 				return JsonState.DOCUMENT_END;
 			}
@@ -183,6 +207,11 @@ public final class JsonPullParser implements Closeable {
 	}
 
 	private JsonState prepareDocument() throws JsonSyntaxException, IOException {
+		// if (multiDocumentMode && hasNextNonWhitespace()) {
+		// stack.pop();
+		// stack.replace(Context.AFTER_PARSE);
+		// return JsonState.DOCUMENTS_END;
+		// } else {
 		stack.replace(Context.NONEMPTY_DOCUMENT);
 		char firstCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_DOCUMENT_START);
 		if ('[' == firstCharacter) {
@@ -194,6 +223,7 @@ public final class JsonPullParser implements Closeable {
 		} else {
 			throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
 		}
+		// }
 	}
 
 	private JsonState prepareArrayFirst() throws JsonSyntaxException, IOException {
@@ -295,6 +325,20 @@ public final class JsonPullParser implements Closeable {
 			}
 		}
 		throw syntaxError(error);
+	}
+
+	private boolean hasNextNonWhitespace() throws JsonSyntaxException, IOException {
+		while (0 != source.makeAvailable()) {
+			for (int i = 0, n = source.getAvailable(); i < n; i++) {
+				char nextCharacter = source.peekCharacter(0);
+				if (' ' != nextCharacter && '\n' != nextCharacter && '\t' != nextCharacter && '\r' != nextCharacter) {
+					return true;
+				} else {
+					source.nextCharacter();
+				}
+			}
+		}
+		return false;
 	}
 
 	private JsonState prepareNextString() throws JsonSyntaxException, IOException {
@@ -455,7 +499,13 @@ public final class JsonPullParser implements Closeable {
 	/**
 	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOCUMENT_END} and consumes the end
-	 * of the JSON document. The next {@link JsonState} will be {@literal null}.
+	 * of the JSON document. The next {@link JsonState} will be
+	 * {@link JsonState#SOURCE_END}.
+	 * 
+	 * <p>
+	 * If this {@link JsonPullParser} allows multiple documents in the same
+	 * {@link JsonSource}, The next {@link JsonState} will be
+	 * {@link JsonState#DOCUMENT_BEGIN} or {@link JsonState#SOURCE_END}.
 	 * 
 	 * @throws IllegalStateException
 	 *             If the current {@link JsonState} is not

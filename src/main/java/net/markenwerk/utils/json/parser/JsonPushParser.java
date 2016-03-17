@@ -41,6 +41,8 @@ public final class JsonPushParser implements Closeable {
 
 	private JsonHandler<?> handler;
 
+	private boolean multiDocumentMode;
+
 	/**
 	 * Creates a new {@link JsonPushParser} for the given {@link String}.
 	 *
@@ -138,11 +140,42 @@ public final class JsonPushParser implements Closeable {
 	 */
 	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, JsonSyntaxException,
 			IOException {
+		return handle(handler, false);
+	}
+
+	/**
+	 * Handle the character sequence from the {@link JsonSource} and report to
+	 * the {@link JsonHandler}.
+	 * 
+	 * <p>
+	 * Calling this method closes the underlying {@link JsonSource}, but it can
+	 * be {@link JsonPushParser#close() closed manually}.
+	 * 
+	 * @param handler
+	 *            The {@link JsonHandler} to report to.
+	 * 
+	 * @return The result that has been calculated by the given
+	 *         {@link JsonHandler}.
+	 * @param multiDocumentMode
+	 *            Whether to allow multiple JSON documents in the same
+	 *            {@link JsonSource}.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             If the given {@link JsonHandler} is {@literal null}.
+	 * @throws JsonSyntaxException
+	 *             If the {@link JsonSyntaxException} document contains a syntax
+	 *             error.
+	 * @throws IOException
+	 *             If reading from the underlying {@link Reader} failed.
+	 */
+	public <Result> Result handle(JsonHandler<Result> handler, boolean multiDocumentMode)
+			throws IllegalArgumentException, JsonSyntaxException, IOException {
 		if (null == handler) {
 			throw new IllegalArgumentException("handler is null");
 		}
 		try {
 			this.handler = handler;
+			this.multiDocumentMode = multiDocumentMode;
 			handleDocument();
 			return handler.getResult();
 		} finally {
@@ -151,16 +184,25 @@ public final class JsonPushParser implements Closeable {
 	}
 
 	private void handleDocument() throws JsonSyntaxException, IOException {
-		handler.onDocumentBegin();
-		char firstCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_DOCUMENT_START);
-		if (firstCharacter == '{') {
-			handleObjectFirst();
-		} else if (firstCharacter == '[') {
-			handleArrayFirst();
-		} else {
-			throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
+		while (true) {
+			handler.onDocumentBegin();
+			char firstCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_DOCUMENT_START);
+			if (firstCharacter == '{') {
+				handleObjectFirst();
+			} else if (firstCharacter == '[') {
+				handleArrayFirst();
+			} else {
+				throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
+			}
+			handler.onDocumentEnd();
+			if (hasNextNonWhitespace()) {
+				if (!multiDocumentMode) {
+					throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_END);
+				}
+			} else {
+				break;
+			}
 		}
-		handler.onDocumentEnd();
 	}
 
 	private void handleArrayFirst() throws JsonSyntaxException, IOException {
@@ -260,6 +302,20 @@ public final class JsonPushParser implements Closeable {
 			}
 		}
 		throw syntaxError(error);
+	}
+
+	private boolean hasNextNonWhitespace() throws JsonSyntaxException, IOException {
+		while (0 != source.makeAvailable()) {
+			for (int i = 0, n = source.getAvailable(); i < n; i++) {
+				char nextCharacter = source.peekCharacter(0);
+				if (' ' != nextCharacter && '\n' != nextCharacter && '\t' != nextCharacter && '\r' != nextCharacter) {
+					return true;
+				} else {
+					source.nextCharacter();
+				}
+			}
+		}
+		return false;
 	}
 
 	private String readNextString() throws JsonSyntaxException, IOException {
