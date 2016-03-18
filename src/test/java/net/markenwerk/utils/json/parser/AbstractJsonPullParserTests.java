@@ -122,7 +122,7 @@ public abstract class AbstractJsonPullParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_leadingWhitespace() throws IOException, JsonSyntaxException {
-		JsonPullParser jsonParser = new JsonPullParser(getSource(" \n []"));
+		JsonPullParser jsonParser = new JsonPullParser(getSource(" \n\r\t []"));
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
@@ -143,7 +143,7 @@ public abstract class AbstractJsonPullParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_trailingWhitespace() throws IOException, JsonSyntaxException {
-		JsonPullParser jsonParser = new JsonPullParser(getSource("[] \n "));
+		JsonPullParser jsonParser = new JsonPullParser(getSource("[] \n\r\t "));
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
@@ -195,6 +195,27 @@ public abstract class AbstractJsonPullParserTests {
 		} catch (JsonSyntaxException exception) {
 
 			Assert.assertEquals(JsonSyntaxError.INVALID_ARRAY_FIRST, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void emptyArray_trailingNonWhitespace() throws IOException {
+		JsonPullParser jsonParser = new JsonPullParser(getSource("[]X"));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.beginArray();
+			jsonParser.endArray();
+			jsonParser.endDocumnet();
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.INVALID_DOCUMENT_END, exception.getError());
 
 		} finally {
 			jsonParser.close();
@@ -1590,7 +1611,53 @@ public abstract class AbstractJsonPullParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode() throws IOException, JsonSyntaxException {
-		JsonPullParser jsonParser = new JsonPullParser(getSource("{} \n []"), true);
+		JsonPullParser jsonParser = new JsonPullParser(getSource("{}[]"), true);
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.beginObject();
+			jsonParser.endObject();
+			jsonParser.endDocumnet();
+
+			jsonParser.beginDocumnet();
+			jsonParser.beginArray();
+			jsonParser.endArray();
+			jsonParser.endDocumnet();
+
+			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void multipleDocumentMode_trailingWhitespace() throws IOException, JsonSyntaxException {
+		JsonPullParser jsonParser = new JsonPullParser(getSource("{}[] \n\r\t "), true);
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.beginObject();
+			jsonParser.endObject();
+			jsonParser.endDocumnet();
+
+			jsonParser.beginDocumnet();
+			jsonParser.beginArray();
+			jsonParser.endArray();
+			jsonParser.endDocumnet();
+
+			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void multipleDocumentMode_separatingWhitespace() throws IOException, JsonSyntaxException {
+		JsonPullParser jsonParser = new JsonPullParser(getSource("{} \n\r\t []"), true);
 		try {
 
 			jsonParser.beginDocumnet();

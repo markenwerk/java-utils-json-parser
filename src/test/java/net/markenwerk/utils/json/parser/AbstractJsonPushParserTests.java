@@ -141,7 +141,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_leadingWhitespace() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource(" \n []"));
+		JsonPushParser jsonParser = new JsonPushParser(getSource(" \n\r\t []"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -161,7 +161,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_trailingWhitespace() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[] \n "));
+		JsonPushParser jsonParser = new JsonPushParser(getSource("[] \n\r\t "));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -208,6 +208,24 @@ public abstract class AbstractJsonPushParserTests {
 		} catch (JsonSyntaxException exception) {
 
 			Assert.assertEquals(JsonSyntaxError.INVALID_ARRAY_FIRST, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void emptyArray_trailingNonWhitespace() throws IOException {
+		JsonPushParser jsonParser = new JsonPushParser(getSource("[]X"));
+		try {
+
+			jsonParser.handle(new NullHandler());
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.INVALID_DOCUMENT_END, exception.getError());
 
 		} finally {
 			jsonParser.close();
@@ -1046,7 +1064,59 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{} \n []"));
+		JsonPushParser jsonParser = new JsonPushParser(getSource("{}[]"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()), true);
+
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
+			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
+			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(2));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(4));
+			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(5));
+			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(6));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(7));
+
+			Assert.assertEquals(8, events.size());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+	
+	@Test
+	@SuppressWarnings("javadoc")
+	public void multipleDocumentMode_trailingWhitespace() throws IOException, JsonSyntaxException {
+		JsonPushParser jsonParser = new JsonPushParser(getSource("{}[] \n\r\t "));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()), true);
+
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
+			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
+			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(2));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(4));
+			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(5));
+			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(6));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(7));
+
+			Assert.assertEquals(8, events.size());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+	
+	@Test
+	@SuppressWarnings("javadoc")
+	public void multipleDocumentMode_separatingWhitespace() throws IOException, JsonSyntaxException {
+		JsonPushParser jsonParser = new JsonPushParser(getSource("{} \n\r\t []"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
