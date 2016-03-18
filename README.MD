@@ -48,9 +48,27 @@ The [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler], aut
 
 Both parsers consume a [`JsonSource`][JsonSource], which represents a character stream and the necessary methods to it.
 
-This library provides the [`ReaderJsonStream`][ReaderJsonStream], which buffers and consumes the characters that are yielded by a given [`Reader`][Reader]. Additionally, this library provides the [`StringJsonSource`][StringJsonSource] and the [`CharacterArrayJsonSource`][CharacterArrayJsonSource] that can be used to parse the characters from an existing string or an existing `char[]`.
+This library provides the [`ReaderJsonStream`][ReaderJsonStream], which buffers and consumes the characters that are yielded by a given [`Reader`][Reader].
 
-It is usually not necessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].
+```java
+Reader reader = ...
+
+// create a new json source for reader
+JsonSource jsonSource = new ReaderJsonSource(reader);
+```
+
+Additionally, this library provides the [`StringJsonSource`][StringJsonSource] and the [`CharacterArrayJsonSource`][CharacterArrayJsonSource] that can be used to parse the characters from an existing string or an existing `char[]`.
+
+```java
+String string = ...
+char[] chars = ...
+
+// create new json sources for string and chars
+JsonSource stringJsonSource = new StringJsonSource(string);
+JsonSource characterArrayJsonSource = new CharacterArrayJsonSource(chars);
+```
+
+*It is usually not necessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].*
 
 ## Push parser
 
@@ -109,4 +127,4 @@ JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
 [JSONArray]: https://stleary.github.io/JSON-java/index.html?org/json/JSONArray.html
 [JSONObject]: https://stleary.github.io/JSON-java/index.html?org/json/JSONObject.html
 
-[Reader]: http://docs.oracle.com/javase/8/docs/api/index.html?java/io/Reader.html
+[Reader]: http://docs.oracle.com/javase/8/docs/api/index.html?java/io/Reader.html;
