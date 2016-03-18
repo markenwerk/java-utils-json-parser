@@ -32,9 +32,9 @@ An event base parser that (unlike most JSON libraries) dosn't create a document 
 
  - efficiently process huge JSON documents on the fly,
  - create a document model from another JSON library, if that library can only process a string (like the version of the [JSON library](http://mvnrepository.com/artifact/org.json/json/20080701), that comes with Android) and thus, removing the need to create a string, 
- - or to automagically create Java objects (using some witchcraft) and thus, removing the need to create a document model.
+ - or to automagically create Java objects (using some reflective witchcraft) and thus, removing the need to create a document model.
  
-This library is intended to be as lightweight as possible and make no assumtions about the tasks, it may be used for.
+This library is intended to be as lightweight as possible and make no assumptions about the tasks, it may be used for.
 
 This library actually provides two parser: A pull parser and a push parser.
 
@@ -48,9 +48,9 @@ The push parser takes a handler, automatically consumes the JSON tokens and call
 
 Both parsers consume a [`JsonSource`][JsonSource], which represents a character stream and the necessary methods to it.
 
-This library provides the [`ReaderJsonStream`][ReaderJsonStream], which buffers and consumes the characters that are yielded by a given [`Reader`]. Additionaly, this library provides the [`StringJsonSource`][StringJsonSource] and the [`CharacterArrayJsonSource`][CharacterArrayJsonSource] that can be used to parse the characters from an existing string or an existing `char[]`.
+This library provides the [`ReaderJsonStream`][ReaderJsonStream], which buffers and consumes the characters that are yielded by a given [`Reader`]. Additionally, this library provides the [`StringJsonSource`][StringJsonSource] and the [`CharacterArrayJsonSource`][CharacterArrayJsonSource] that can be used to parse the characters from an existing string or an existing `char[]`.
 
-It is usually not neccessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].
+It is usually not necessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].
 
 ## Push parser
 
