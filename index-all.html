@@ -90,24 +90,30 @@
 </a>
 <h2 class="title">B</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#beginArray--">beginArray()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#beginArray--">beginArray()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#ARRAY_BEGIN"><code>JsonState.ARRAY_BEGIN</code></a> and consumes the
  beginning of a JSON array.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#beginDocumnet--">beginDocumnet()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#beginArray--">beginArray()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#beginDocumnet--">beginDocumnet()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_BEGIN"><code>JsonState.DOCUMENT_BEGIN</code></a> and consumes the
  begin of the JSON document.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#beginObject--">beginObject()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#beginDocumnet--">beginDocumnet()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#beginObject--">beginObject()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#OBJECT_BEGIN"><code>JsonState.OBJECT_BEGIN</code></a> and consumes the
  beginning of a JSON object.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#beginObject--">beginObject()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSource.html#BYTE_ORDER_MARK">BYTE_ORDER_MARK</a></span> - Static variable in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser">JsonSource</a></dt>
 <dd>
 <div class="block">A <code>char</code> that represents the Unicode byte order mark.</div>
@@ -130,44 +136,52 @@
 </dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html#close--">close()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html" title="class in net.markenwerk.utils.json.parser">CharacterArrayJsonSource</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#close--">close()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#close--">close()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#close--">close()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#close--">close()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/ReaderJsonSource.html#close--">close()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/ReaderJsonSource.html" title="class in net.markenwerk.utils.json.parser">ReaderJsonSource</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/StringJsonSource.html#close--">close()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/StringJsonSource.html" title="class in net.markenwerk.utils.json.parser">StringJsonSource</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--">currentState()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--">currentState()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
 <div class="block">Reads, if necessary, from the underlying Reader and describes the current
- <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> of this <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a>, which describes the
- next type of value or structural element of the JSON document.</div>
+ <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> of this <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a>, which describes
+ the next type of value or structural element of the JSON document.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--">currentState()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a name="I:E">
 <!--   -->
 </a>
 <h2 class="title">E</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#endArray--">endArray()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#endArray--">endArray()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#ARRAY_END"><code>JsonState.ARRAY_END</code></a> and consumes the end of
  the JSON array.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#endDocumnet--">endDocumnet()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#endArray--">endArray()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#endDocumnet--">endDocumnet()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_END"><code>JsonState.DOCUMENT_END</code></a> and consumes the end
  of the JSON document.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#endObject--">endObject()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#endDocumnet--">endDocumnet()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#endObject--">endObject()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#OBJECT_END"><code>JsonState.OBJECT_END</code></a> and consumes the end of
  the JSON object.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#endObject--">endObject()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a name="I:G">
 <!--   -->
@@ -186,12 +200,28 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html#getColumn--">getColumn()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html" title="class in net.markenwerk.utils.json.parser">CharacterArrayJsonSource</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#getColumn--">getColumn()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dd>
+<div class="block">Returns the <a href="net/markenwerk/utils/json/parser/JsonSource.html#getColumn--"><code>column</code></a> that corresponds to the
+ current position of the underlying <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> in the character
+ sequence, as if the character source was a regular file.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#getColumn--">getColumn()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
+<dd>
+<div class="block">Returns the <a href="net/markenwerk/utils/json/parser/JsonSource.html#getColumn--"><code>column</code></a> that corresponds to the
+ current position of the underlying <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> in the character
+ sequence, as if the character source was a regular file.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSource.html#getColumn--">getColumn()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser">JsonSource</a></dt>
 <dd>
 <div class="block">Returns the column that corresponds to the current position of this
  <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> in the character sequence, as if the character source
  was a regular file.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#getColumn--">getColumn()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#getColumn--">getColumn()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html#getColumn--">getColumn()</a></span> - Method in exception net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser">JsonSyntaxException</a></dt>
 <dd>
 <div class="block">Returns the column in the JSON document, where the syntax error occurred.</div>
@@ -232,12 +262,28 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html#getLine--">getLine()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html" title="class in net.markenwerk.utils.json.parser">CharacterArrayJsonSource</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#getLine--">getLine()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dd>
+<div class="block">Returns the <a href="net/markenwerk/utils/json/parser/JsonSource.html#getLine--"><code>line</code></a> that corresponds to the
+ current position of the underlying <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> in the character
+ sequence, as if the character source was a regular file.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#getLine--">getLine()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
+<dd>
+<div class="block">Returns the <a href="net/markenwerk/utils/json/parser/JsonSource.html#getLine--"><code>line</code></a> that corresponds to the
+ current position of the underlying <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> in the character
+ sequence, as if the character source was a regular file.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSource.html#getLine--">getLine()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser">JsonSource</a></dt>
 <dd>
 <div class="block">Returns the line that corresponds to the current position of this
  <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> in the character sequence, as if the character source
  was a regular file.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#getLine--">getLine()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#getLine--">getLine()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html#getLine--">getLine()</a></span> - Method in exception net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser">JsonSyntaxException</a></dt>
 <dd>
 <div class="block">Returns the line in the JSON document, where the syntax error occurred.</div>
@@ -275,20 +321,24 @@
 </a>
 <h2 class="title">H</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#handle-net.markenwerk.utils.json.parser.JsonHandler-">handle(JsonHandler&lt;Result&gt;)</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#handle-net.markenwerk.utils.json.parser.JsonHandler-">handle(JsonHandler&lt;Result&gt;)</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
 <dd>
 <div class="block">Handle the character sequence from the <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> and report to
  the <a href="net/markenwerk/utils/json/parser/JsonHandler.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonHandler</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#handle-net.markenwerk.utils.json.parser.JsonHandler-boolean-">handle(JsonHandler&lt;Result&gt;, boolean)</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#handle-net.markenwerk.utils.json.parser.JsonHandler-">handle(JsonHandler&lt;Result&gt;)</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#handle-net.markenwerk.utils.json.parser.JsonHandler-boolean-">handle(JsonHandler&lt;Result&gt;, boolean)</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
 <dd>
 <div class="block">Handle the character sequence from the <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> and report to
  the <a href="net/markenwerk/utils/json/parser/JsonHandler.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonHandler</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#hasNext--">hasNext()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#hasNext--">hasNext()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
 <div class="block">Returns whether the current JSON array or JSON object has more elements.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#hasNext--">hasNext()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a name="I:J">
 <!--   -->
@@ -298,79 +348,91 @@
 <dt><a href="net/markenwerk/utils/json/parser/JsonHandler.html" title="interface in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonHandler</span></a>&lt;<a href="net/markenwerk/utils/json/parser/JsonHandler.html" title="type parameter in JsonHandler">Result</a>&gt; - Interface in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
 <dd>
 <div class="block">A <a href="net/markenwerk/utils/json/parser/JsonHandler.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonHandler</code></a> handles the events that are generated by a
- <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> and calculates a result.</div>
+ <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> and calculates a result.</div>
 </dd>
-<dt><a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonPullParser</span></a> - Class in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
+<dt><a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonPullParser</span></a> - Interface in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
 <dd>
-<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> is a stream based JSON parser.</div>
+<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> is an event based JSON parser.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#JsonPullParser-java.lang.String-">JsonPullParser(String)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="interface in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonPushParser</span></a> - Interface in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
 <dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang"><code>String</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#JsonPullParser-char:A-">JsonPullParser(char[])</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> for the given <code>char[]</code>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#JsonPullParser-java.io.Reader-">JsonPullParser(Reader)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#JsonPullParser-java.io.Reader-int-">JsonPullParser(Reader, int)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#JsonPullParser-net.markenwerk.utils.json.parser.JsonSource-">JsonPullParser(JsonSource)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> for the given <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#JsonPullParser-net.markenwerk.utils.json.parser.JsonSource-boolean-">JsonPullParser(JsonSource, boolean)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> for the given <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
-</dd>
-<dt><a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonPushParser</span></a> - Class in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
-<dd>
-<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> is a stream based JSON parser.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#JsonPushParser-java.lang.String-">JsonPushParser(String)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang"><code>String</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#JsonPushParser-char:A-">JsonPushParser(char[])</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> for the given <code>char[]</code>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#JsonPushParser-java.io.Reader-">JsonPushParser(Reader)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#JsonPushParser-java.io.Reader-int-">JsonPushParser(Reader, int)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#JsonPushParser-net.markenwerk.utils.json.parser.JsonSource-">JsonPushParser(JsonSource)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
-<dd>
-<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> for the given <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
+<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> is an event based JSON parser.</div>
 </dd>
 <dt><a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonSource</span></a> - Interface in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
 <dd>
 <div class="block">A <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> represents access to a sequence of characters to be used
- used by a <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a>.</div>
+ used by a <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a>.</div>
+</dd>
+<dt><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonSourcePullParser</span></a> - Class in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
+<dd>
+<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> is a <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> that consumes a
+ <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#JsonSourcePullParser-java.lang.String-">JsonSourcePullParser(String)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang"><code>String</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#JsonSourcePullParser-char:A-">JsonSourcePullParser(char[])</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> for the given <code>char[]</code>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#JsonSourcePullParser-java.io.Reader-">JsonSourcePullParser(Reader)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#JsonSourcePullParser-java.io.Reader-int-">JsonSourcePullParser(Reader, int)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#JsonSourcePullParser-net.markenwerk.utils.json.parser.JsonSource-">JsonSourcePullParser(JsonSource)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> for the given
+ <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#JsonSourcePullParser-net.markenwerk.utils.json.parser.JsonSource-boolean-">JsonSourcePullParser(JsonSource, boolean)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> for the given
+ <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
+</dd>
+<dt><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonSourcePushParser</span></a> - Class in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
+<dd>
+<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePushParser</code></a> is a stream based JSON parser.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#JsonSourcePushParser-java.lang.String-">JsonSourcePushParser(String)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePushParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang"><code>String</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#JsonSourcePushParser-char:A-">JsonSourcePushParser(char[])</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePushParser</code></a> for the given <code>char[]</code>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#JsonSourcePushParser-java.io.Reader-">JsonSourcePushParser(Reader)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePushParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#JsonSourcePushParser-java.io.Reader-int-">JsonSourcePushParser(Reader, int)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePushParser</code></a> for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#JsonSourcePushParser-net.markenwerk.utils.json.parser.JsonSource-">JsonSourcePushParser(JsonSource)</a></span> - Constructor for class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
+<dd>
+<div class="block">Creates a new <a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePushParser</code></a> for the given
+ <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
 </dd>
 <dt><a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonState</span></a> - Enum in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
 <dd>
-<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> describes the current state of a <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a>
+<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> describes the current state of a <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a>
  and determines which methods may be called successfully next.</div>
 </dd>
 <dt><a href="net/markenwerk/utils/json/parser/JsonSyntaxError.html" title="enum in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonSyntaxError</span></a> - Enum in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
 <dd>
 <div class="block">A <a href="net/markenwerk/utils/json/parser/JsonSyntaxError.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonSyntaxError</code></a> describes the kinds of syntax error a
- <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> or a <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> may encounter.</div>
+ <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> or a <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> may encounter.</div>
 </dd>
 <dt><a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser"><span class="typeNameLink">JsonSyntaxException</span></a> - Exception in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
 <dd>
-<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSyntaxException</code></a> indicates that a <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> or a
- <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> encountered a JSON syntax error while parsing a JSON
+<div class="block">A <a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSyntaxException</code></a> indicates that a <a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a> or a
+ <a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPushParser</code></a> encountered a JSON syntax error while parsing a JSON
  document.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html#JsonSyntaxException-net.markenwerk.utils.json.parser.JsonSyntaxError-int-int-java.lang.String-java.lang.String-">JsonSyntaxException(JsonSyntaxError, int, int, String, String)</a></span> - Constructor for exception net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser">JsonSyntaxException</a></dt>
@@ -412,23 +474,27 @@
 <dl>
 <dt><a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a> - package net.markenwerk.utils.json.parser</dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextBoolean--">nextBoolean()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextBoolean--">nextBoolean()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#BOOLEAN"><code>JsonState.BOOLEAN</code></a> and consumes and returns
  the corresponding value.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextByte--">nextByte()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextBoolean--">nextBoolean()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextByte--">nextByte()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
  corresponding value as a <code>byte</code>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextByte--">nextByte()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html#nextCharacter--">nextCharacter()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html" title="class in net.markenwerk.utils.json.parser">CharacterArrayJsonSource</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextCharacter--">nextCharacter()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextCharacter--">nextCharacter()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
  corresponding value as a <code>char</code>.</div>
 </dd>
@@ -436,59 +502,75 @@
 <dd>
 <div class="block">Consumes and returns the next character in the character sequence.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextCharacter--">nextCharacter()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/ReaderJsonSource.html#nextCharacter--">nextCharacter()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/ReaderJsonSource.html" title="class in net.markenwerk.utils.json.parser">ReaderJsonSource</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/StringJsonSource.html#nextCharacter--">nextCharacter()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/StringJsonSource.html" title="class in net.markenwerk.utils.json.parser">StringJsonSource</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextDouble--">nextDouble()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextDouble--">nextDouble()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#DOUBLE"><code>JsonState.DOUBLE</code></a> and consumes and returns
  the corresponding value.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextFloat--">nextFloat()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextDouble--">nextDouble()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextFloat--">nextFloat()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#DOUBLE"><code>JsonState.DOUBLE</code></a> and consumes and returns
  the corresponding value as a <code>float</code>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextInteger--">nextInteger()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextFloat--">nextFloat()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextInteger--">nextInteger()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
  corresponding value as a <code>int</code>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextLong--">nextLong()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextInteger--">nextInteger()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextLong--">nextLong()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
  corresponding value.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextName--">nextName()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextLong--">nextLong()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextName--">nextName()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#NAME"><code>JsonState.NAME</code></a> and consumes and returns the
  corresponding name of a JSON object entry.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextNull--">nextNull()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextName--">nextName()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextNull--">nextNull()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#NULL"><code>JsonState.NULL</code></a> and consumes the
  null The next <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> describes either the next
  sibling value of this JSON value or the end of surrounding JSON array or
  JSON object.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextShort--">nextShort()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextNull--">nextNull()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextShort--">nextShort()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
  corresponding value as a <code>short</code>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextShort--">nextShort()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html#nextString-int-">nextString(int)</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html" title="class in net.markenwerk.utils.json.parser">CharacterArrayJsonSource</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextString--">nextString()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#nextString--">nextString()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
-<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonPullParser.html#currentState--"><code>current</code></a>
+<div class="block">Ensures that the <a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a> and consumes and returns
  the corresponding value.</div>
 </dd>
@@ -496,6 +578,8 @@
 <dd>
 <div class="block">Consumes and returns the next characters in the character sequence.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#nextString--">nextString()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/ReaderJsonSource.html#nextString-int-">nextString(int)</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/ReaderJsonSource.html" title="class in net.markenwerk.utils.json.parser">ReaderJsonSource</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/StringJsonSource.html#nextString-int-">nextString(int)</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/StringJsonSource.html" title="class in net.markenwerk.utils.json.parser">StringJsonSource</a></dt>
@@ -601,10 +685,12 @@
 </a>
 <h2 class="title">S</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#skipValue--">skipValue()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#skipValue--">skipValue()</a></span> - Method in interface net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
 <dd>
 <div class="block">Skips the current JSON value.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#skipValue--">skipValue()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/markenwerk/utils/json/parser/StringJsonSource.html" title="class in net.markenwerk.utils.json.parser"><span class="typeNameLink">StringJsonSource</span></a> - Class in <a href="net/markenwerk/utils/json/parser/package-summary.html">net.markenwerk.utils.json.parser</a></dt>
 <dd>
 <div class="block">A <a href="net/markenwerk/utils/json/parser/StringJsonSource.html" title="class in net.markenwerk.utils.json.parser"><code>StringJsonSource</code></a> is a <a href="net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> that is backed by a given
@@ -620,9 +706,9 @@
 </a>
 <h2 class="title">T</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPullParser.html#toString--">toString()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPullParser.html" title="class in net.markenwerk.utils.json.parser">JsonPullParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html#toString--">toString()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePullParser</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonPushParser.html#toString--">toString()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonPushParser.html" title="class in net.markenwerk.utils.json.parser">JsonPushParser</a></dt>
+<dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html#toString--">toString()</a></span> - Method in class net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSourcePushParser.html" title="class in net.markenwerk.utils.json.parser">JsonSourcePushParser</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html#toString--">toString()</a></span> - Method in exception net.markenwerk.utils.json.parser.<a href="net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser">JsonSyntaxException</a></dt>
 <dd>&nbsp;</dd>
