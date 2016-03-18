@@ -119,6 +119,7 @@ JsonPullParser jsonPullParser = new JsonSourcePullParser(jsonSource);
 while(jsonPullParser.hasNext()) {
 	switch(jsonPullParser.currentState()) {
 		case ARRAY_BEGIN:
+			jsonPullParser.beginArray();
 			...
 			break;
 
