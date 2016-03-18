@@ -72,7 +72,7 @@ JsonSource characterArrayJsonSource = new CharacterArrayJsonSource(chars);
 
 ## Push parser
 
-The [example](https://gist.github.com/toKrause/ef6b3f3f060640f8620c) shows a pair of simple [`JsonHandlers`][JsonHandler] for a [`JsonPushParser`][JsonPushParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
+This [gist](https://gist.github.com/toKrause/ef6b3f3f060640f8620c) shows a pair of simple [`JsonHandlers`][JsonHandler] for a [`JsonPushParser`][JsonPushParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
 
 If the root structure of the JSON document is a JSON array:
 
@@ -94,7 +94,7 @@ JSONObject jsonObject = new JsonPushParser(new FileReader(file)).handle(new Obje
 
 ## Pull parser
 
-The [example](https://gist.github.com/toKrause/95944d3069b5422ee45f) shows a pair of simple helper methods using a [`JsonPullParser`][JsonPullParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
+This [gist](https://gist.github.com/toKrause/95944d3069b5422ee45f) shows a pair of simple helper methods using a [`JsonPullParser`][JsonPullParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
 
 If the root structure of the JSON document is a JSON array:
 
