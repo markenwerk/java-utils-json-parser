@@ -35,12 +35,6 @@ An event base parser that (unlike most JSON libraries) dosn't create a document 
  - or to automagically create Java objects (using some reflective witchcraft) and thus, removing the need to create a document model.
  
 This library is intended to be as lightweight as possible and make no assumptions about the tasks, it may be used for.
-
-This library actually provides two parser: A pull parser and a push parser.
-
-The [`JsonPullParser`][JsonPullParser], when asked, reports it's [`JsonState`][JsonState], which reflects what kind of JSON token (`ARRAY_BEGIN`, `NULL`, `BOOLEN`, ..., `ARRAY_END`, ...) comes next in the character stream. Users of a pull parser have to repeatedly ask for the current [`JsonState`][JsonState] and the call the appropriate methods on the [`JsonPullParser`][JsonPullParser], to consume the token. 
- 
-The [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler], automatically consumes the JSON tokens and calls the appropriate callback methods on the [`JsonHandler`][JsonHandler].
  
 # Usage
 
@@ -64,13 +58,30 @@ String string = ...
 char[] chars = ...
 
 // create new json sources for string and chars
-JsonSource stringJsonSource = new StringJsonSource(string);
-JsonSource characterArrayJsonSource = new CharacterArrayJsonSource(chars);
+JsonSource jsonSource1 = new StringJsonSource(string);
+JsonSource jsonSource2 = new CharacterArrayJsonSource(chars);
 ```
 
 *It is usually not necessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].*
 
 ## Push parser
+
+A [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler] and calls the appropriate callback methods of a [`JsonHandler`][JsonHandler], when processing a JSON document.
+
+This library provides the default implementation [`JsonSourcePushParser`][JsonSourcePushParser], which consumes a [`JsonSource`][JsonSource] to process a JSON document.
+
+```java
+JsonSource jsonSource = ...
+JsonHandler jsonHandler = ...
+
+// creates a new parser for jsonSource
+JsonPushParser jsonPushParser = new JsonSourcePushParser(jsonSource);
+
+// consumes jsonSource and reports events to jsonHandler
+jsonPushParser.handle(jsonSource)
+```
+
+### Creating a document model
 
 This [gist](https://gist.github.com/toKrause/ef6b3f3f060640f8620c) shows a pair of simple [`JsonHandlers`][JsonHandler] for a [`JsonPushParser`][JsonPushParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
 
@@ -93,6 +104,31 @@ JSONObject jsonObject = new JsonPushParser(new FileReader(file)).handle(new Obje
 ```
 
 ## Pull parser
+
+A [`JsonPullParser`][JsonPullParser], when asked, reports it's [`JsonState`][JsonState], which reflects the immediate future (`ARRAY_BEGIN`, `NULL`, `BOOLEN`, ..., `ARRAY_END`, ...) of the processed JSON document and determines the appropriate method to be called on the [`JsonPullParser`][JsonPullParser].
+
+This library provides the default implementation [`JsonSourcePullParser`][JsonSourcePullParser], which consumes a [`JsonSource`][JsonSource] to process a JSON document.
+
+```java
+JsonSource jsonSource = ...
+
+// creates a new parser for jsonSource
+JsonPullParser jsonPullParser = new JsonSourcePullParser(jsonSource);
+
+// consumes jsonSource and events
+while(jsonPullParser.hasNext()) {
+	switch(jsonPullParser.currentState()) {
+		case ARRAY_BEGIN:
+			...
+			break;
+
+		...
+		
+	}
+}
+```
+
+### Creating a document model
 
 This [gist](https://gist.github.com/toKrause/95944d3069b5422ee45f) shows a pair of simple helper methods using a [`JsonPullParser`][JsonPullParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
 
@@ -120,6 +156,8 @@ JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
 [JsonPullParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonPullParser.html
 [JsonPushParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonPushParser.html
 [JsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSource.html
+[JsonSourcePullParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSourcePullParser.html
+[JsonSourcePushParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSourcePushParser.html
 [JsonState]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonState.html
 [ReaderJsonStream]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/ReaderJsonStream.html
 [StringJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/StringJsonSource.html

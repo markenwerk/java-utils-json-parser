@@ -44,7 +44,7 @@ import net.markenwerk.utils.json.parser.events.ObjectEndJsonEvent;
 import net.markenwerk.utils.json.parser.events.StringJsonEvent;
 
 /**
- * JUnit test for {@link JsonPushParser}.
+ * JUnit test for {@link JsonSourcePushParser}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  */
@@ -53,19 +53,19 @@ public abstract class AbstractJsonPushParserTests {
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
 	public void create_nullSource() {
-		new JsonPushParser((JsonSource) null);
+		new JsonSourcePushParser((JsonSource) null);
 	}
 
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
 	public void create_nullHandler() throws IllegalArgumentException, JsonSyntaxException, IOException {
-		new JsonPushParser(getSource("")).handle(null);
+		new JsonSourcePushParser(getSource("")).handle(null);
 	}
 
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyDocument() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource(""));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource(""));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -83,7 +83,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmpty_invalidStart() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("\""));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\""));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -101,7 +101,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -121,7 +121,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_afterBom() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource(JsonSource.BYTE_ORDER_MARK + "[]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource(JsonSource.BYTE_ORDER_MARK + "[]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -141,7 +141,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_leadingWhitespace() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource(" \n\r\t []"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource(" \n\r\t []"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -161,7 +161,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_trailingWhitespace() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[] \n\r\t "));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[] \n\r\t "));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -181,7 +181,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_unfinished() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("["));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("["));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -199,7 +199,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_wrongFinish() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[}"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -217,7 +217,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyArray_trailingNonWhitespace() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[]X"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[]X"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -235,7 +235,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNull() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[null]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[null]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -251,7 +251,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleFalse() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[false]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[false]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -267,7 +267,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleTrue() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[true]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[true]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -283,7 +283,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleEmptyString() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\"]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -299,7 +299,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyString() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"foo\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"foo\"]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -316,7 +316,7 @@ public abstract class AbstractJsonPushParserTests {
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyVeryLargeString() throws IOException, JsonSyntaxException {
 		String value = createVeryLargeString();
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"" + value + "\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"" + value + "\"]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -341,7 +341,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithEscapeSequences() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\\"\\\\\\/\\b\\f\\r\\n\\t\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\\"\\\\\\/\\b\\f\\r\\n\\t\"]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -357,7 +357,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithUnicodeEscapeSequences() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\uBEEF\\ubeef\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\uBEEF\\ubeef\"]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -374,7 +374,7 @@ public abstract class AbstractJsonPushParserTests {
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringWithSurrogateUnicodeEscapeSequences() throws IOException,
 			JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\uD834\\uDD1E\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\uD834\\uDD1E\"]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -390,7 +390,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringDangelingEscapeSequences() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -408,7 +408,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringUnterminatedEscapeSequences() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\\"]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -426,7 +426,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringInvalidEscapeSequences() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\x\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\x\"]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -444,7 +444,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringDangelingUnicodeEscapeSequences() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\u"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\u"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -462,7 +462,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringUnterminatedUnicodeEscapeSequences() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\u\",null]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\u\",null]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -480,7 +480,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNonEmptyStringInvalidUnicodeEscapeSequences() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[\"\\uNOPE\"]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\uNOPE\"]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -498,7 +498,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleLong() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[0]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[0]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -514,7 +514,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveLong() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[42]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[42]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -530,7 +530,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNegativeLong() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[-42]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[-42]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -546,7 +546,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleDouble() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[0.0]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[0.0]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -562,7 +562,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDouble() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[42.23]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[42.23]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -578,7 +578,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleNegativeDouble() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[-42.23]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[-42.23]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -594,7 +594,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDoubleWithPositiveExponent() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[42.0e7]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[42.0e7]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -610,7 +610,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singlePositiveDoubleWithNegativeExponent() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[42.0e-7]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[42.0e-7]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -626,7 +626,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_singleInvalidLiteal() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[x]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[x]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -644,7 +644,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_multipleValues() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[null,null]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[null,null]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -666,7 +666,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_nestedArray() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[[]]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[[]]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -688,7 +688,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_unfinishedDangelingValue() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[null"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[null"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -706,7 +706,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_wrongFinish() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[null}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[null}"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -724,7 +724,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_unfinishedDangelingComma() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[null,"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[null,"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -742,7 +742,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyArray_dengelingCommaWrongFinish() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("[null,]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[null,]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -760,7 +760,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyObject() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{}"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -780,7 +780,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyObject_unfinished() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -798,7 +798,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void emptyObject_wrongFinish() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -816,7 +816,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_singleValue() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\":null}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\":null}"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -838,7 +838,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_multipleValues() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\":null,\"bar\":null}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\":null,\"bar\":null}"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -862,7 +862,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_nestedValue() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\":{}}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\":{}}"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -885,7 +885,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_unfinishedNoName() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{null}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{null}"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -903,7 +903,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_unfinishedDangelingName() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\""));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\""));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -921,7 +921,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_unfinishedDangelingColon() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\":"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\":"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -939,7 +939,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_unfinishedDangelingValue() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\":null"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\":null"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -957,7 +957,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_unfinishedDangelingComma() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\":null,"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\":null,"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -975,7 +975,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_unfinishedNoValue() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\",null}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\",null}"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -993,7 +993,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_unfinishedKeyAfterComma() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\":null,null}"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\":null,null}"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -1011,7 +1011,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_wrongFinish() throws IOException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{\"foo\":null]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{\"foo\":null]"));
 		try {
 
 			jsonParser.handle(new NullHandler());
@@ -1029,7 +1029,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmptyObject_complexValue() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(
 				getSource(" \n { \"foo\" : [ \"bar\\n\" , true , { \n } ] , \"baz\" : { \"foo\" \t : \t 42 } } \n "));
 		try {
 
@@ -1064,7 +1064,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{}[]"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{}[]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -1090,7 +1090,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_trailingWhitespace() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{}[] \n\r\t "));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{}[] \n\r\t "));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -1116,7 +1116,7 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_separatingWhitespace() throws IOException, JsonSyntaxException {
-		JsonPushParser jsonParser = new JsonPushParser(getSource("{} \n\r\t []"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("{} \n\r\t []"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
@@ -1143,7 +1143,7 @@ public abstract class AbstractJsonPushParserTests {
 	@SuppressWarnings("javadoc")
 	public void syntaxError_position() throws IOException {
 
-		JsonPushParser jsonParser = new JsonPushParser(getSource("  \n  \n  \n   Xfoobar"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("  \n  \n  \n   Xfoobar"));
 
 		try {
 

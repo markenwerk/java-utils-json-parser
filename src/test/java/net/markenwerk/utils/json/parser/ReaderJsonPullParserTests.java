@@ -27,7 +27,7 @@ import java.io.StringReader;
 import org.junit.Test;
 
 /**
- * JUnit test for {@link JsonPullParser} with an underlying
+ * JUnit test for {@link JsonSourcePullParser} with an underlying
  * {@link ReaderJsonSource}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
@@ -37,7 +37,7 @@ public class ReaderJsonPullParserTests extends AbstractJsonPullParserTests {
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
 	public void create_nullReader() {
-		new JsonPullParser((Reader) null);
+		new JsonSourcePullParser((Reader) null);
 	}
 
 	@Override
