@@ -59,7 +59,7 @@ The [example](https://gist.github.com/toKrause/ef6b3f3f060640f8620c) shows a pai
 If the root structure of the JSON document is a JSON array:
 
 ```java
-File file = null;
+File file = ...;
 
 // create a new json array from the file content
 JSONArray jsonArray = new JsonPushParser(new FileReader(file)).handle(new ArrayHandler());
@@ -68,7 +68,7 @@ JSONArray jsonArray = new JsonPushParser(new FileReader(file)).handle(new ArrayH
 If the root structure of the JSON document is a JSON object:
 
 ```java
-File file = null;
+File file = ...;
 
 // create a new json object from the file content
 JSONObject jsonObject = new JsonPushParser(new FileReader(file)).handle(new ObjectHandler());
@@ -81,7 +81,7 @@ The [example](https://gist.github.com/toKrause/95944d3069b5422ee45f) shows a pai
 If the root structure of the JSON document is a JSON array:
 
 ```java
-File file = null;
+File file = ...;
 
 // create a new json array from the file content
 JSONArray jsonArray = JsonUtil.readArray(new FileReader(file));
@@ -90,7 +90,7 @@ JSONArray jsonArray = JsonUtil.readArray(new FileReader(file));
 If the root structure of the JSON document is a JSON object:
 
 ```java
-File file = null;
+File file = ...;
 
 // create a new json object from the file content
 JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
