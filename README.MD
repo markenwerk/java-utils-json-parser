@@ -48,7 +48,7 @@ The [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler], aut
 
 Both parsers consume a [`JsonSource`][JsonSource], which represents a character stream and the necessary methods to it.
 
-This library provides the [`ReaderJsonStream`][ReaderJsonStream], which buffers and consumes the characters that are yielded by a given [`Reader`]. Additionally, this library provides the [`StringJsonSource`][StringJsonSource] and the [`CharacterArrayJsonSource`][CharacterArrayJsonSource] that can be used to parse the characters from an existing string or an existing `char[]`.
+This library provides the [`ReaderJsonStream`][ReaderJsonStream], which buffers and consumes the characters that are yielded by a given [`Reader`][Reader]. Additionally, this library provides the [`StringJsonSource`][StringJsonSource] and the [`CharacterArrayJsonSource`][CharacterArrayJsonSource] that can be used to parse the characters from an existing string or an existing `char[]`.
 
 It is usually not necessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].
 
