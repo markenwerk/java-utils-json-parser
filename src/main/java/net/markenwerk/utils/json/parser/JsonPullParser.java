@@ -478,6 +478,28 @@ public final class JsonPullParser implements Closeable {
 	}
 
 	/**
+	 * Returns the {@link JsonSource#getLine() line} that corresponds to the
+	 * current position of the underlying {@link JsonSource} in the character
+	 * sequence, as if the character source was a regular file.
+	 * 
+	 * @return The line.
+	 */
+	public int getLine() {
+		return source.getLine();
+	}
+
+	/**
+	 * Returns the {@link JsonSource#getColumn() column} that corresponds to the
+	 * current position of the underlying {@link JsonSource} in the character
+	 * sequence, as if the character source was a regular file.
+	 * 
+	 * @return The line.
+	 */
+	public int getColumn() {
+		return source.getColumn();
+	}
+
+	/**
 	 * Ensures that the {@link JsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOCUMENT_BEGIN} and consumes the
 	 * begin of the JSON document. The next {@link JsonState} will be

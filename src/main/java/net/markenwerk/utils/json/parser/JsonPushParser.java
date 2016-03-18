@@ -458,6 +458,28 @@ public final class JsonPushParser implements Closeable {
 				source.getFuture(5));
 	}
 
+	/**
+	 * Returns the {@link JsonSource#getLine() line} that corresponds to the
+	 * current position of the underlying {@link JsonSource} in the character
+	 * sequence, as if the character source was a regular file.
+	 * 
+	 * @return The line.
+	 */
+	public int getLine() {
+		return source.getLine();
+	}
+
+	/**
+	 * Returns the {@link JsonSource#getColumn() column} that corresponds to the
+	 * current position of the underlying {@link JsonSource} in the character
+	 * sequence, as if the character source was a regular file.
+	 * 
+	 * @return The line.
+	 */
+	public int getColumn() {
+		return source.getColumn();
+	}
+
 	public void close() throws IOException {
 		source.close();
 	}
