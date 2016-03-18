@@ -38,9 +38,9 @@ This library is intended to be as lightweight as possible and make no assumption
 
 This library actually provides two parser: A pull parser and a push parser.
 
-The pull parser, when asked, reports it's state, which reflects what kind of JSON token (ARRAY_BEGIN, NULL, BOOLEN, ..., ARRAY_END, ...) comes next in the character stream. Users of a pull parser have to repeatedly ask for the current state and the call the appropriate methods, to consume the token. 
+The [`JsonPullParser`][JsonPullParser], when asked, reports it's [`JsonState`][JsonState], which reflects what kind of JSON token (`ARRAY_BEGIN`, `NULL`, `BOOLEN`, ..., `ARRAY_END`, ...) comes next in the character stream. Users of a pull parser have to repeatedly ask for the current [`JsonState`][JsonState] and the call the appropriate methods on the [`JsonPullParser`][JsonPullParser], to consume the token. 
  
-The push parser takes a handler, automatically consumes the JSON tokens and calls the appropriate callback methods on the handler.
+The [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler], automatically consumes the JSON tokens and calls the appropriate callback methods on the [`JsonHandler`][JsonHandler].
  
 # Usage
 
@@ -102,6 +102,7 @@ JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
 [JsonPullParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonPullParser.html
 [JsonPushParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonPushParser.html
 [JsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSource.html
+[JsonState]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonState.html
 [ReaderJsonStream]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/ReaderJsonStream.html
 [StringJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/StringJsonSource.html
 
