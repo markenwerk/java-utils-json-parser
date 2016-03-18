@@ -124,6 +124,9 @@ public final class JsonPushParser implements Closeable {
 	 * Calling this method closes the underlying {@link JsonSource}, but it can
 	 * be {@link JsonPushParser#close() closed manually}.
 	 * 
+	 * @param <Result>
+	 *            The result type of the {@link JsonHandler}.
+	 * 
 	 * @param handler
 	 *            The {@link JsonHandler} to report to.
 	 * 
@@ -150,6 +153,9 @@ public final class JsonPushParser implements Closeable {
 	 * <p>
 	 * Calling this method closes the underlying {@link JsonSource}, but it can
 	 * be {@link JsonPushParser#close() closed manually}.
+	 * 
+	 * @param <Result>
+	 *            The result type of the {@link JsonHandler}.
 	 * 
 	 * @param handler
 	 *            The {@link JsonHandler} to report to.
