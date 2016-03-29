@@ -162,20 +162,20 @@ The following table shows the results of a [performance test](https://gist.githu
 - Using the constructor for a [`JSONArray`][JSONArray] with a [`JSONTokener`][JSONTokener] for a [`FileReader`][FileReader].
 - Using the constructor for a [`JSONArray`][JSONArray] with a [`JSONTokener`][JSONTokener] for a preloaded `String`.
 
-| Parser | Source | [`test0.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test0.json) (~2.5kB) | [`test1.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test1.json) (~25.0kB) | [`test2.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test2.json) (~250.0kB) | [`test3.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test3.json) (~2.5MB) |
-|:----------------------------------:|:------------------:|:----:|:----:|:----:|:-----:|
-| [`JsonPushParser`][JsonPushParser] | [`Reader`][Reader] | 0.15 | 0.37 | 3.36 | 33.18 |
-| [`JsonPushParser`][JsonPushParser] | `String`           | 0.05 | 0.34 | 3.15 | 31.51 |
-| [`JsonPullParser`][JsonPullParser] | [`Reader`][Reader] | 0.09 | 0.39 | 3.56 | 35.57 |
-| [`JsonPullParser`][JsonPullParser] | `String`           | 0.05 | 0.36 | 3.46 | 34.71 |
-| [`JSONArray`][JSONArray]           | [`Reader`][Reader] | 0.08 | 0.59 | 5.74 | 57.88 |
-| [`JSONArray`][JSONArray]           | `String`           | 0.06 | 0.54 | 5.31 | 53.48 |
+| Parser | Source | [`test0.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test0.json) (~2.5kB) | [`test1.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test1.json) (~25.0kB) | [`test2.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test2.json) (~250.0kB) | [`test3.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test3.json) (~25MB) |
+|:----------------------------------------------:|:------------------:|:----:|:----:|:----:|:-----:|
+| [`JsonSourcePushParser`][JsonSourcePushParser] | [`Reader`][Reader] | 0.15 | 0.37 | 3.36 | 33.18 |
+| [`JsonSourcePushParser`][JsonSourcePushParser] | `String`           | 0.05 | 0.34 | 3.15 | 31.51 |
+| [`JsonSourcePullParser`][JsonSourcePullParser] | [`Reader`][Reader] | 0.09 | 0.39 | 3.56 | 35.57 |
+| [`JsonSourcePullParser`][JsonSourcePullParser] | `String`           | 0.05 | 0.36 | 3.46 | 34.71 |
+| [`JSONArray`][JSONArray]                       | [`Reader`][Reader] | 0.08 | 0.59 | 5.74 | 57.88 |
+| [`JSONArray`][JSONArray]                       | `String`           | 0.06 | 0.54 | 5.31 | 53.48 |
 
 The four JSON files of different size have been created with a [random JSON generator](http://www.json-generator.com/).
 
 ### Conclusions
 
-Both parsers provided by this library are generally a bit faster than the reference implementation, although the difference is probably not significant for most use cases and only visible for large JSON files.
+Both parsers provided by this library are, for sufficiently large JSON documents, about 42% faster than the reference implementation.
 
 The relation between the size of the JSON input and the parsing duration is linear.
 
