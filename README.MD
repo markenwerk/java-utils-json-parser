@@ -151,6 +151,36 @@ File file = ...;
 JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
 ```
 
+## Performance comparison
+
+The following table shows the results of a [performance test](https://gist.github.com/toKrause/2227e1d4d2d2557db60b#file-test-java) with 1000 iterations that compares multiple methods of creating a document model:
+
+- Using a [`JsonSourcePushParser`][JsonSourcePushParser] with a [`ReaderJsonSource`][ReaderJsonSource] for a [`FileReader`][FileReader] and the abovementioned [`ArrayHandler`][ArrayHandler].
+- Using a [`JsonSourcePullParser`][JsonSourcePullParser] with a [`ReaderJsonSource`][ReaderJsonSource] for a [`FileReader`][FileReader] and the abovementioned [`JsonUtil`][JsonUtil].
+- Using the constructor for a [`JSONArray`][JSONArray] with a [`JSONTokener`][JSONTokener] for a [`FileReader`][FileReader].
+- Using a [`JsonSourcePushParser`][JsonSourcePushParser] with a [`StringJsonSource`][StringJsonSource] for a preloaded `String`.
+- Using a [`JsonSourcePullParser`][JsonSourcePullParser] with a [`StringJsonSource`][StringJsonSource] for a preloaded `String`.
+- Using the constructor for a [`JSONArray`][JSONArray] with a [`JSONTokener`][JSONTokener] for a preloaded `String`.
+
+|| [`test0.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test0.json) (~2.5kB) | [`test1.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test1.json) (~25.0kB) | [`test2.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test2.json) (~250.0kB) | [`test3.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test3.json) (~25MB) |
+|-----------------------------------|-----------------------|------------------------|-------------------------|----------------------|
+| `JsonPushParser` for `FileReader` | 0.15                  | 0.37                   | 3.36                    | 33.18                |
+| `JsonPushParser` for `String`     | 0.05                  | 0.34                   | 3.15                    | 31.51                |
+| `JsonPullParser` for `FileReader` | 0.09                  | 0.39                   | 3.56                    | 35.57                |
+| `JsonPullParser` for `String`     | 0.05                  | 0.36                   | 3.46                    | 34.71                |
+| `JSONArray` for `FileReader`      | 0.08                  | 0.59                   | 5.74                    | 57.88                |
+| `JSONArray` for `String`          | 0.06                  | 0.54                   | 5.31                    | 53.48                |
+
+The four JSON files of different size have been created with a [random JSON generator](http://www.json-generator.com/).
+
+### Conclusions
+
+Both parsers provided by this library are generally a bit faster than the reference implementation, although the difference is probably not significant for most use cases and only visible for large JSON files.
+
+The relation between the size of the JSON input and the parsing duration is linear.
+
+Preloading the content of a JSON file into a `String` instead of using a [`FileReader`][FileReader] yield no significant performance improvement.
+
 
 [CharacterArrayJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html
 [JsonHandler]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonHandler.html
@@ -160,10 +190,15 @@ JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
 [JsonSourcePullParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSourcePullParser.html
 [JsonSourcePushParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSourcePushParser.html
 [JsonState]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonState.html
-[ReaderJsonStream]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/ReaderJsonStream.html
+[ReaderJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/ReaderJsonSource.html
 [StringJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/StringJsonSource.html
 
 [JSONArray]: https://stleary.github.io/JSON-java/index.html?org/json/JSONArray.html
 [JSONObject]: https://stleary.github.io/JSON-java/index.html?org/json/JSONObject.html
+[JSONTokener]: https://stleary.github.io/JSON-java/index.html?org/json/JSONTokener.html
 
-[Reader]: http://docs.oracle.com/javase/8/docs/api/index.html?java/io/Reader.html;
+[FileReader]: http://docs.oracle.com/javase/8/docs/api/index.html?java/io/FileReader.html
+[Reader]: http://docs.oracle.com/javase/8/docs/api/index.html?java/io/Reader.html
+
+[ArrayHandler]: https://gist.github.com/toKrause/ef6b3f3f060640f8620c#file-arrayhandler-java
+[JsonUtil]: https://gist.github.com/toKrause/95944d3069b5422ee45f#file-jsonutil-java
