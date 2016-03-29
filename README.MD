@@ -163,7 +163,7 @@ The following table shows the results of a [performance test](https://gist.githu
 - Using the constructor for a [`JSONArray`][JSONArray] with a [`JSONTokener`][JSONTokener] for a preloaded `String`.
 
 | Parser | Source | [`test0.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test0.json) (~2.5kB) | [`test1.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test1.json) (~25.0kB) | [`test2.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test2.json) (~250.0kB) | [`test3.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test3.json) (~25MB) |
-|------------------------------------|-------------------------------|------|------|------|-------|
+|:----------------------------------:|:------------------:|:----:|:----:|:----:|:-----:|
 | [`JsonPushParser`][JsonPushParser] | [`Reader`][Reader] | 0.15 | 0.37 | 3.36 | 33.18 |
 | [`JsonPushParser`][JsonPushParser] | `String`           | 0.05 | 0.34 | 3.15 | 31.51 |
 | [`JsonPullParser`][JsonPullParser] | [`Reader`][Reader] | 0.09 | 0.39 | 3.56 | 35.57 |
