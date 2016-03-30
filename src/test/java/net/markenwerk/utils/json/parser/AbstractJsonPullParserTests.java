@@ -22,6 +22,7 @@
 package net.markenwerk.utils.json.parser;
 
 import java.io.IOException;
+import java.io.Reader;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -519,6 +520,66 @@ public abstract class AbstractJsonPullParserTests {
 		} finally {
 			jsonParser.close();
 		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_readEmpty() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\""));
+		try {
+
+			jsonParser.beginDocument();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals("", readString(jsonParser.readString()));
+			jsonParser.endDocument();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_readNonEmpty() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"foo\""));
+		try {
+
+			jsonParser.beginDocument();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals("foo", readString(jsonParser.readString()));
+			jsonParser.endDocument();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_readVeryLarge() throws IOException, JsonSyntaxException {
+		String value = createVeryLargeString();
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"" + value + "\""));
+		try {
+
+			jsonParser.beginDocument();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals(value, readString(jsonParser.readString()));
+			jsonParser.endDocument();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	private String readString(Reader reader) throws IOException {
+		StringBuilder builder = new StringBuilder();
+		char[] buffer = new char[64];
+		int length;
+		while (-1 != (length = reader.read(buffer))) {
+			builder.append(buffer, 0, length);
+		}
+		reader.close();
+		return builder.toString();
 	}
 
 	private String createVeryLargeString() {

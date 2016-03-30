@@ -49,8 +49,6 @@ public final class JsonSourcePullParser implements JsonPullParser {
 
 	private double doubleValue;
 
-	private String stringValue;
-
 	private boolean multiDocumentMode;
 
 	private boolean strictStructMode;
@@ -211,7 +209,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 			if (strictStructMode) {
 				throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
 			} else if ('"' == firstCharacter) {
-				return prepareNextString();
+				return JsonState.STRING;
 			} else {
 				return prepareNextLiteral(firstCharacter);
 			}
@@ -244,7 +242,6 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	private JsonState prepareObjectFirst() throws JsonSyntaxException, IOException {
 		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FIRST);
 		if ('"' == nextCharacter) {
-			prepareNextString();
 			stack.replace(Context.DANGLING_NAME);
 			return JsonState.NAME;
 		} else if ('}' == nextCharacter) {
@@ -260,7 +257,6 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		if (',' == nextCharacter) {
 			nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_NAME);
 			if ('"' == nextCharacter) {
-				prepareNextString();
 				stack.replace(Context.DANGLING_NAME);
 				return JsonState.NAME;
 			} else {
@@ -297,7 +293,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 			stack.push(Context.EMPTY_OBJECT);
 			return JsonState.OBJECT_BEGIN;
 		} else if ('"' == firstCharacter) {
-			return prepareNextString();
+			return JsonState.STRING;
 		} else if (']' == firstCharacter) {
 			throw syntaxError(error);
 		} else if ('}' == firstCharacter) {
@@ -333,7 +329,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		return false;
 	}
 
-	private JsonState prepareNextString() throws JsonSyntaxException, IOException {
+	private String getNextString() throws JsonSyntaxException, IOException {
 		builder.setLength(0);
 		boolean buffered = false;
 		while (source.makeAvailable(1)) {
@@ -341,15 +337,19 @@ public final class JsonSourcePullParser implements JsonPullParser {
 			int available = source.getAvailable();
 			while (offset < available) {
 				char nextCharacter = source.peekCharacter(offset);
+				System.out.println(nextCharacter);
 				if ('"' == nextCharacter) {
+					final String stringValue;
 					if (buffered) {
 						source.appendNextString(builder, offset);
 						stringValue = builder.toString();
 					} else {
 						stringValue = source.nextString(offset);
 					}
+					System.out.println("F" + nextCharacter);
+
 					source.nextCharacter();
-					return JsonState.STRING;
+					return stringValue;
 				} else if ('\\' == nextCharacter) {
 					buffered = true;
 					source.appendNextString(builder, offset);
@@ -363,6 +363,74 @@ public final class JsonSourcePullParser implements JsonPullParser {
 			if (-1 != offset) {
 				buffered = true;
 				source.appendNextString(builder, offset);
+			}
+		}
+		throw syntaxError(JsonSyntaxError.UNTERMINATED_STRING);
+	}
+
+	private Reader readNextString() throws JsonSyntaxException, IOException {
+
+		return new Reader() {
+
+			private boolean endReached = false;
+
+			@Override
+			public int read(char[] buffer, int offset, int maxLength) throws IOException {
+				if (endReached) {
+					return -1;
+				}
+				int amount = 0;
+				while (amount < maxLength) {
+					int readValue = read();
+					if (-1 == readValue) {
+						break;
+					} else {
+						buffer[offset + amount] = (char) readValue;
+					}
+					amount++;
+				}
+				return amount;
+			}
+
+			@Override
+			public int read() throws IOException {
+				if (!source.makeAvailable(1)) {
+					JsonSyntaxException e = syntaxError(JsonSyntaxError.UNTERMINATED_STRING);
+					throw new IOException(e.getMessage(), e);
+				}
+				char character = source.nextCharacter();
+				if ('"' == character) {
+					endReached = true;
+					return -1;
+				} else if ('\\' == character) {
+					try {
+						return readEscaped();
+					} catch (JsonSyntaxException e) {
+						throw new IOException(e.getMessage(), e);
+					}
+				} else {
+					return character;
+				}
+			}
+
+			@Override
+			public void close() throws IOException {
+				while (!endReached) {
+					read();
+				}
+			}
+		};
+
+	}
+
+	private void skipNextString() throws JsonSyntaxException, IOException {
+		while (source.makeAvailable(1)) {
+			int available = source.getAvailable();
+			for (int i = 0; i < available; i++) {
+				char nextCharacter = source.nextCharacter();
+				if ('"' == nextCharacter) {
+					return;
+				}
 			}
 		}
 		throw syntaxError(JsonSyntaxError.UNTERMINATED_STRING);
@@ -593,13 +661,19 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	@Override
 	public String nextString() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.STRING);
-		return stringValue;
+		return getNextString();
+	}
+
+	@Override
+	public Reader readString() throws IllegalStateException, JsonSyntaxException, IOException {
+		consume(JsonState.STRING);
+		return readNextString();
 	}
 
 	@Override
 	public String nextName() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.NAME);
-		return stringValue;
+		return getNextString();
 	}
 
 	@Override
@@ -623,6 +697,10 @@ public final class JsonSourcePullParser implements JsonPullParser {
 			case ARRAY_END:
 			case OBJECT_END:
 				depth--;
+				break;
+			case STRING:
+			case NAME:
+				skipNextString();
 				break;
 			default:
 			}

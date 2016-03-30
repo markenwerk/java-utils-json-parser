@@ -383,6 +383,31 @@ public interface JsonPullParser extends Closeable {
 
 	/**
 	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * {@link JsonState} is {@link JsonState#STRING} and return a {@link Reader}
+	 * that consumes the corresponding value. The next {@link JsonState}
+	 * describes either the next sibling value of this JSON value or the end of
+	 * surrounding JSON array or JSON object.
+	 * 
+	 * <p>
+	 * <b>Important:</b> the returned {@link Reader} must be
+	 * {@link Reader#read() read} completely or {@link Reader#close() closed},
+	 * before the next call to any other method of this {@link JsonPullParser}.
+	 * 
+	 * @return A {@link Reader} for the string value.
+	 * 
+	 * @throws IllegalStateException
+	 *             If the current {@link JsonState} is not
+	 *             {@link JsonState#STRING}.
+	 * @throws JsonSyntaxException
+	 *             If the read {@link JsonSyntaxException} document contains a
+	 *             syntax error.
+	 * @throws IOException
+	 *             If reading from the underlying {@link Reader} failed.
+	 */
+	public Reader readString() throws IllegalStateException, JsonSyntaxException, IOException;
+
+	/**
+	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#NAME} and consumes and returns the
 	 * corresponding name of a JSON object entry. The next {@link JsonState}
 	 * describes the corresponding value.
