@@ -152,8 +152,8 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#JsonSourcePullParser-net.markenwerk.utils.json.parser.JsonSource-boolean-">JsonSourcePullParser</a></span>(<a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser">JsonSource</a>&nbsp;source,
-                    boolean&nbsp;multiDocumentMode)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#JsonSourcePullParser-net.markenwerk.utils.json.parser.JsonSource-net.markenwerk.utils.json.parser.JsonParserMode...-">JsonSourcePullParser</a></span>(<a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser">JsonSource</a>&nbsp;source,
+                    <a href="../../../../../net/markenwerk/utils/json/parser/JsonParserMode.html" title="enum in net.markenwerk.utils.json.parser">JsonParserMode</a>...&nbsp;modes)</code>
 <div class="block">Creates a new <a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> for the given
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
 </td>
@@ -484,22 +484,22 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
 </dl>
 </li>
 </ul>
-<a name="JsonSourcePullParser-net.markenwerk.utils.json.parser.JsonSource-boolean-">
+<a name="JsonSourcePullParser-net.markenwerk.utils.json.parser.JsonSource-net.markenwerk.utils.json.parser.JsonParserMode...-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>JsonSourcePullParser</h4>
 <pre>public&nbsp;JsonSourcePullParser(<a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser">JsonSource</a>&nbsp;source,
-                            boolean&nbsp;multiDocumentMode)
+                            <a href="../../../../../net/markenwerk/utils/json/parser/JsonParserMode.html" title="enum in net.markenwerk.utils.json.parser">JsonParserMode</a>...&nbsp;modes)
                      throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></pre>
 <div class="block">Creates a new <a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSourcePullParser</code></a> for the given
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>source</code> - The <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> to read from.</dd>
-<dd><code>multiDocumentMode</code> - Whether to allow multiple JSON documents in the same
-            <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>.</dd>
+<dd><code>modes</code> - Selection of <a href="../../../../../net/markenwerk/utils/json/parser/JsonParserMode.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonParserModes</code></a> to be used
+            during parsing.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If the given <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> is null.</dd>
 </dl>
