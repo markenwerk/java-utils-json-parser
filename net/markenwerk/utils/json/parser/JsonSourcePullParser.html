@@ -199,7 +199,7 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#beginDocumnet--">beginDocumnet</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#beginDocument--">beginDocument</a></span>()</code>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_BEGIN"><code>JsonState.DOCUMENT_BEGIN</code></a> and consumes the
  begin of the JSON document.</div>
@@ -235,7 +235,7 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#endDocumnet--">endDocumnet</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#endDocument--">endDocument</a></span>()</code>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_END"><code>JsonState.DOCUMENT_END</code></a> and consumes the end
  of the JSON document.</div>
@@ -561,24 +561,24 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
 </dl>
 </li>
 </ul>
-<a name="beginDocumnet--">
+<a name="beginDocument--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>beginDocumnet</h4>
-<pre>public&nbsp;void&nbsp;beginDocumnet()
+<h4>beginDocument</h4>
+<pre>public&nbsp;void&nbsp;beginDocument()
                    throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
                           <a href="../../../../../net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser">JsonSyntaxException</a>,
                           <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#beginDocumnet--">JsonPullParser</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#beginDocument--">JsonPullParser</a></code></span></div>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_BEGIN"><code>JsonState.DOCUMENT_BEGIN</code></a> and consumes the
  begin of the JSON document. The next <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> will be
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#ARRAY_BEGIN"><code>JsonState.ARRAY_BEGIN</code></a> or <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#OBJECT_BEGIN"><code>JsonState.OBJECT_BEGIN</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#beginDocumnet--">beginDocumnet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></code></dd>
+<dd><code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#beginDocument--">beginDocument</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_BEGIN"><code>JsonState.DOCUMENT_BEGIN</code></a>.</dd>
@@ -588,17 +588,17 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
 </dl>
 </li>
 </ul>
-<a name="endDocumnet--">
+<a name="endDocument--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>endDocumnet</h4>
-<pre>public&nbsp;void&nbsp;endDocumnet()
+<h4>endDocument</h4>
+<pre>public&nbsp;void&nbsp;endDocument()
                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
                         <a href="../../../../../net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser">JsonSyntaxException</a>,
                         <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#endDocumnet--">JsonPullParser</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#endDocument--">JsonPullParser</a></code></span></div>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_END"><code>JsonState.DOCUMENT_END</code></a> and consumes the end
  of the JSON document. The next <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> will be
@@ -610,7 +610,7 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_BEGIN"><code>JsonState.DOCUMENT_BEGIN</code></a> or <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#SOURCE_END"><code>JsonState.SOURCE_END</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#endDocumnet--">endDocumnet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></code></dd>
+<dd><code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#endDocument--">endDocument</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_END"><code>JsonState.DOCUMENT_END</code></a>.</dd>
