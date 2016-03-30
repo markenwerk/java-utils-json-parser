@@ -45,7 +45,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.currentState();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -64,7 +64,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("null"), JsonParserMode.STRICT_STRUCT_MODE);
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.currentState();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -83,10 +83,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("null"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
 			jsonParser.nextNull();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -99,10 +99,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("false"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.BOOLEAN, jsonParser.currentState());
 			Assert.assertEquals(false, jsonParser.nextBoolean());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -115,10 +115,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("true"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.BOOLEAN, jsonParser.currentState());
 			Assert.assertEquals(true, jsonParser.nextBoolean());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -131,10 +131,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("0"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
 			Assert.assertEquals(0, jsonParser.nextLong());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -147,10 +147,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
 			Assert.assertEquals(42, jsonParser.nextLong());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -163,10 +163,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("-42"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
 			Assert.assertEquals(-42, jsonParser.nextLong());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -179,10 +179,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
 			Assert.assertEquals(42, jsonParser.nextInteger());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -196,7 +196,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextInteger();
 
 		} finally {
@@ -211,7 +211,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextInteger();
 
 		} finally {
@@ -225,10 +225,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
 			Assert.assertEquals(42, jsonParser.nextShort());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -242,7 +242,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextShort();
 
 		} finally {
@@ -257,7 +257,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextShort();
 
 		} finally {
@@ -271,10 +271,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
 			Assert.assertEquals(42, jsonParser.nextCharacter());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -288,7 +288,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextCharacter();
 
 		} finally {
@@ -303,7 +303,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextCharacter();
 
 		} finally {
@@ -317,10 +317,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
 			Assert.assertEquals(42, jsonParser.nextByte());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -334,7 +334,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextByte();
 
 		} finally {
@@ -349,7 +349,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextByte();
 
 		} finally {
@@ -363,10 +363,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("0.0"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
 			Assert.assertEquals(0, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -379,10 +379,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42.23"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
 			Assert.assertEquals(42.23, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -395,10 +395,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("-42.23"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
 			Assert.assertEquals(-42.23, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -411,10 +411,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42.0e7"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
 			Assert.assertEquals(42.0e7, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -427,10 +427,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42.0e-7"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
 			Assert.assertEquals(42.0e-7, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -443,10 +443,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42.23"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
 			Assert.assertEquals(42.23f, jsonParser.nextFloat(), 0e-10f);
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -459,7 +459,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("x"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.currentState();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -478,10 +478,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			Assert.assertEquals("", jsonParser.nextString());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -494,10 +494,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"foo\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			Assert.assertEquals("foo", jsonParser.nextString());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -511,10 +511,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"" + value + "\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			Assert.assertEquals(value, jsonParser.nextString());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -536,10 +536,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\\"\\\\\\/\\b\\f\\r\\n\\t\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			Assert.assertEquals("\"\\/\b\f\r\n\t", jsonParser.nextString());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -552,10 +552,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\uBEEF\\ubeef\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			Assert.assertEquals("\ubeef\uBEEF", jsonParser.nextString());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -568,10 +568,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\uD834\\uDD1E\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			Assert.assertEquals("\uD834\uDD1E", jsonParser.nextString());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -584,7 +584,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextString();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -603,7 +603,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextString();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -622,7 +622,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\x\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextString();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -641,7 +641,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\u"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextString();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -660,7 +660,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\u\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextString();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -679,7 +679,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\uNOPE\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.nextString();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
@@ -699,13 +699,13 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -720,13 +720,13 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -741,13 +741,13 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -762,13 +762,13 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -782,7 +782,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("["));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.currentState();
 
@@ -802,7 +802,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.currentState();
 
@@ -822,10 +822,10 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[]X"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.endArray();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -844,7 +844,7 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
 			Assert.assertTrue(jsonParser.hasNext());
@@ -854,7 +854,7 @@ public abstract class AbstractJsonPullParserTests {
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -869,7 +869,7 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
 			Assert.assertTrue(jsonParser.hasNext());
@@ -882,7 +882,7 @@ public abstract class AbstractJsonPullParserTests {
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -897,7 +897,7 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
 			Assert.assertTrue(jsonParser.hasNext());
@@ -910,7 +910,7 @@ public abstract class AbstractJsonPullParserTests {
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -924,7 +924,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[null"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.nextNull();
 			jsonParser.currentState();
@@ -945,7 +945,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[null}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.nextNull();
 			jsonParser.currentState();
@@ -966,7 +966,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[null,"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.nextNull();
 			jsonParser.currentState();
@@ -987,7 +987,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[null,]"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.nextNull();
 			jsonParser.currentState();
@@ -1009,13 +1009,13 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 			jsonParser.beginObject();
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -1029,7 +1029,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.currentState();
 
@@ -1049,7 +1049,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{]"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.currentState();
 
@@ -1070,7 +1070,7 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 			jsonParser.beginObject();
 			Assert.assertTrue(jsonParser.hasNext());
@@ -1082,7 +1082,7 @@ public abstract class AbstractJsonPullParserTests {
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -1097,7 +1097,7 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 			jsonParser.beginObject();
 			Assert.assertTrue(jsonParser.hasNext());
@@ -1114,7 +1114,7 @@ public abstract class AbstractJsonPullParserTests {
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -1129,7 +1129,7 @@ public abstract class AbstractJsonPullParserTests {
 		try {
 
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 			jsonParser.beginObject();
 			Assert.assertTrue(jsonParser.hasNext());
@@ -1144,7 +1144,7 @@ public abstract class AbstractJsonPullParserTests {
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
@@ -1158,7 +1158,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{null}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.currentState();
@@ -1179,7 +1179,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"foo\""));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.currentState();
@@ -1200,7 +1200,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"foo\":"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.currentState();
@@ -1221,7 +1221,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"foo\":null"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.nextNull();
@@ -1243,7 +1243,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"foo\":null,"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.nextNull();
@@ -1265,7 +1265,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"foo\",null}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.currentState();
@@ -1286,7 +1286,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"foo\":null,null}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.nextNull();
@@ -1308,7 +1308,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"foo\":null]"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.nextNull();
@@ -1333,7 +1333,7 @@ public abstract class AbstractJsonPullParserTests {
 			//@formatter:off
 			Assert.assertTrue(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			Assert.assertTrue(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 				jsonParser.beginObject();
@@ -1391,7 +1391,7 @@ public abstract class AbstractJsonPullParserTests {
 				jsonParser.endObject();
 				
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 			//@formatter:on
 
@@ -1406,11 +1406,11 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[]"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.skipValue();
 			Assert.assertTrue(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1423,14 +1423,14 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[null,\"keep\" ]"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.skipValue();
 			Assert.assertTrue(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			jsonParser.nextString();
 			jsonParser.endArray();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1443,13 +1443,13 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[]"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.skipValue();
 			Assert.assertFalse(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1462,14 +1462,14 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[[{\"skipped\":[true]}],\"keep\" ]"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.skipValue();
 			Assert.assertTrue(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			jsonParser.nextString();
 			jsonParser.endArray();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1482,11 +1482,11 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.skipValue();
 			Assert.assertTrue(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1499,13 +1499,13 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.skipValue();
 			Assert.assertFalse(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1518,7 +1518,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"skip\":null,\"keep\":null}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.skipValue();
 			Assert.assertTrue(jsonParser.hasNext());
@@ -1526,7 +1526,7 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.nextName();
 			jsonParser.nextNull();
 			jsonParser.endObject();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1539,7 +1539,7 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{\"skip\":null,\"keep\":null}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.skipValue();
@@ -1548,7 +1548,7 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.nextName();
 			jsonParser.nextNull();
 			jsonParser.endObject();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1561,12 +1561,12 @@ public abstract class AbstractJsonPullParserTests {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}"));
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.endObject();
 			jsonParser.skipValue();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 		} finally {
 			jsonParser.close();
@@ -1577,18 +1577,18 @@ public abstract class AbstractJsonPullParserTests {
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode() throws IOException, JsonSyntaxException {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}[]"),
-				JsonParserMode.MULTI_DOCUMNET_MODE);
+				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.endObject();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.endArray();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
@@ -1601,18 +1601,18 @@ public abstract class AbstractJsonPullParserTests {
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_trailingWhitespace() throws IOException, JsonSyntaxException {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}[] \n\r\t "),
-				JsonParserMode.MULTI_DOCUMNET_MODE);
+				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.endObject();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.endArray();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
@@ -1625,18 +1625,18 @@ public abstract class AbstractJsonPullParserTests {
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_separatingWhitespace() throws IOException, JsonSyntaxException {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{} \n\r\t []"),
-				JsonParserMode.MULTI_DOCUMNET_MODE);
+				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.endObject();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.endArray();
-			jsonParser.endDocumnet();
+			jsonParser.endDocument();
 
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
@@ -1653,7 +1653,7 @@ public abstract class AbstractJsonPullParserTests {
 
 		try {
 
-			jsonParser.beginDocumnet();
+			jsonParser.beginDocument();
 			jsonParser.beginObject();
 
 			throw new RuntimeException("Expected JsonSyntaxException");

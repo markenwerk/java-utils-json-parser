@@ -142,7 +142,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		this.source = source;
 		if (null != modes) {
 			List<JsonParserMode> modesList = Arrays.asList(modes);
-			this.multiDocumentMode = modesList.contains(JsonParserMode.MULTI_DOCUMNET_MODE);
+			this.multiDocumentMode = modesList.contains(JsonParserMode.MULTI_DOCUMENT_MODE);
 			this.strictStructMode = modesList.contains(JsonParserMode.STRICT_STRUCT_MODE);
 		} else {
 			this.multiDocumentMode = false;
@@ -484,12 +484,12 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	}
 
 	@Override
-	public void beginDocumnet() throws IllegalStateException, JsonSyntaxException, IOException {
+	public void beginDocument() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOCUMENT_BEGIN);
 	}
 
 	@Override
-	public void endDocumnet() throws IllegalStateException, JsonSyntaxException, IOException {
+	public void endDocument() throws IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOCUMENT_END);
 	}
 

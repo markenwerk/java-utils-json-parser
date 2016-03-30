@@ -1093,7 +1093,7 @@ public abstract class AbstractJsonPushParserTests {
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMNET_MODE);
+					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMENT_MODE);
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
@@ -1119,7 +1119,7 @@ public abstract class AbstractJsonPushParserTests {
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMNET_MODE);
+					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMENT_MODE);
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
@@ -1145,7 +1145,7 @@ public abstract class AbstractJsonPushParserTests {
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMNET_MODE);
+					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMENT_MODE);
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));

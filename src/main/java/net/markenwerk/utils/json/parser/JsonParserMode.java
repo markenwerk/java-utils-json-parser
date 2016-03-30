@@ -36,12 +36,12 @@ public enum JsonParserMode {
 	 * or to process a server response where the server sends multiple JSON
 	 * documents through a persistent connection.
 	 */
-	MULTI_DOCUMNET_MODE,
+	MULTI_DOCUMENT_MODE,
 
 	/**
 	 * Requires that the JSON document contains either a JSON array or a JSON
 	 * object, but no other JSON value, as required in the now obsolete <a
-	 * href="https://tools.ietf.org/html/rfc4627">RFC 4627<a>
+	 * href="https://tools.ietf.org/html/rfc4627">RFC 4627</a>
 	 */
 	STRICT_STRUCT_MODE
 

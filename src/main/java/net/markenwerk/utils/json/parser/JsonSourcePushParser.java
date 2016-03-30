@@ -163,7 +163,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 			this.handler = handler;
 			if (null != modes) {
 				List<JsonParserMode> modesList = Arrays.asList(modes);
-				this.multiDocumentMode = modesList.contains(JsonParserMode.MULTI_DOCUMNET_MODE);
+				this.multiDocumentMode = modesList.contains(JsonParserMode.MULTI_DOCUMENT_MODE);
 				this.strictStructMode = modesList.contains(JsonParserMode.STRICT_STRUCT_MODE);
 			} else {
 				this.multiDocumentMode = false;

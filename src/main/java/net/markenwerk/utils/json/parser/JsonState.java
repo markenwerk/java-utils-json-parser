@@ -39,7 +39,7 @@ public enum JsonState {
 
 	/**
 	 * The {@link JsonPullParser} has encountered the end of a JSON document. It
-	 * is possible to {@link JsonPullParser#endDocumnet() end} the document.
+	 * is possible to {@link JsonPullParser#endDocument() end} the document.
 	 */
 	DOCUMENT_END,
 

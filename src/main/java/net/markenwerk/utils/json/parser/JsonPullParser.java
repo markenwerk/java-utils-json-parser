@@ -78,7 +78,7 @@ public interface JsonPullParser extends Closeable {
 	 * @throws IOException
 	 *             If reading from the underlying {@link Reader} failed.
 	 */
-	public void beginDocumnet() throws IllegalStateException, JsonSyntaxException, IOException;
+	public void beginDocument() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
 	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
@@ -100,7 +100,7 @@ public interface JsonPullParser extends Closeable {
 	 * @throws IOException
 	 *             If reading from the underlying {@link Reader} failed.
 	 */
-	public void endDocumnet() throws IllegalStateException, JsonSyntaxException, IOException;
+	public void endDocument() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
 	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
