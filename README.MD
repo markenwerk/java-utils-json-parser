@@ -42,7 +42,7 @@ This library is intended to be as lightweight as possible and make no assumption
 
 Both parsers consume a [`JsonSource`][JsonSource], which represents a character stream and the necessary methods to it.
 
-This library provides the [`ReaderJsonStream`][ReaderJsonStream], which buffers and consumes the characters that are yielded by a given [`Reader`][Reader].
+This library provides the [`ReaderJsonSource`][ReaderJsonSource], which buffers and consumes the characters that are yielded by a given [`Reader`][Reader].
 
 ```java
 Reader reader = ...
