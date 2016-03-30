@@ -337,7 +337,6 @@ public final class JsonSourcePullParser implements JsonPullParser {
 			int available = source.getAvailable();
 			while (offset < available) {
 				char nextCharacter = source.peekCharacter(offset);
-				System.out.println(nextCharacter);
 				if ('"' == nextCharacter) {
 					final String stringValue;
 					if (buffered) {
@@ -346,8 +345,6 @@ public final class JsonSourcePullParser implements JsonPullParser {
 					} else {
 						stringValue = source.nextString(offset);
 					}
-					System.out.println("F" + nextCharacter);
-
 					source.nextCharacter();
 					return stringValue;
 				} else if ('\\' == nextCharacter) {
