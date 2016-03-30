@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -362,12 +362,20 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
 </td>
 </tr>
 <tr id="i22" class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#readString--">readString</a></span>()</code>
+<div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
+ <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a> and return a <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>
+ that consumes the corresponding value.</div>
+</td>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#skipValue--">skipValue</a></span>()</code>
 <div class="block">Skips the current JSON value.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -1021,6 +1029,41 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullPars
 <dd><code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#nextString--">nextString</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The string value.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
+             <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a>.</dd>
+<dd><code><a href="../../../../../net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser">JsonSyntaxException</a></code> - If the read <a href="../../../../../net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser"><code>JsonSyntaxException</code></a> document contains a
+             syntax error.</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
+</dl>
+</li>
+</ul>
+<a name="readString--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readString</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a>&nbsp;readString()
+                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
+                         <a href="../../../../../net/markenwerk/utils/json/parser/JsonSyntaxException.html" title="class in net.markenwerk.utils.json.parser">JsonSyntaxException</a>,
+                         <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#readString--">JsonPullParser</a></code></span></div>
+<div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/JsonSourcePullParser.html#currentState--"><code>current</code></a>
+ <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a> and return a <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>
+ that consumes the corresponding value. The next <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a>
+ describes either the next sibling value of this JSON value or the end of
+ surrounding JSON array or JSON object.
+ 
+ <p>
+ <b>Important:</b> the returned <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> must be
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true#read--" title="class or interface in java.io"><code>read</code></a> completely or <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true#close--" title="class or interface in java.io"><code>closed</code></a>,
+ before the next call to any other method of this <a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonPullParser</code></a>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html#readString--">readString</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPullParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPullParser</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> for the string value.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a>.</dd>
