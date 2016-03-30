@@ -129,6 +129,17 @@ while(jsonPullParser.hasNext()) {
 }
 ```
 
+Assuming the structure of the JSON document is known beforehand (e.g a JSON array of strings), it may not be necessary to repeatedly call `currentState()`:
+
+```java
+// consumes a jsonarray of strings
+jsonPullParser.beginArray();
+while(jsonPullParser.hasNext()) {
+    tags.add(jsonPullParser.nextString());
+}
+jsonPullParser.endArray();
+```
+
 ### Creating a document model
 
 This [gist](https://gist.github.com/toKrause/95944d3069b5422ee45f) shows a pair of simple helper methods using a [`JsonPullParser`][JsonPullParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
@@ -149,6 +160,50 @@ File file = ...;
 
 // create a new json object from the file content
 JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
+```
+
+### Skipping values
+
+A [`JsonPullParser`][JsonPullParser] can be instructed to skip the current value. If the current value state is `ARRAY_BEGIN` or `OBJECT_BEGIN` the whole JSON array or JSON object is skipped. Inside of an JSON object, a value may be skipped before or after the name has been pulled.
+
+```java
+while(jsonPullParser.hasNext()) {
+	switch(jsonPullParser.currentState()) {
+		case NAME:
+            String name = jsonPullParser.nextName();
+			if(name.equals("optional_content") {
+			    // ignore optional content 
+                jsonPullParser.skipValue();
+			}
+			...
+			break;
+
+		...
+		
+	}
+}
+```
+
+### Reading strings
+
+A [`JsonPullParser`][JsonPullParser] can be used to create a [`Reader`][Reader] for a JSON string. This may yield considerable performance improvements if a JSON document contains large strings that need to be further processed (e.g. a Base64-encoded image), because no string object has to be created.
+
+```java
+while(jsonPullParser.hasNext()) {
+	switch(jsonPullParser.currentState()) {
+		case NAME:
+            String name = jsonPullParser.nextName();
+			if(name.equals("image") {
+    			Reader imageReader = jsonPullParser.readString();
+			    image = ImageIO.read(new Base64InputStream(new ReaderInputStream(imageReader)));
+			}
+			...
+			break;
+
+		...
+		
+	}
+}
 ```
 
 ## Performance comparison
