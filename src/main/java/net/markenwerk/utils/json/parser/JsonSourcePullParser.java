@@ -23,6 +23,8 @@ package net.markenwerk.utils.json.parser;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A {@link JsonSourcePullParser} is a {@link JsonPullParser} that consumes a
@@ -51,6 +53,8 @@ public final class JsonSourcePullParser implements JsonPullParser {
 
 	private boolean multiDocumentMode;
 
+	private boolean strictStructMode;
+
 	/**
 	 * Creates a new {@link JsonSourcePullParser} for the given {@link String}.
 	 *
@@ -60,7 +64,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 *             If the given {@link String} is {@literal null}.
 	 */
 	public JsonSourcePullParser(String string) throws IllegalArgumentException {
-		this(new StringJsonSource(string), false);
+		this(new StringJsonSource(string), (JsonParserMode[]) null);
 	}
 
 	/**
@@ -72,7 +76,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 *             If the given {@code char[]} is {@literal null}.
 	 */
 	public JsonSourcePullParser(char[] characters) throws IllegalArgumentException {
-		this(new CharacterArrayJsonSource(characters), false);
+		this(new CharacterArrayJsonSource(characters), (JsonParserMode[]) null);
 	}
 
 	/**
@@ -84,7 +88,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 *             If the given {@link Reader} is {@literal null}.
 	 */
 	public JsonSourcePullParser(Reader reader) throws IllegalArgumentException {
-		this(new ReaderJsonSource(reader), false);
+		this(new ReaderJsonSource(reader), (JsonParserMode[]) null);
 	}
 
 	/**
@@ -101,7 +105,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 *             size.
 	 */
 	public JsonSourcePullParser(Reader reader, int size) throws IllegalArgumentException {
-		this(new ReaderJsonSource(reader, size), false);
+		this(new ReaderJsonSource(reader, size), (JsonParserMode[]) null);
 	}
 
 	/**
@@ -114,7 +118,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
 	public JsonSourcePullParser(JsonSource source) throws IllegalArgumentException {
-		this(source, false);
+		this(source, (JsonParserMode[]) null);
 
 	}
 
@@ -124,19 +128,26 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 * 
 	 * @param source
 	 *            The {@link JsonSource} to read from.
-	 * @param multiDocumentMode
-	 *            Whether to allow multiple JSON documents in the same
-	 *            {@link JsonSource}.
+	 * @param modes
+	 *            Selection of {@link JsonParserMode JsonParserModes} to be used
+	 *            during parsing.
 	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
-	public JsonSourcePullParser(JsonSource source, boolean multiDocumentMode) throws IllegalArgumentException {
+	public JsonSourcePullParser(JsonSource source, JsonParserMode... modes) throws IllegalArgumentException {
 		if (null == source) {
 			throw new IllegalArgumentException("source is null");
 		}
 		this.source = source;
-		this.multiDocumentMode = multiDocumentMode;
+		if (null != modes) {
+			List<JsonParserMode> modesList = Arrays.asList(modes);
+			this.multiDocumentMode = modesList.contains(JsonParserMode.MULTI_DOCUMNET_MODE);
+			this.strictStructMode = modesList.contains(JsonParserMode.STRICT_STRUCT_MODE);
+		} else {
+			this.multiDocumentMode = false;
+			this.strictStructMode = false;
+		}
 		stack.push(Context.BEFORE_PARSE);
 	}
 
@@ -188,11 +199,6 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	}
 
 	private JsonState prepareDocument() throws JsonSyntaxException, IOException {
-		// if (multiDocumentMode && hasNextNonWhitespace()) {
-		// stack.pop();
-		// stack.replace(Context.AFTER_PARSE);
-		// return JsonState.DOCUMENTS_END;
-		// } else {
 		stack.replace(Context.NONEMPTY_DOCUMENT);
 		char firstCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_DOCUMENT_START);
 		if ('[' == firstCharacter) {
@@ -202,9 +208,14 @@ public final class JsonSourcePullParser implements JsonPullParser {
 			stack.push(Context.EMPTY_OBJECT);
 			return JsonState.OBJECT_BEGIN;
 		} else {
-			throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
+			if (strictStructMode) {
+				throw syntaxError(JsonSyntaxError.INVALID_DOCUMENT_START);
+			} else if ('"' == firstCharacter) {
+				return prepareNextString();
+			} else {
+				return prepareNextLiteral(firstCharacter);
+			}
 		}
-		// }
 	}
 
 	private JsonState prepareArrayFirst() throws JsonSyntaxException, IOException {
@@ -300,7 +311,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		while (source.makeAvailable(1)) {
 			for (int i = 0, n = source.getAvailable(); i < n; i++) {
 				char nextCharacter = source.nextCharacter();
-				if (' ' != nextCharacter && '\n' != nextCharacter && '\t' != nextCharacter && '\r' != nextCharacter) {
+				if (' ' != nextCharacter && '\t' != nextCharacter && '\n' != nextCharacter && '\r' != nextCharacter) {
 					return nextCharacter;
 				}
 			}
@@ -312,7 +323,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		while (0 != source.makeAvailable()) {
 			for (int i = 0, n = source.getAvailable(); i < n; i++) {
 				char nextCharacter = source.peekCharacter(0);
-				if (' ' != nextCharacter && '\n' != nextCharacter && '\t' != nextCharacter && '\r' != nextCharacter) {
+				if (' ' != nextCharacter && '\t' != nextCharacter && '\n' != nextCharacter && '\r' != nextCharacter) {
 					return true;
 				} else {
 					source.nextCharacter();
@@ -372,10 +383,10 @@ public final class JsonSourcePullParser implements JsonPullParser {
 				return '\b';
 			case 'f':
 				return '\f';
-			case 'r':
-				return '\r';
 			case 'n':
 				return '\n';
+			case 'r':
+				return '\r';
 			case 't':
 				return '\t';
 			case 'u':
@@ -414,8 +425,8 @@ public final class JsonSourcePullParser implements JsonPullParser {
 			case ' ':
 			case '\b':
 			case '\f':
-			case '\r':
 			case '\n':
+			case '\r':
 			case '\t':
 				return decodeLiteral(builder.toString());
 			default:
@@ -426,12 +437,12 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	}
 
 	private JsonState decodeLiteral(String literal) throws JsonSyntaxException {
-		if ("null".equalsIgnoreCase(literal)) {
+		if ("null".equals(literal)) {
 			return JsonState.NULL;
-		} else if ("false".equalsIgnoreCase(literal)) {
+		} else if ("false".equals(literal)) {
 			booleanValue = false;
 			return JsonState.BOOLEAN;
-		} else if ("true".equalsIgnoreCase(literal)) {
+		} else if ("true".equals(literal)) {
 			booleanValue = true;
 			return JsonState.BOOLEAN;
 		} else {

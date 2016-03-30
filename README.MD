@@ -6,7 +6,7 @@
 [![Issues](https://img.shields.io/github/issues/markenwerk/java-utils-json-parser.svg)](https://github.com/markenwerk/java-utils-json-parser/issues)
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/markenwerk/java-utils-json-parser/blob/master/LICENSE)
 
-This library provides a pair of lightweight event based JSON parsers (a pull parser and a push parser). An event based parser just emits a stream of events and doesn't create a document model for the parsed JSON document.
+This library provides a pair of lightweight event based JSON parsers (a pull parser and a push parser) for JSON as specified in [RFC 7159](https://tools.ietf.org/html/rfc7159). An event based parser just emits a stream of events and doesn't create a document model for the parsed JSON document.
 
 ## Overview
 

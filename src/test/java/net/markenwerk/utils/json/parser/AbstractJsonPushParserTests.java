@@ -83,10 +83,10 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmpty_invalidStart() throws IOException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\""));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("null"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullHandler(), JsonParserMode.STRICT_STRUCT_MODE);
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -97,6 +97,419 @@ public abstract class AbstractJsonPushParserTests {
 			jsonParser.close();
 		}
 	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleNull() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("null"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new NullJsonEvent(), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleFalse() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("false"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new BooleanJsonEvent(false), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleTrue() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("true"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new BooleanJsonEvent(true), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleLong() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("0"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new LongJsonEvent(0), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singlePositiveLong() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("42"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new LongJsonEvent(42), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleNegativeLong() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("-42"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new LongJsonEvent(-42), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleDouble() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("0.0"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new DoubleJsonEvent(0.0), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singlePositiveDouble() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("42.23"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new DoubleJsonEvent(42.23), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleNegativeDouble() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("-42.23"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new DoubleJsonEvent(-42.23), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singlePositiveDoubleWithPositiveExponent() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("42.0e7"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new DoubleJsonEvent(42.0e7), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singlePositiveDoubleWithNegativeExponent() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("42.0e-7"));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new DoubleJsonEvent(42.0e-7), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleInvalidLiteal() throws IOException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("x"));
+		try {
+
+			jsonParser.handle(new NullHandler());
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.INVALID_LITERAL, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+	
+	
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleEmptyString() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\""));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new StringJsonEvent(""), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyString() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"foo\""));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new StringJsonEvent("foo"), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyVeryLargeString() throws IOException, JsonSyntaxException {
+		String value = createVeryLargeString();
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"" + value + "\""));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new StringJsonEvent(value), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	private String createVeryLargeString() {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < 10000; i++) {
+			builder.append((char) ('a' + i % 26));
+		}
+		String value = builder.toString();
+		return value;
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringWithEscapeSequences() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\\"\\\\\\/\\b\\f\\r\\n\\t\""));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new StringJsonEvent("\"\\/\b\f\r\n\t"), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringWithUnicodeEscapeSequences() throws IOException, JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\uBEEF\\ubeef\""));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new StringJsonEvent("\ubeef\uBEEF"), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringWithSurrogateUnicodeEscapeSequences() throws IOException,
+			JsonSyntaxException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\uD834\\uDD1E\""));
+		try {
+
+			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
+					new CollectingJsonEventHandler()));
+
+			Assert.assertEquals(new StringJsonEvent("\uD834\uDD1E"), events.get(1));
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringDangelingEscapeSequence() throws IOException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\"));
+		try {
+
+			jsonParser.handle(new NullHandler());
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.UNFINISHED_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringUnterminatedEscapeSequence() throws IOException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\\""));
+		try {
+
+			jsonParser.handle(new NullHandler());
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.UNTERMINATED_STRING, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringInvalidEscapeSequence() throws IOException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\x\""));
+		try {
+
+			jsonParser.handle(new NullHandler());
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.INVALID_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringDangelingUnicodeEscapeSequence() throws IOException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\u"));
+		try {
+
+			jsonParser.handle(new NullHandler());
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringUnterminatedUnicodeEscapeSequence() throws IOException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\u\""));
+		try {
+
+			jsonParser.handle(new NullHandler());
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_singleNonEmptyStringInvalidUnicodeEscapeSequence() throws IOException {
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("\"\\uNOPE\""));
+		try {
+
+			jsonParser.handle(new NullHandler());
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.INVALID_UNICODE_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+	
 
 	@Test
 	@SuppressWarnings("javadoc")
@@ -234,407 +647,19 @@ public abstract class AbstractJsonPushParserTests {
 
 	@Test
 	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNull() throws IOException, JsonSyntaxException {
+	public void nonEmptyArray_singleValue() throws IOException, JsonSyntaxException {
 		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[null]"));
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
 					new CollectingJsonEventHandler()));
 
+			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
+			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
 			Assert.assertEquals(new NullJsonEvent(), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleFalse() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[false]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new BooleanJsonEvent(false), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleTrue() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[true]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new BooleanJsonEvent(true), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleEmptyString() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\"]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new StringJsonEvent(""), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyString() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"foo\"]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new StringJsonEvent("foo"), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyVeryLargeString() throws IOException, JsonSyntaxException {
-		String value = createVeryLargeString();
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"" + value + "\"]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new StringJsonEvent(value), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	private String createVeryLargeString() {
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < 10000; i++) {
-			builder.append((char) ('a' + i % 26));
-		}
-		String value = builder.toString();
-		return value;
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringWithEscapeSequences() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\\"\\\\\\/\\b\\f\\r\\n\\t\"]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new StringJsonEvent("\"\\/\b\f\r\n\t"), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringWithUnicodeEscapeSequences() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\uBEEF\\ubeef\"]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new StringJsonEvent("\ubeef\uBEEF"), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringWithSurrogateUnicodeEscapeSequences() throws IOException,
-			JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\uD834\\uDD1E\"]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new StringJsonEvent("\uD834\uDD1E"), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringDangelingEscapeSequences() throws IOException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\"));
-		try {
-
-			jsonParser.handle(new NullHandler());
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.UNFINISHED_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringUnterminatedEscapeSequences() throws IOException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\\"]"));
-		try {
-
-			jsonParser.handle(new NullHandler());
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.UNTERMINATED_STRING, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringInvalidEscapeSequences() throws IOException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\x\"]"));
-		try {
-
-			jsonParser.handle(new NullHandler());
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.INVALID_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringDangelingUnicodeEscapeSequences() throws IOException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\u"));
-		try {
-
-			jsonParser.handle(new NullHandler());
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringUnterminatedUnicodeEscapeSequences() throws IOException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\u\",null]"));
-		try {
-
-			jsonParser.handle(new NullHandler());
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringInvalidUnicodeEscapeSequences() throws IOException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[\"\\uNOPE\"]"));
-		try {
-
-			jsonParser.handle(new NullHandler());
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.INVALID_UNICODE_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleLong() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[0]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new LongJsonEvent(0), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singlePositiveLong() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[42]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new LongJsonEvent(42), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNegativeLong() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[-42]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new LongJsonEvent(-42), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleDouble() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[0.0]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new DoubleJsonEvent(0.0), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singlePositiveDouble() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[42.23]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new DoubleJsonEvent(42.23), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNegativeDouble() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[-42.23]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new DoubleJsonEvent(-42.23), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singlePositiveDoubleWithPositiveExponent() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[42.0e7]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new DoubleJsonEvent(42.0e7), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singlePositiveDoubleWithNegativeExponent() throws IOException, JsonSyntaxException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[42.0e-7]"));
-		try {
-
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
-
-			Assert.assertEquals(new DoubleJsonEvent(42.0e-7), events.get(2));
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleInvalidLiteal() throws IOException {
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("[x]"));
-		try {
-
-			jsonParser.handle(new NullHandler());
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.INVALID_LITERAL, exception.getError());
+			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(3));
+			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(4));
+			Assert.assertEquals(5, events.size());
 
 		} finally {
 			jsonParser.close();
@@ -1068,7 +1093,7 @@ public abstract class AbstractJsonPushParserTests {
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), true);
+					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMNET_MODE);
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
@@ -1086,7 +1111,7 @@ public abstract class AbstractJsonPushParserTests {
 			jsonParser.close();
 		}
 	}
-	
+
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_trailingWhitespace() throws IOException, JsonSyntaxException {
@@ -1094,7 +1119,7 @@ public abstract class AbstractJsonPushParserTests {
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), true);
+					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMNET_MODE);
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
@@ -1112,7 +1137,7 @@ public abstract class AbstractJsonPushParserTests {
 			jsonParser.close();
 		}
 	}
-	
+
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_separatingWhitespace() throws IOException, JsonSyntaxException {
@@ -1120,7 +1145,7 @@ public abstract class AbstractJsonPushParserTests {
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), true);
+					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMNET_MODE);
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
@@ -1143,7 +1168,7 @@ public abstract class AbstractJsonPushParserTests {
 	@SuppressWarnings("javadoc")
 	public void syntaxError_position() throws IOException {
 
-		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("  \n  \n  \n   Xfoobar"));
+		JsonSourcePushParser jsonParser = new JsonSourcePushParser(getSource("  \n  \n  \n   X"));
 
 		try {
 

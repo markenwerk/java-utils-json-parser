@@ -61,7 +61,7 @@ public abstract class AbstractJsonPullParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmpty_invalidStart() throws IOException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\""));
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("null"), JsonParserMode.STRICT_STRUCT_MODE);
 		try {
 
 			jsonParser.beginDocumnet();
@@ -71,6 +71,621 @@ public abstract class AbstractJsonPullParserTests {
 		} catch (JsonSyntaxException exception) {
 
 			Assert.assertEquals(JsonSyntaxError.INVALID_DOCUMENT_START, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_null() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("null"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
+			jsonParser.nextNull();
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_false() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("false"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.BOOLEAN, jsonParser.currentState());
+			Assert.assertEquals(false, jsonParser.nextBoolean());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_true() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("true"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.BOOLEAN, jsonParser.currentState());
+			Assert.assertEquals(true, jsonParser.nextBoolean());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleLong() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("0"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
+			Assert.assertEquals(0, jsonParser.nextLong());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singlePositiveLong() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
+			Assert.assertEquals(42, jsonParser.nextLong());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleNegativeLong() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("-42"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
+			Assert.assertEquals(-42, jsonParser.nextLong());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleInteger() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
+			Assert.assertEquals(42, jsonParser.nextInteger());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test(expected = ArithmeticException.class)
+	public void literal_singleTooLargeInteger() throws IOException, JsonSyntaxException {
+		long value = ((long) Integer.MAX_VALUE) + 1;
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextInteger();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test(expected = ArithmeticException.class)
+	public void literal_singleTooSmallInteger() throws IOException, JsonSyntaxException {
+		long value = ((long) Integer.MIN_VALUE) - 1;
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextInteger();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleShort() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
+			Assert.assertEquals(42, jsonParser.nextShort());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test(expected = ArithmeticException.class)
+	public void literal_singleTooLargeShort() throws IOException, JsonSyntaxException {
+		long value = ((long) Short.MAX_VALUE) + 1;
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextShort();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test(expected = ArithmeticException.class)
+	public void literal_singleTooSmallShort() throws IOException, JsonSyntaxException {
+		long value = ((long) Short.MIN_VALUE) - 1;
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextShort();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleCharacter() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
+			Assert.assertEquals(42, jsonParser.nextCharacter());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test(expected = ArithmeticException.class)
+	public void literal_singleTooLargeCharacter() throws IOException, JsonSyntaxException {
+		long value = ((long) Character.MAX_VALUE) + 1;
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextCharacter();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test(expected = ArithmeticException.class)
+	public void literal_singleTooSmallCharacter() throws IOException, JsonSyntaxException {
+		long value = ((long) Character.MIN_VALUE) - 1;
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextCharacter();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleByte() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
+			Assert.assertEquals(42, jsonParser.nextByte());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test(expected = ArithmeticException.class)
+	public void literal_singleTooLargeByte() throws IOException, JsonSyntaxException {
+		long value = ((long) Byte.MAX_VALUE) + 1;
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextByte();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test(expected = ArithmeticException.class)
+	public void literal_singleTooSmallByte() throws IOException, JsonSyntaxException {
+		long value = ((long) Byte.MIN_VALUE) - 1;
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource(Long.toString(value)));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextByte();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleDouble() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("0.0"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
+			Assert.assertEquals(0, jsonParser.nextDouble(), 0e-10);
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singlePositiveDouble() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42.23"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
+			Assert.assertEquals(42.23, jsonParser.nextDouble(), 0e-10);
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleNegativeDouble() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("-42.23"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
+			Assert.assertEquals(-42.23, jsonParser.nextDouble(), 0e-10);
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singlePositiveDoubleWithPositiveExponent() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42.0e7"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
+			Assert.assertEquals(42.0e7, jsonParser.nextDouble(), 0e-10);
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singlePositiveDoubleWithNegativeExponent() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42.0e-7"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
+			Assert.assertEquals(42.0e-7, jsonParser.nextDouble(), 0e-10);
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleFloat() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("42.23"));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
+			Assert.assertEquals(42.23f, jsonParser.nextFloat(), 0e-10f);
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void literal_singleInvalidLiteal() throws IOException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("x"));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.currentState();
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.INVALID_LITERAL, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_empty() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals("", jsonParser.nextString());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_nonEmpty() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"foo\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals("foo", jsonParser.nextString());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_veryLarge() throws IOException, JsonSyntaxException {
+		String value = createVeryLargeString();
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"" + value + "\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals(value, jsonParser.nextString());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	private String createVeryLargeString() {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < 10000; i++) {
+			builder.append((char) ('a' + i % 26));
+		}
+		String value = builder.toString();
+		return value;
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_withEscapeSequences() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\\"\\\\\\/\\b\\f\\r\\n\\t\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals("\"\\/\b\f\r\n\t", jsonParser.nextString());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_withUnicodeEscapeSequences() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\uBEEF\\ubeef\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals("\ubeef\uBEEF", jsonParser.nextString());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_withSurrogateUnicodeEscapeSequence() throws IOException, JsonSyntaxException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\uD834\\uDD1E\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
+			Assert.assertEquals("\uD834\uDD1E", jsonParser.nextString());
+			jsonParser.endDocumnet();
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_dangelingEscapeSequence() throws IOException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\"));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextString();
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.UNFINISHED_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_unterminatedEscapeSequence() throws IOException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextString();
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.UNTERMINATED_STRING, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_invalidEscapeSequence() throws IOException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\x\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextString();
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.INVALID_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_dangelingUnicodeEscapeSequence() throws IOException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\u"));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextString();
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_unterminatedUnicodeEscapeSequence() throws IOException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\u\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextString();
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE, exception.getError());
+
+		} finally {
+			jsonParser.close();
+		}
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void string_invalidUnicodeEscapeSequence() throws IOException {
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("\"\\uNOPE\""));
+		try {
+
+			jsonParser.beginDocumnet();
+			jsonParser.nextString();
+
+			throw new RuntimeException("Expected JsonSyntaxException");
+		} catch (JsonSyntaxException exception) {
+
+			Assert.assertEquals(JsonSyntaxError.INVALID_UNICODE_ESCAPE_SEQUENCE, exception.getError());
 
 		} finally {
 			jsonParser.close();
@@ -224,673 +839,23 @@ public abstract class AbstractJsonPullParserTests {
 
 	@Test
 	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNull() throws IOException, JsonSyntaxException {
+	public void nonEmptyArray_singleValue() throws IOException, JsonSyntaxException {
 		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[null]"));
 		try {
 
+			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
 			jsonParser.beginDocumnet();
+			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
+			Assert.assertTrue(jsonParser.hasNext());
 			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
 			jsonParser.nextNull();
+			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
+			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
 			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleFalse() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[false]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.BOOLEAN, jsonParser.currentState());
-			Assert.assertEquals(false, jsonParser.nextBoolean());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleTrue() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[true]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.BOOLEAN, jsonParser.currentState());
-			Assert.assertEquals(true, jsonParser.nextBoolean());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleEmptyString() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
-			Assert.assertEquals("", jsonParser.nextString());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyString() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"foo\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
-			Assert.assertEquals("foo", jsonParser.nextString());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyVeryLargeString() throws IOException, JsonSyntaxException {
-		String value = createVeryLargeString();
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"" + value + "\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
-			Assert.assertEquals(value, jsonParser.nextString());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	private String createVeryLargeString() {
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < 10000; i++) {
-			builder.append((char) ('a' + i % 26));
-		}
-		String value = builder.toString();
-		return value;
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringWithEscapeSequences() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\\"\\\\\\/\\b\\f\\r\\n\\t\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
-			Assert.assertEquals("\"\\/\b\f\r\n\t", jsonParser.nextString());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringWithUnicodeEscapeSequences() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\uBEEF\\ubeef\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
-			Assert.assertEquals("\ubeef\uBEEF", jsonParser.nextString());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringWithSurrogateUnicodeEscapeSequences() throws IOException,
-			JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\uD834\\uDD1E\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
-			Assert.assertEquals("\uD834\uDD1E", jsonParser.nextString());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringDangelingEscapeSequences() throws IOException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextString();
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.UNFINISHED_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringUnterminatedEscapeSequences() throws IOException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextString();
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.UNTERMINATED_STRING, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringInvalidEscapeSequences() throws IOException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\x\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextString();
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.INVALID_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringDangelingUnicodeEscapeSequences() throws IOException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\u"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextString();
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringUnterminatedUnicodeEscapeSequences() throws IOException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\u\",null]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextString();
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.UNFINISHED_UNICODE_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNonEmptyStringInvalidUnicodeEscapeSequences() throws IOException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[\"\\uNOPE\"]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextString();
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.INVALID_UNICODE_ESCAPE_SEQUENCE, exception.getError());
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleLong() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[0]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
-			Assert.assertEquals(0, jsonParser.nextLong());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singlePositiveLong() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
-			Assert.assertEquals(42, jsonParser.nextLong());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNegativeLong() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[-42]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
-			Assert.assertEquals(-42, jsonParser.nextLong());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleInteger() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
-			Assert.assertEquals(42, jsonParser.nextInteger());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
-	public void nonEmptyArray_singleTooLargeInteger() throws IOException, JsonSyntaxException {
-		long value = ((long) Integer.MAX_VALUE) + 1;
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[" + value + "]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextInteger();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
-	public void nonEmptyArray_singleTooSmallInteger() throws IOException, JsonSyntaxException {
-		long value = ((long) Integer.MIN_VALUE) - 1;
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[" + value + "]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextInteger();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleShort() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
-			Assert.assertEquals(42, jsonParser.nextShort());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
-	public void nonEmptyArray_singleTooLargeShort() throws IOException, JsonSyntaxException {
-		long value = ((long) Short.MAX_VALUE) + 1;
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[" + value + "]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextShort();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
-	public void nonEmptyArray_singleTooSmallShort() throws IOException, JsonSyntaxException {
-		long value = ((long) Short.MIN_VALUE) - 1;
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[" + value + "]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextShort();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleCharacter() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
-			Assert.assertEquals(42, jsonParser.nextCharacter());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
-	public void nonEmptyArray_singleTooLargeCharacter() throws IOException, JsonSyntaxException {
-		long value = ((long) Character.MAX_VALUE) + 1;
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[" + value + "]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextCharacter();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
-	public void nonEmptyArray_singleTooSmallCharacter() throws IOException, JsonSyntaxException {
-		long value = ((long) Character.MIN_VALUE) - 1;
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[" + value + "]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextCharacter();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleByte() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
-			Assert.assertEquals(42, jsonParser.nextByte());
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
-	public void nonEmptyArray_singleTooLargeByte() throws IOException, JsonSyntaxException {
-		long value = ((long) Byte.MAX_VALUE) + 1;
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[" + value + "]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextByte();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
-	public void nonEmptyArray_singleTooSmallByte() throws IOException, JsonSyntaxException {
-		long value = ((long) Byte.MIN_VALUE) - 1;
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[" + value + "]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.nextByte();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleDouble() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[0.0]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
-			Assert.assertEquals(0, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singlePositiveDouble() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42.23]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
-			Assert.assertEquals(42.23, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleNegativeDouble() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[-42.23]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
-			Assert.assertEquals(-42.23, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singlePositiveDoubleWithPositiveExponent() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42.0e7]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
-			Assert.assertEquals(42.0e7, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singlePositiveDoubleWithNegativeExponent() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42.0e-7]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
-			Assert.assertEquals(42.0e-7, jsonParser.nextDouble(), 0e-10);
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleFloat() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[42.23]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			Assert.assertEquals(JsonState.DOUBLE, jsonParser.currentState());
-			Assert.assertEquals(42.23f, jsonParser.nextFloat(), 0e-10f);
-			jsonParser.endArray();
-			jsonParser.endDocumnet();
-
-		} finally {
-			jsonParser.close();
-		}
-	}
-
-	@Test
-	@SuppressWarnings("javadoc")
-	public void nonEmptyArray_singleInvalidLiteal() throws IOException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("[x]"));
-		try {
-
-			jsonParser.beginDocumnet();
-			jsonParser.beginArray();
-			jsonParser.currentState();
-
-			throw new RuntimeException("Expected JsonSyntaxException");
-		} catch (JsonSyntaxException exception) {
-
-			Assert.assertEquals(JsonSyntaxError.INVALID_LITERAL, exception.getError());
+			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
 
 		} finally {
 			jsonParser.close();
@@ -1611,7 +1576,8 @@ public abstract class AbstractJsonPullParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}[]"), true);
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}[]"),
+				JsonParserMode.MULTI_DOCUMNET_MODE);
 		try {
 
 			jsonParser.beginDocumnet();
@@ -1634,7 +1600,8 @@ public abstract class AbstractJsonPullParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_trailingWhitespace() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}[] \n\r\t "), true);
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{}[] \n\r\t "),
+				JsonParserMode.MULTI_DOCUMNET_MODE);
 		try {
 
 			jsonParser.beginDocumnet();
@@ -1657,7 +1624,8 @@ public abstract class AbstractJsonPullParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_separatingWhitespace() throws IOException, JsonSyntaxException {
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{} \n\r\t []"), true);
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("{} \n\r\t []"),
+				JsonParserMode.MULTI_DOCUMNET_MODE);
 		try {
 
 			jsonParser.beginDocumnet();
@@ -1681,7 +1649,7 @@ public abstract class AbstractJsonPullParserTests {
 	@SuppressWarnings("javadoc")
 	public void syntaxError_position() throws IOException {
 
-		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("  \n  \n  \n   Xfoobar"));
+		JsonSourcePullParser jsonParser = new JsonSourcePullParser(getSource("  \n  \n  \n   X"));
 
 		try {
 
