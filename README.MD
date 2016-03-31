@@ -24,9 +24,9 @@ Consult the [usage description](#usage) and [Javadoc](http://markenwerk.github.i
 
 # Motivation
 
-The original intention was, to create a pure JAVA implementation of an event based JSON parser, that  (like Android's [`JsonReader`](https://developer.android.com/reference/android/util/JsonReader.html)) has the ability, to stream through a character stream and process the contained JSON document, without the need to read the whole character stream into a string first.
+The original intention was, to create a pure Java implementation of an event based JSON parser, that  (like Android's [`JsonReader`](https://developer.android.com/reference/android/util/JsonReader.html)) has the ability, to stream through a character stream and process the contained JSON document, without the need to read the whole character stream into a string first.
 
-As a pure JAVA implementation, this library is available on all Java based execution environments, not just on Android.
+As a pure Java implementation, this library is available on all Java based execution environments, not just on Android.
 
 An event base parser that (unlike most JSON libraries) dosn't create a document model, may be used to
 
