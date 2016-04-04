@@ -66,7 +66,7 @@ public final class JsonEventJsonHandler<Result> implements JsonHandler<Result> {
 	}
 
 	@Override
-	public void onEndObject() {
+	public void onObjectEnd() {
 		handler.onEvent(new ObjectEndJsonEvent());
 	}
 

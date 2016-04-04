@@ -28,7 +28,7 @@ public class NullHandler implements JsonHandler<Void> {
 	}
 
 	@Override
-	public void onEndObject() {
+	public void onObjectEnd() {
 	}
 
 	@Override

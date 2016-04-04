@@ -55,7 +55,7 @@ public interface JsonHandler<Result> {
 
 	/**
 	 * Called when the parsing of a JSON object started. A corresponding call
-	 * for the {@link JsonHandler#onEndObject() end} will eventually be called.
+	 * for the {@link JsonHandler#onObjectEnd() end} will eventually be called.
 	 */
 	public void onObjectBegin();
 
@@ -71,7 +71,7 @@ public interface JsonHandler<Result> {
 	/**
 	 * Called when the parsing of a JSON object ended.
 	 */
-	public void onEndObject();
+	public void onObjectEnd();
 
 	/**
 	 * Called when the parsing of a JSON object encountered a JSON null.

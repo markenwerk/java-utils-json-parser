@@ -233,7 +233,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		handler.onObjectBegin();
 		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FIRST);
 		if ('}' == nextCharacter) {
-			handler.onEndObject();
+			handler.onObjectEnd();
 		} else if ('"' == nextCharacter) {
 			handleObjectValue();
 			handleObjectFollowing();
@@ -246,7 +246,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		while (true) {
 			char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FOLLOW);
 			if ('}' == nextCharacter) {
-				handler.onEndObject();
+				handler.onObjectEnd();
 				break;
 			} else if (',' == nextCharacter) {
 				nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_NAME);

@@ -594,11 +594,11 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		consume(JsonState.LONG);
 		if (longValue < Byte.MIN_VALUE) {
 			throw new ArithmeticException("Value is too small to be a byte");
-		}
-		if (longValue > Byte.MAX_VALUE) {
+		} else if (longValue > Byte.MAX_VALUE) {
 			throw new ArithmeticException("Value is too large to be a byte");
+		} else {
+			return (byte) longValue;
 		}
-		return (byte) longValue;
 	}
 
 	@Override
@@ -606,11 +606,11 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		consume(JsonState.LONG);
 		if (longValue < Character.MIN_VALUE) {
 			throw new ArithmeticException("Value is too small to be a character");
-		}
-		if (longValue > Character.MAX_VALUE) {
+		} else if (longValue > Character.MAX_VALUE) {
 			throw new ArithmeticException("Value is too large to be a character");
+		} else {
+			return (char) longValue;
 		}
-		return (char) longValue;
 	}
 
 	@Override
@@ -618,11 +618,11 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		consume(JsonState.LONG);
 		if (longValue < Short.MIN_VALUE) {
 			throw new ArithmeticException("Value is too small to be a short");
-		}
-		if (longValue > Short.MAX_VALUE) {
+		} else if (longValue > Short.MAX_VALUE) {
 			throw new ArithmeticException("Value is too large to be a short");
+		} else {
+			return (short) longValue;
 		}
-		return (short) longValue;
 	}
 
 	@Override
@@ -630,11 +630,11 @@ public final class JsonSourcePullParser implements JsonPullParser {
 		consume(JsonState.LONG);
 		if (longValue < Integer.MIN_VALUE) {
 			throw new ArithmeticException("Value is too small to be an integer");
-		}
-		if (longValue > Integer.MAX_VALUE) {
+		} else if (longValue > Integer.MAX_VALUE) {
 			throw new ArithmeticException("Value is too large to be an integer");
+		} else {
+			return (int) longValue;
 		}
-		return (int) longValue;
 	}
 
 	@Override
