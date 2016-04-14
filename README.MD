@@ -1,7 +1,8 @@
 # An event based JSON parser for Java
 
 [![Build Status](https://travis-ci.org/markenwerk/java-utils-json-parser.svg?branch=master)](https://travis-ci.org/markenwerk/java-utils-json-parser)
-[![Coverage Status](https://coveralls.io/repos/github/markenwerk/java-utils-data-fetcher/badge.svg?branch=master)](https://coveralls.io/github/markenwerk/java-utils-data-fetcher?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/markenwerk/java-utils-json-parser/badge.svg?branch=master)](https://coveralls.io/github/markenwerk/java-utils-json-parser?branch=master)
+[![Dependency Status](https://www.versioneye.com/user/projects/57100ec5fcd19a0039f16fa4/badge.svg)](https://www.versioneye.com/user/projects/57100ec5fcd19a0039f16fa4)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.markenwerk/utils-json-parser/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.markenwerk/utils-json-parser)
 [![Issues](https://img.shields.io/github/issues/markenwerk/java-utils-json-parser.svg)](https://github.com/markenwerk/java-utils-json-parser/issues)
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/markenwerk/java-utils-json-parser/blob/master/LICENSE)
