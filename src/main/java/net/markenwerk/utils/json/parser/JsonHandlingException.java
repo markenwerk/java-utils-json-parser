@@ -34,7 +34,7 @@ public class JsonHandlingException extends RuntimeException {
 
 	/**
 	 * Creates a new {@link JsonHandlingException} with the given message and
-	 * cause. The given cause is chained to this exception.
+	 * cause.
 	 *
 	 * @param message
 	 *            The message.
@@ -62,7 +62,7 @@ public class JsonHandlingException extends RuntimeException {
 	 *            The cause of this {@link JsonHandlingException}.
 	 */
 	public JsonHandlingException(Throwable cause) {
-		super(cause.getMessage(), cause);
+		super(null == cause ? null : cause.getMessage(), cause);
 	}
 
 }
