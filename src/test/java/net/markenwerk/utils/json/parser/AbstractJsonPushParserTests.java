@@ -58,7 +58,7 @@ public abstract class AbstractJsonPushParserTests {
 
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
-	public void create_nullHandler() throws IllegalArgumentException, JsonSyntaxException, IOException {
+	public void create_nullHandler() throws IllegalArgumentException, IOException {
 		new JsonSourcePushParser(getSource("")).handle(null);
 	}
 

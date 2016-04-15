@@ -29,7 +29,7 @@ package net.markenwerk.utils.json.parser;
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
  */
-public final class JsonSyntaxException extends Exception {
+public final class JsonSyntaxException extends RuntimeException {
 
 	private static final long serialVersionUID = 4648280170907086815L;
 

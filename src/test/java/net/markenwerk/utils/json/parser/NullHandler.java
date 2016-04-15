@@ -24,11 +24,15 @@ public class NullHandler implements JsonHandler<Void> {
 	}
 
 	@Override
+	public void onObjectEnd() {
+	}
+
+	@Override
 	public void onName(String name) {
 	}
 
 	@Override
-	public void onObjectEnd() {
+	public void onNext() {
 	}
 
 	@Override

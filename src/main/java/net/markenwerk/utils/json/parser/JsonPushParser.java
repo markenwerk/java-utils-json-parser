@@ -55,14 +55,17 @@ public interface JsonPushParser extends Closeable {
 	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link JsonHandler} is {@literal null}.
+	 * @throws IOException
+	 *             If reading from the underlying {@link Reader} failed.
 	 * @throws JsonSyntaxException
 	 *             If the {@link JsonSyntaxException} document contains a syntax
 	 *             error.
-	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 * @throws JsonHandlingException
+	 *             If the given {@link JsonHandler} failed to while handling an
+	 *             event.
 	 */
-	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, JsonSyntaxException,
-			IOException;
+	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, IOException,
+			JsonSyntaxException, JsonHandlingException;
 
 	/**
 	 * Returns the {@link JsonSource#getLine() line} that corresponds to the

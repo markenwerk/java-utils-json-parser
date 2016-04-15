@@ -121,8 +121,8 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	}
 
 	@Override
-	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, JsonSyntaxException,
-			IOException {
+	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, JsonHandlingException,
+			JsonSyntaxException, IOException {
 		return handle(handler, (JsonParserMode[]) null);
 	}
 
@@ -148,14 +148,17 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link JsonHandler} is {@literal null}.
+	 * @throws IOException
+	 *             If reading from the underlying {@link Reader} failed.
 	 * @throws JsonSyntaxException
 	 *             If the {@link JsonSyntaxException} document contains a syntax
 	 *             error.
-	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 * @throws JsonHandlingException
+	 *             If the given {@link JsonHandler} failed to while handling an
+	 *             event.
 	 */
 	public <Result> Result handle(JsonHandler<Result> handler, JsonParserMode... modes)
-			throws IllegalArgumentException, JsonSyntaxException, IOException {
+			throws IllegalArgumentException, IOException, JsonSyntaxException, JsonHandlingException {
 		if (null == handler) {
 			throw new IllegalArgumentException("handler is null");
 		}
@@ -176,7 +179,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleDocument() throws JsonSyntaxException, IOException {
+	private void handleDocument() throws JsonSyntaxException, JsonHandlingException, IOException {
 		while (true) {
 			handler.onDocumentBegin();
 			char firstCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_DOCUMENT_START);
@@ -204,7 +207,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleArrayFirst() throws JsonSyntaxException, IOException {
+	private void handleArrayFirst() throws JsonSyntaxException, JsonHandlingException, IOException {
 		handler.onArrayBegin();
 		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_ARRAY_FIRST);
 		if (']' == nextCharacter) {
@@ -215,13 +218,14 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleArrayFollowing() throws JsonSyntaxException, IOException {
+	private void handleArrayFollowing() throws JsonSyntaxException, JsonHandlingException, IOException {
 		while (true) {
 			char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_ARRAY_FOLLOW);
 			if (']' == nextCharacter) {
 				handler.onArrayEnd();
 				break;
 			} else if (',' == nextCharacter) {
+				handler.onNext();
 				handleValue(JsonSyntaxError.INVALID_ARRAY_VALUE);
 			} else {
 				throw syntaxError(JsonSyntaxError.INVALID_ARRAY_FOLLOW);
@@ -229,7 +233,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleObjectFirst() throws JsonSyntaxException, IOException {
+	private void handleObjectFirst() throws JsonSyntaxException, JsonHandlingException, IOException {
 		handler.onObjectBegin();
 		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FIRST);
 		if ('}' == nextCharacter) {
@@ -242,7 +246,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleObjectFollowing() throws JsonSyntaxException, IOException {
+	private void handleObjectFollowing() throws JsonSyntaxException, JsonHandlingException, IOException {
 		while (true) {
 			char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_FOLLOW);
 			if ('}' == nextCharacter) {
@@ -251,6 +255,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 			} else if (',' == nextCharacter) {
 				nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_NAME);
 				if ('"' == nextCharacter) {
+					handler.onNext();
 					handleObjectValue();
 				} else {
 					throw syntaxError(JsonSyntaxError.INVALID_OBJECT_NAME);
@@ -261,7 +266,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleObjectValue() throws JsonSyntaxException, IOException {
+	private void handleObjectValue() throws JsonSyntaxException, JsonHandlingException, IOException {
 		handler.onName(readNextString());
 		char nextCharacter = nextNonWhitespace(JsonSyntaxError.INVALID_OBJECT_SEPARATION);
 		if (':' == nextCharacter) {
@@ -271,11 +276,12 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleValue(JsonSyntaxError error) throws JsonSyntaxException, IOException {
+	private void handleValue(JsonSyntaxError error) throws JsonSyntaxException, JsonHandlingException, IOException {
 		handleValue(nextNonWhitespace(error), error);
 	}
 
-	private void handleValue(char firstCharacter, JsonSyntaxError error) throws JsonSyntaxException, IOException {
+	private void handleValue(char firstCharacter, JsonSyntaxError error) throws JsonSyntaxException,
+			JsonHandlingException, IOException {
 		if ('{' == firstCharacter) {
 			handleObjectFirst();
 		} else if ('[' == firstCharacter) {
@@ -399,7 +405,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleLiteral(char firstCharacter) throws JsonSyntaxException, IOException {
+	private void handleLiteral(char firstCharacter) throws JsonSyntaxException, JsonHandlingException, IOException {
 		builder.setLength(0);
 		builder.append(firstCharacter);
 		while (0 != source.makeAvailable()) {
@@ -422,7 +428,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		handleLiteral(builder.toString());
 	}
 
-	private void handleLiteral(String literal) throws JsonSyntaxException {
+	private void handleLiteral(String literal) throws JsonSyntaxException, JsonHandlingException {
 		if ("null".equals(literal)) {
 			handler.onNull();
 		} else if ("false".equals(literal)) {
@@ -434,7 +440,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 		}
 	}
 
-	private void handleNumber(String literal) throws JsonSyntaxException {
+	private void handleNumber(String literal) throws JsonSyntaxException, JsonHandlingException {
 		try {
 			handler.onLong(Long.parseLong(literal));
 		} catch (NumberFormatException ignored) {

@@ -22,6 +22,7 @@
 package net.markenwerk.utils.json.parser.events;
 
 import net.markenwerk.utils.json.parser.JsonHandler;
+import net.markenwerk.utils.json.parser.JsonHandlingException;
 
 @SuppressWarnings("javadoc")
 public final class JsonEventJsonHandler<Result> implements JsonHandler<Result> {
@@ -61,13 +62,17 @@ public final class JsonEventJsonHandler<Result> implements JsonHandler<Result> {
 	}
 
 	@Override
+	public void onObjectEnd() {
+		handler.onEvent(new ObjectEndJsonEvent());
+	}
+
+	@Override
 	public void onName(String name) {
 		handler.onEvent(new NameJsonEvent(name));
 	}
 
 	@Override
-	public void onObjectEnd() {
-		handler.onEvent(new ObjectEndJsonEvent());
+	public void onNext() throws JsonHandlingException {
 	}
 
 	@Override
