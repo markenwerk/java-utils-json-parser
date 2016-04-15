@@ -22,7 +22,7 @@
 package net.markenwerk.utils.json.parser;
 
 /**
- * A JsonHandlingException indicates that the handling of an event in in
+ * A JsonHandlingException indicates that the handling of an event by a
  * {@link JsonHandler} failed.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
