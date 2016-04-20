@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>${project.groupId}:${project.artifactId}</name>
-	<description>An event based JSON parser for Java</description>
+	<description>A fast event based JSON parser for Java</description>
 	<url>${urls.github}</url>
 	<inceptionYear>2016</inceptionYear>
 

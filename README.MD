@@ -1,4 +1,4 @@
-# An event based JSON parser for Java
+# A fast event based JSON parser for Java
 
 [![Build Status](https://travis-ci.org/markenwerk/java-utils-json-parser.svg?branch=master)](https://travis-ci.org/markenwerk/java-utils-json-parser)
 [![Coverage Status](https://coveralls.io/repos/github/markenwerk/java-utils-json-parser/badge.svg?branch=master)](https://coveralls.io/github/markenwerk/java-utils-json-parser?branch=master)
