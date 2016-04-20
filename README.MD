@@ -239,7 +239,6 @@ Preloading the content of a JSON file into a `String` instead of using a [`FileR
 
 
 [CharacterArrayJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html
-[JsonHandler]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonHandler.html
 [JsonPullParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonPullParser.html
 [JsonPushParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonPushParser.html
 [JsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSource.html
@@ -248,6 +247,8 @@ Preloading the content of a JSON file into a `String` instead of using a [`FileR
 [JsonState]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonState.html
 [ReaderJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/ReaderJsonSource.html
 [StringJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/StringJsonSource.html
+
+[JsonHandler]: https://markenwerk.github.io/java-utils-json-commons/index.html?net/markenwerk/utils/json/commons/interfaces/JsonHandler.html
 
 [JSONArray]: https://stleary.github.io/JSON-java/index.html?org/json/JSONArray.html
 [JSONObject]: https://stleary.github.io/JSON-java/index.html?org/json/JSONObject.html

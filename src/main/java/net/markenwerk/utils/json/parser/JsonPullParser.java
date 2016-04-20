@@ -25,6 +25,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 
+import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxException;
+
 /**
  * A {@link JsonPullParser} is an event based JSON parser. It
  * {@link JsonPullParser#currentState() reports} it's current {@link JsonState}

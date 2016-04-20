@@ -27,6 +27,9 @@ import java.io.Reader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxError;
+import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxException;
+
 /**
  * JUnit test for {@link JsonSourcePullParser}.
  * 
