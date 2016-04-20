@@ -29,7 +29,7 @@ import java.util.List;
 import net.markenwerk.utils.json.commons.exceptions.JsonHandlingException;
 import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxError;
 import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxException;
-import net.markenwerk.utils.json.commons.interfaces.JsonHandler;
+import net.markenwerk.utils.json.commons.handler.JsonHandler;
 
 /**
  * A {@link JsonSourcePushParser} is a stream based JSON parser. It reads

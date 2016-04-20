@@ -1,6 +1,6 @@
 package net.markenwerk.utils.json.parser;
 
-import net.markenwerk.utils.json.commons.interfaces.JsonHandler;
+import net.markenwerk.utils.json.commons.handler.JsonHandler;
 
 @SuppressWarnings("javadoc")
 public class NullHandler implements JsonHandler<Void> {
