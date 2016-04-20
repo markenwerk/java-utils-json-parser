@@ -26,6 +26,7 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
+import net.markenwerk.utils.json.commons.exceptions.InvalidJsonValueException;
 import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxError;
 import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxException;
 
@@ -593,48 +594,49 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	}
 
 	@Override
-	public byte nextByte() throws ArithmeticException, IllegalStateException, JsonSyntaxException, IOException {
+	public byte nextByte() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
 		if (longValue < Byte.MIN_VALUE) {
-			throw new ArithmeticException("Value is too small to be a byte");
+			throw new InvalidJsonValueException("Value is too small to be a byte");
 		} else if (longValue > Byte.MAX_VALUE) {
-			throw new ArithmeticException("Value is too large to be a byte");
+			throw new InvalidJsonValueException("Value is too large to be a byte");
 		} else {
 			return (byte) longValue;
 		}
 	}
 
 	@Override
-	public char nextCharacter() throws IllegalStateException, JsonSyntaxException, IOException {
+	public char nextCharacter() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException,
+			IOException {
 		consume(JsonState.LONG);
 		if (longValue < Character.MIN_VALUE) {
-			throw new ArithmeticException("Value is too small to be a character");
+			throw new InvalidJsonValueException("Value is too small to be a character");
 		} else if (longValue > Character.MAX_VALUE) {
-			throw new ArithmeticException("Value is too large to be a character");
+			throw new InvalidJsonValueException("Value is too large to be a character");
 		} else {
 			return (char) longValue;
 		}
 	}
 
 	@Override
-	public short nextShort() throws IllegalStateException, JsonSyntaxException, IOException {
+	public short nextShort() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
 		if (longValue < Short.MIN_VALUE) {
-			throw new ArithmeticException("Value is too small to be a short");
+			throw new InvalidJsonValueException("Value is too small to be a short");
 		} else if (longValue > Short.MAX_VALUE) {
-			throw new ArithmeticException("Value is too large to be a short");
+			throw new InvalidJsonValueException("Value is too large to be a short");
 		} else {
 			return (short) longValue;
 		}
 	}
 
 	@Override
-	public int nextInteger() throws IllegalStateException, JsonSyntaxException, IOException {
+	public int nextInteger() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.LONG);
 		if (longValue < Integer.MIN_VALUE) {
-			throw new ArithmeticException("Value is too small to be an integer");
+			throw new InvalidJsonValueException("Value is too small to be an integer");
 		} else if (longValue > Integer.MAX_VALUE) {
-			throw new ArithmeticException("Value is too large to be an integer");
+			throw new InvalidJsonValueException("Value is too large to be an integer");
 		} else {
 			return (int) longValue;
 		}
@@ -647,9 +649,15 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	}
 
 	@Override
-	public float nextFloat() throws IllegalStateException, JsonSyntaxException, IOException {
+	public float nextFloat() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOUBLE);
-		return (float) doubleValue;
+		if (longValue < Float.MIN_VALUE) {
+			throw new InvalidJsonValueException("Value is too small to be a float");
+		} else if (longValue > Float.MAX_VALUE) {
+			throw new InvalidJsonValueException("Value is too large to be a float");
+		} else {
+			return (int) longValue;
+		}
 	}
 
 	@Override

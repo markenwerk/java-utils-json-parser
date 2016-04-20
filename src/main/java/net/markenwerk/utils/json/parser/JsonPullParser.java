@@ -25,6 +25,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 
+import net.markenwerk.utils.json.commons.exceptions.InvalidJsonValueException;
 import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxException;
 
 /**
@@ -220,7 +221,7 @@ public interface JsonPullParser extends Closeable {
 	 * 
 	 * @return The {@code byte} value.
 	 * 
-	 * @throws ArithmeticException
+	 * @throws InvalidJsonValueException
 	 *             If the value is too large or too small to fit into a
 	 *             {@code byte}.
 	 * @throws IllegalStateException
@@ -232,7 +233,7 @@ public interface JsonPullParser extends Closeable {
 	 * @throws IOException
 	 *             If reading from the underlying {@link Reader} failed.
 	 */
-	public byte nextByte() throws ArithmeticException, IllegalStateException, JsonSyntaxException, IOException;
+	public byte nextByte() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
 	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
@@ -243,7 +244,7 @@ public interface JsonPullParser extends Closeable {
 	 * 
 	 * @return The {@code char} value.
 	 * 
-	 * @throws ArithmeticException
+	 * @throws InvalidJsonValueException
 	 *             If the value is too large or too small to fit into a
 	 *             {@code char}.
 	 * @throws IllegalStateException
@@ -266,7 +267,7 @@ public interface JsonPullParser extends Closeable {
 	 * 
 	 * @return The {@code short} value.
 	 * 
-	 * @throws ArithmeticException
+	 * @throws InvalidJsonValueException
 	 *             If the value is too large or too small to fit into a
 	 *             {@code short}.
 	 * @throws IllegalStateException
@@ -289,7 +290,7 @@ public interface JsonPullParser extends Closeable {
 	 * 
 	 * @return The {@code int} value.
 	 * 
-	 * @throws ArithmeticException
+	 * @throws InvalidJsonValueException
 	 *             If the value is too large or too small to fit into a
 	 *             {@code int}.
 	 * @throws IllegalStateException
