@@ -69,14 +69,14 @@ JsonSource jsonSource2 = new CharacterArrayJsonSource(chars);
 
 A [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler] and calls the appropriate callback methods of a [`JsonHandler`][JsonHandler], when processing a JSON document.
 
-This library provides the default implementation [`JsonSourcePushParser`][JsonSourcePushParser], which consumes a [`JsonSource`][JsonSource] to process a JSON document.
+This library provides the default implementation [`DefaultJsonPushParser`][DefaultJsonPushParser], which consumes a [`JsonSource`][JsonSource] to process a JSON document.
 
 ```java
 JsonSource jsonSource = ...
 JsonHandler jsonHandler = ...
 
 // creates a new parser for jsonSource
-JsonPushParser jsonPushParser = new JsonSourcePushParser(jsonSource);
+JsonPushParser jsonPushParser = new DefaultJsonPushParser(jsonSource);
 
 // consumes jsonSource and reports events to jsonHandler
 jsonPushParser.handle(jsonSource)
@@ -108,13 +108,13 @@ JSONObject jsonObject = new JsonPushParser(new FileReader(file)).handle(new Obje
 
 A [`JsonPullParser`][JsonPullParser], when asked, reports it's [`JsonState`][JsonState], which reflects the immediate future (`ARRAY_BEGIN`, `NULL`, `BOOLEN`, ..., `ARRAY_END`, ...) of the processed JSON document and determines the appropriate method to be called on the [`JsonPullParser`][JsonPullParser].
 
-This library provides the default implementation [`JsonSourcePullParser`][JsonSourcePullParser], which consumes a [`JsonSource`][JsonSource] to process a JSON document.
+This library provides the default implementation [`DefaultJsonPullParser`][DefaultJsonPullParser], which consumes a [`JsonSource`][JsonSource] to process a JSON document.
 
 ```java
 JsonSource jsonSource = ...
 
 // creates a new parser for jsonSource
-JsonPullParser jsonPullParser = new JsonSourcePullParser(jsonSource);
+JsonPullParser jsonPullParser = new DefaultJsonPullParser(jsonSource);
 
 // consumes jsonSource and events
 while(jsonPullParser.hasNext()) {
@@ -211,21 +211,21 @@ while(jsonPullParser.hasNext()) {
 
 The following table shows the results of a [performance test](https://gist.github.com/toKrause/2227e1d4d2d2557db60b#file-test-java) with 1000 iterations that compares multiple methods of creating a document model:
 
-- Using a [`JsonSourcePushParser`][JsonSourcePushParser] with a [`ReaderJsonSource`][ReaderJsonSource] for a [`FileReader`][FileReader] and the abovementioned [`ArrayHandler`][ArrayHandler].
-- Using a [`JsonSourcePushParser`][JsonSourcePushParser] with a [`StringJsonSource`][StringJsonSource] for a preloaded `String`.
-- Using a [`JsonSourcePullParser`][JsonSourcePullParser] with a [`ReaderJsonSource`][ReaderJsonSource] for a [`FileReader`][FileReader] and the abovementioned [`JsonUtil`][JsonUtil].
-- Using a [`JsonSourcePullParser`][JsonSourcePullParser] with a [`StringJsonSource`][StringJsonSource] for a preloaded `String`.
+- Using a [`DefaultJsonPushParser`][DefaultJsonPushParser] with a [`ReaderJsonSource`][ReaderJsonSource] for a [`FileReader`][FileReader] and the abovementioned [`ArrayHandler`][ArrayHandler].
+- Using a [`DefaultJsonPushParser`][DefaultJsonPushParser] with a [`StringJsonSource`][StringJsonSource] for a preloaded `String`.
+- Using a [`DefaultJsonPullParser`][DefaultJsonPullParser] with a [`ReaderJsonSource`][ReaderJsonSource] for a [`FileReader`][FileReader] and the abovementioned [`JsonUtil`][JsonUtil].
+- Using a [`DefaultJsonPullParser`][DefaultJsonPullParser] with a [`StringJsonSource`][StringJsonSource] for a preloaded `String`.
 - Using the constructor for a [`JSONArray`][JSONArray] with a [`JSONTokener`][JSONTokener] for a [`FileReader`][FileReader].
 - Using the constructor for a [`JSONArray`][JSONArray] with a [`JSONTokener`][JSONTokener] for a preloaded `String`.
 
 | Parser | Source | [`test0.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test0.json) (~2.5kB) | [`test1.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test1.json) (~25.0kB) | [`test2.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test2.json) (~250.0kB) | [`test3.json`](https://gist.githubusercontent.com/toKrause/2227e1d4d2d2557db60b/raw/7571076fc88cb2880e466b8f92fd6169a0800841/test3.json) (~2.5MB) |
-|:----------------------------------------------:|:------------------:|:----:|:----:|:----:|:-----:|
-| [`JsonSourcePushParser`][JsonSourcePushParser] | [`Reader`][Reader] | 0.15 | 0.37 | 3.36 | 33.18 |
-| [`JsonSourcePushParser`][JsonSourcePushParser] | `String`           | 0.05 | 0.34 | 3.15 | 31.51 |
-| [`JsonSourcePullParser`][JsonSourcePullParser] | [`Reader`][Reader] | 0.09 | 0.39 | 3.56 | 35.57 |
-| [`JsonSourcePullParser`][JsonSourcePullParser] | `String`           | 0.05 | 0.36 | 3.46 | 34.71 |
-| [`JSONArray`][JSONArray]                       | [`Reader`][Reader] | 0.08 | 0.59 | 5.74 | 57.88 |
-| [`JSONArray`][JSONArray]                       | `String`           | 0.06 | 0.54 | 5.31 | 53.48 |
+|:------------------------------------------------:|:------------------:|:----:|:----:|:----:|:-----:|
+| [`DefaultJsonPushParser`][DefaultJsonPushParser] | [`Reader`][Reader] | 0.15 | 0.37 | 3.36 | 33.18 |
+| [`DefaultJsonPushParser`][DefaultJsonPushParser] | `String`           | 0.05 | 0.34 | 3.15 | 31.51 |
+| [`DefaultJsonPullParser`][DefaultJsonPullParser] | [`Reader`][Reader] | 0.09 | 0.39 | 3.56 | 35.57 |
+| [`DefaultJsonPullParser`][DefaultJsonPullParser] | `String`           | 0.05 | 0.36 | 3.46 | 34.71 |
+| [`JSONArray`][JSONArray]                         | [`Reader`][Reader] | 0.08 | 0.59 | 5.74 | 57.88 |
+| [`JSONArray`][JSONArray]                         | `String`           | 0.06 | 0.54 | 5.31 | 53.48 |
 
 The four JSON files of different size have been created with a [random JSON generator](http://www.json-generator.com/).
 
@@ -242,8 +242,8 @@ Preloading the content of a JSON file into a `String` instead of using a [`FileR
 [JsonPullParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonPullParser.html
 [JsonPushParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonPushParser.html
 [JsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSource.html
-[JsonSourcePullParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSourcePullParser.html
-[JsonSourcePushParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonSourcePushParser.html
+[DefaultJsonPullParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/DefaultJsonPullParser.html
+[DefaultJsonPushParser]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/DefaultJsonPushParser.html
 [JsonState]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/JsonState.html
 [ReaderJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/ReaderJsonSource.html
 [StringJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/StringJsonSource.html

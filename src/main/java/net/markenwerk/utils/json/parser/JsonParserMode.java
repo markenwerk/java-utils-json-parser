@@ -23,7 +23,7 @@ package net.markenwerk.utils.json.parser;
 
 /**
  * A {@link JsonParserMode} is a configuration flag that modifies the execution
- * of a {@link JsonSourcePullParser} or a {@link JsonSourcePushParser}.
+ * of a {@link DefaultJsonPullParser} or a {@link DefaultJsonPushParser}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0

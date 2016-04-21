@@ -32,14 +32,14 @@ import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
 import net.markenwerk.utils.json.common.handler.JsonHandler;
 
 /**
- * A {@link JsonSourcePushParser} is a stream based JSON parser. It reads
+ * A {@link DefaultJsonPushParser} is a stream based JSON parser. It reads
  * characters from a given {@link Reader} as far as necessary to calculate a
  * {@link JsonState} or to yield the next value.
  *
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
  */
-public final class JsonSourcePushParser implements JsonPushParser {
+public final class DefaultJsonPushParser implements JsonPushParser {
 
 	private final StringBuilder builder = new StringBuilder();
 
@@ -52,7 +52,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	private boolean strictStructMode;
 
 	/**
-	 * Creates a new {@link JsonSourcePushParser} for the given {@link String}.
+	 * Creates a new {@link DefaultJsonPushParser} for the given {@link String}.
 	 *
 	 * @param string
 	 *            The {@link String} to read from.
@@ -60,12 +60,12 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	 *             If the given {@link String} is {@literal null} or if the
 	 *             given {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonSourcePushParser(String string) throws IllegalArgumentException {
+	public DefaultJsonPushParser(String string) throws IllegalArgumentException {
 		this(new StringJsonSource(string));
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePushParser} for the given {@code char[]}.
+	 * Creates a new {@link DefaultJsonPushParser} for the given {@code char[]}.
 	 *
 	 * @param characters
 	 *            The {@code char[]} to read from.
@@ -73,12 +73,12 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	 *             If the given {@link String} is {@literal null} or if the
 	 *             given {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonSourcePushParser(char[] characters) throws IllegalArgumentException {
+	public DefaultJsonPushParser(char[] characters) throws IllegalArgumentException {
 		this(new CharacterArrayJsonSource(characters));
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePushParser} for the given {@link Reader}.
+	 * Creates a new {@link DefaultJsonPushParser} for the given {@link Reader}.
 	 * 
 	 * 
 	 * @param reader
@@ -86,12 +86,12 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null}.
 	 */
-	public JsonSourcePushParser(Reader reader) throws IllegalArgumentException {
+	public DefaultJsonPushParser(Reader reader) throws IllegalArgumentException {
 		this(new ReaderJsonSource(reader));
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePushParser} for the given {@link Reader}.
+	 * Creates a new {@link DefaultJsonPushParser} for the given {@link Reader}.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to read from.
@@ -104,12 +104,12 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
 	 *             size.
 	 */
-	public JsonSourcePushParser(Reader reader, int size) throws IllegalArgumentException {
+	public DefaultJsonPushParser(Reader reader, int size) throws IllegalArgumentException {
 		this(new ReaderJsonSource(reader, size));
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePushParser} for the given
+	 * Creates a new {@link DefaultJsonPushParser} for the given
 	 * {@link JsonSource}.
 	 * 
 	 * @param source
@@ -118,7 +118,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	 *             If the given {@link String} is {@literal null} or if the
 	 *             given {@link JsonHandler} is {@literal null}.
 	 */
-	public JsonSourcePushParser(JsonSource source) throws IllegalArgumentException {
+	public DefaultJsonPushParser(JsonSource source) throws IllegalArgumentException {
 		if (null == source) {
 			throw new IllegalArgumentException("source is null");
 		}
@@ -137,7 +137,7 @@ public final class JsonSourcePushParser implements JsonPushParser {
 	 * 
 	 * <p>
 	 * Calling this method closes the underlying {@link JsonSource}, but it can
-	 * be {@link JsonSourcePushParser#close() closed manually}.
+	 * be {@link DefaultJsonPushParser#close() closed manually}.
 	 * 
 	 * @param <Result>
 	 *            The result type of the {@link JsonHandler}.

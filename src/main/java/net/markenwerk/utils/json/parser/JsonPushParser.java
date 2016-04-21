@@ -46,7 +46,7 @@ public interface JsonPushParser extends Closeable {
 	 * 
 	 * <p>
 	 * Calling this method closes the underlying {@link JsonSource}, but it can
-	 * be {@link JsonSourcePushParser#close() closed manually}.
+	 * be {@link DefaultJsonPushParser#close() closed manually}.
 	 * 
 	 * @param <Result>
 	 *            The result type of the {@link JsonHandler}.

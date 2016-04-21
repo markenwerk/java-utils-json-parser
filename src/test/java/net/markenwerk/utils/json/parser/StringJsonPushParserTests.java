@@ -24,7 +24,7 @@ package net.markenwerk.utils.json.parser;
 import org.junit.Test;
 
 /**
- * JUnit test for {@link JsonSourcePushParser} with an underlying
+ * JUnit test for {@link DefaultJsonPushParser} with an underlying
  * {@link StringJsonSource}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
@@ -34,7 +34,7 @@ public class StringJsonPushParserTests extends AbstractJsonPushParserTests {
 	@SuppressWarnings({ "resource", "javadoc" })
 	@Test(expected = IllegalArgumentException.class)
 	public void create_nullString() {
-		new JsonSourcePushParser((String) null);
+		new DefaultJsonPushParser((String) null);
 	}
 
 	@Override

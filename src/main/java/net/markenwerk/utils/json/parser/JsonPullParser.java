@@ -54,7 +54,7 @@ public interface JsonPullParser extends Closeable {
 
 	/**
 	 * Reads, if necessary, from the underlying Reader and describes the current
-	 * {@link JsonState} of this {@link JsonSourcePullParser}, which describes
+	 * {@link JsonState} of this {@link DefaultJsonPullParser}, which describes
 	 * the next type of value or structural element of the JSON document.
 	 * 
 	 * @return The current {@link JsonState}.
@@ -67,7 +67,7 @@ public interface JsonPullParser extends Closeable {
 	public JsonState currentState() throws JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOCUMENT_BEGIN} and consumes the
 	 * begin of the JSON document. The next {@link JsonState} will be
 	 * {@link JsonState#ARRAY_BEGIN} or {@link JsonState#OBJECT_BEGIN}.
@@ -84,13 +84,13 @@ public interface JsonPullParser extends Closeable {
 	public void beginDocument() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOCUMENT_END} and consumes the end
 	 * of the JSON document. The next {@link JsonState} will be
 	 * {@link JsonState#SOURCE_END}.
 	 * 
 	 * <p>
-	 * If this {@link JsonSourcePullParser} allows multiple documents in the
+	 * If this {@link DefaultJsonPullParser} allows multiple documents in the
 	 * same {@link JsonSource}, The next {@link JsonState} will be
 	 * {@link JsonState#DOCUMENT_BEGIN} or {@link JsonState#SOURCE_END}.
 	 * 
@@ -106,7 +106,7 @@ public interface JsonPullParser extends Closeable {
 	public void endDocument() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#ARRAY_BEGIN} and consumes the
 	 * beginning of a JSON array. The next {@link JsonState} describes either
 	 * the first value of this JSON array or the end of this JSON array.
@@ -123,7 +123,7 @@ public interface JsonPullParser extends Closeable {
 	public void beginArray() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#ARRAY_END} and consumes the end of
 	 * the JSON array. The next {@link JsonState} describes either the next
 	 * sibling value of this JSON array or the end of the JSON document.
@@ -140,10 +140,10 @@ public interface JsonPullParser extends Closeable {
 	public void endArray() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#OBJECT_BEGIN} and consumes the
 	 * beginning of a JSON object. The next {@link JsonState} describes either
-	 * the {@link JsonSourcePullParser#nextName()} of the first value of this
+	 * the {@link DefaultJsonPullParser#nextName()} of the first value of this
 	 * JSON object or the end of this JSON object.
 	 * 
 	 * @throws IllegalStateException
@@ -158,7 +158,7 @@ public interface JsonPullParser extends Closeable {
 	public void beginObject() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#OBJECT_END} and consumes the end of
 	 * the JSON object. The next {@link JsonState} describes either the next
 	 * sibling value of this JSON object or the end of the JSON document.
@@ -175,7 +175,7 @@ public interface JsonPullParser extends Closeable {
 	public void endObject() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#NULL} and consumes the
 	 * {@literal null} The next {@link JsonState} describes either the next
 	 * sibling value of this JSON value or the end of surrounding JSON array or
@@ -193,7 +193,7 @@ public interface JsonPullParser extends Closeable {
 	public void nextNull() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#BOOLEAN} and consumes and returns
 	 * the corresponding value. The next {@link JsonState} describes either the
 	 * next sibling value of this JSON value or the end of surrounding JSON
@@ -213,7 +213,7 @@ public interface JsonPullParser extends Closeable {
 	public boolean nextBoolean() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value as a {@code byte}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -236,7 +236,7 @@ public interface JsonPullParser extends Closeable {
 	public byte nextByte() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value as a {@code char}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -259,7 +259,7 @@ public interface JsonPullParser extends Closeable {
 	public char nextCharacter() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value as a {@code short}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -282,7 +282,7 @@ public interface JsonPullParser extends Closeable {
 	public short nextShort() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value as a {@code int}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -305,7 +305,7 @@ public interface JsonPullParser extends Closeable {
 	public int nextInteger() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#LONG} and consumes and returns the
 	 * corresponding value. The next {@link JsonState} describes either the next
 	 * sibling value of this JSON value or the end of surrounding JSON array or
@@ -325,7 +325,7 @@ public interface JsonPullParser extends Closeable {
 	public long nextLong() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns
 	 * the corresponding value as a {@code float}. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -345,7 +345,7 @@ public interface JsonPullParser extends Closeable {
 	public float nextFloat() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#DOUBLE} and consumes and returns
 	 * the corresponding value. The next {@link JsonState} describes either the
 	 * next sibling value of this JSON value or the end of surrounding JSON
@@ -365,7 +365,7 @@ public interface JsonPullParser extends Closeable {
 	public double nextDouble() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#STRING} and consumes and returns
 	 * the corresponding value. The next {@link JsonState} describes either the
 	 * next sibling value of this JSON value or the end of surrounding JSON
@@ -385,7 +385,7 @@ public interface JsonPullParser extends Closeable {
 	public String nextString() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#STRING} and return a {@link Reader}
 	 * that consumes the corresponding value. The next {@link JsonState}
 	 * describes either the next sibling value of this JSON value or the end of
@@ -410,7 +410,7 @@ public interface JsonPullParser extends Closeable {
 	public Reader readString() throws IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
-	 * Ensures that the {@link JsonSourcePullParser#currentState() current}
+	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
 	 * {@link JsonState} is {@link JsonState#NAME} and consumes and returns the
 	 * corresponding name of a JSON object entry. The next {@link JsonState}
 	 * describes the corresponding value.

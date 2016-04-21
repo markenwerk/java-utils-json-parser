@@ -31,13 +31,13 @@ import net.markenwerk.utils.json.common.exceptions.JsonSyntaxError;
 import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
 
 /**
- * A {@link JsonSourcePullParser} is a {@link JsonPullParser} that consumes a
+ * A {@link DefaultJsonPullParser} is a {@link JsonPullParser} that consumes a
  * {@link JsonSource}.
  * 
  * @author Torsten Krause (tk at markenwerk dot net)
  * @since 1.0.0
  */
-public final class JsonSourcePullParser implements JsonPullParser {
+public final class DefaultJsonPullParser implements JsonPullParser {
 
 	private final StringBuilder builder = new StringBuilder();
 
@@ -58,43 +58,43 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	private boolean strictStructMode;
 
 	/**
-	 * Creates a new {@link JsonSourcePullParser} for the given {@link String}.
+	 * Creates a new {@link DefaultJsonPullParser} for the given {@link String}.
 	 *
 	 * @param string
 	 *            The {@link String} to read from.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null}.
 	 */
-	public JsonSourcePullParser(String string) throws IllegalArgumentException {
+	public DefaultJsonPullParser(String string) throws IllegalArgumentException {
 		this(new StringJsonSource(string), (JsonParserMode[]) null);
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePullParser} for the given {@code char[]}.
+	 * Creates a new {@link DefaultJsonPullParser} for the given {@code char[]}.
 	 *
 	 * @param characters
 	 *            The {@code char[]} to read from.
 	 * @throws IllegalArgumentException
 	 *             If the given {@code char[]} is {@literal null}.
 	 */
-	public JsonSourcePullParser(char[] characters) throws IllegalArgumentException {
+	public DefaultJsonPullParser(char[] characters) throws IllegalArgumentException {
 		this(new CharacterArrayJsonSource(characters), (JsonParserMode[]) null);
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePullParser} for the given {@link Reader}.
+	 * Creates a new {@link DefaultJsonPullParser} for the given {@link Reader}.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to read from.
 	 * @throws IllegalArgumentException
 	 *             If the given {@link Reader} is {@literal null}.
 	 */
-	public JsonSourcePullParser(Reader reader) throws IllegalArgumentException {
+	public DefaultJsonPullParser(Reader reader) throws IllegalArgumentException {
 		this(new ReaderJsonSource(reader), (JsonParserMode[]) null);
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePullParser} for the given {@link Reader}.
+	 * Creates a new {@link DefaultJsonPullParser} for the given {@link Reader}.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to read from.
@@ -106,12 +106,12 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
 	 *             size.
 	 */
-	public JsonSourcePullParser(Reader reader, int size) throws IllegalArgumentException {
+	public DefaultJsonPullParser(Reader reader, int size) throws IllegalArgumentException {
 		this(new ReaderJsonSource(reader, size), (JsonParserMode[]) null);
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePullParser} for the given
+	 * Creates a new {@link DefaultJsonPullParser} for the given
 	 * {@link JsonSource}.
 	 * 
 	 * @param source
@@ -119,13 +119,13 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 * @throws IllegalArgumentException
 	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
-	public JsonSourcePullParser(JsonSource source) throws IllegalArgumentException {
+	public DefaultJsonPullParser(JsonSource source) throws IllegalArgumentException {
 		this(source, (JsonParserMode[]) null);
 
 	}
 
 	/**
-	 * Creates a new {@link JsonSourcePullParser} for the given
+	 * Creates a new {@link DefaultJsonPullParser} for the given
 	 * {@link JsonSource}.
 	 * 
 	 * @param source
@@ -137,7 +137,7 @@ public final class JsonSourcePullParser implements JsonPullParser {
 	 * @throws IllegalArgumentException
 	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
-	public JsonSourcePullParser(JsonSource source, JsonParserMode... modes) throws IllegalArgumentException {
+	public DefaultJsonPullParser(JsonSource source, JsonParserMode... modes) throws IllegalArgumentException {
 		if (null == source) {
 			throw new IllegalArgumentException("source is null");
 		}
