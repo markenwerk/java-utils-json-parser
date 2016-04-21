@@ -23,7 +23,7 @@ This library is hosted in the [Maven Central Repository](https://maven-badges.he
 
 Consult the [usage description](#usage) and [Javadoc](http://markenwerk.github.io/java-utils-json-parser/javadoc/index.html) for further information.
 
-# Motivation
+## Motivation
 
 The original intention was, to create a pure Java implementation of an event based JSON parser, that  (like Android's [`JsonReader`](https://developer.android.com/reference/android/util/JsonReader.html)) has the ability, to stream through a character stream and process the contained JSON document, without the need to read the whole character stream into a string first.
 
@@ -37,9 +37,9 @@ An event base parser that (unlike most JSON libraries) dosn't create a document 
  
 This library is intended to be as lightweight as possible and make no assumptions about the tasks, it may be used for.
  
-# Usage
+## Usage
 
-## Sources
+### Sources of JSON documents
 
 Both parsers consume a [`JsonSource`][JsonSource], which represents a character stream and the necessary methods to it.
 
@@ -65,7 +65,7 @@ JsonSource jsonSource2 = new CharacterArrayJsonSource(chars);
 
 *It is usually not necessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].*
 
-## Push parser
+### Push parser
 
 A [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler] and calls the appropriate callback methods of a [`JsonHandler`][JsonHandler], when processing a JSON document.
 
@@ -82,7 +82,7 @@ JsonPushParser jsonPushParser = new JsonSourcePushParser(jsonSource);
 jsonPushParser.handle(jsonSource)
 ```
 
-### Creating a document model
+#### Creating a document model
 
 This [gist](https://gist.github.com/toKrause/ef6b3f3f060640f8620c) shows a pair of simple [`JsonHandlers`][JsonHandler] for a [`JsonPushParser`][JsonPushParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
 
@@ -104,7 +104,7 @@ File file = ...;
 JSONObject jsonObject = new JsonPushParser(new FileReader(file)).handle(new ObjectHandler());
 ```
 
-## Pull parser
+### Pull parser
 
 A [`JsonPullParser`][JsonPullParser], when asked, reports it's [`JsonState`][JsonState], which reflects the immediate future (`ARRAY_BEGIN`, `NULL`, `BOOLEN`, ..., `ARRAY_END`, ...) of the processed JSON document and determines the appropriate method to be called on the [`JsonPullParser`][JsonPullParser].
 
@@ -141,7 +141,7 @@ while(jsonPullParser.hasNext()) {
 jsonPullParser.endArray();
 ```
 
-### Creating a document model
+#### Creating a document model
 
 This [gist](https://gist.github.com/toKrause/95944d3069b5422ee45f) shows a pair of simple helper methods using a [`JsonPullParser`][JsonPullParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
 
@@ -163,7 +163,7 @@ File file = ...;
 JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
 ```
 
-### Skipping values
+#### Skipping values
 
 A [`JsonPullParser`][JsonPullParser] can be instructed to skip the current value. If the current value state is `ARRAY_BEGIN` or `OBJECT_BEGIN` the whole JSON array or JSON object is skipped. Inside of an JSON object, a value may be skipped before or after the name has been pulled.
 
@@ -185,7 +185,7 @@ while(jsonPullParser.hasNext()) {
 }
 ```
 
-### Reading strings
+#### Reading strings efficiently
 
 A [`JsonPullParser`][JsonPullParser] can be used to create a [`Reader`][Reader] for a JSON string. This may yield considerable performance improvements if a JSON document contains large strings that need to be further processed (e.g. a Base64-encoded image), because no string object has to be created.
 
@@ -207,7 +207,7 @@ while(jsonPullParser.hasNext()) {
 }
 ```
 
-## Performance comparison
+### Performance comparison
 
 The following table shows the results of a [performance test](https://gist.github.com/toKrause/2227e1d4d2d2557db60b#file-test-java) with 1000 iterations that compares multiple methods of creating a document model:
 
@@ -229,7 +229,7 @@ The following table shows the results of a [performance test](https://gist.githu
 
 The four JSON files of different size have been created with a [random JSON generator](http://www.json-generator.com/).
 
-### Conclusions
+#### Conclusions
 
 Both parsers provided by this library are, for sufficiently large JSON documents, about 42% faster than the reference implementation.
 
