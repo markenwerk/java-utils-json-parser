@@ -62,7 +62,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.markenwerk</groupId>
-			<artifactId>utils-json-commons</artifactId>
+			<artifactId>utils-json-common</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 

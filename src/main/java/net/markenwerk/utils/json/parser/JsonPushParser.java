@@ -25,9 +25,9 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 
-import net.markenwerk.utils.json.commons.exceptions.JsonHandlingException;
-import net.markenwerk.utils.json.commons.exceptions.JsonSyntaxException;
-import net.markenwerk.utils.json.commons.handler.JsonHandler;
+import net.markenwerk.utils.json.common.exceptions.JsonHandlingException;
+import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
+import net.markenwerk.utils.json.common.handler.JsonHandler;
 
 /**
  * 

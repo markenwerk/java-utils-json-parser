@@ -21,8 +21,8 @@
  */
 package net.markenwerk.utils.json.parser.events;
 
-import net.markenwerk.utils.json.commons.exceptions.JsonHandlingException;
-import net.markenwerk.utils.json.commons.handler.JsonHandler;
+import net.markenwerk.utils.json.common.exceptions.JsonHandlingException;
+import net.markenwerk.utils.json.common.handler.JsonHandler;
 
 @SuppressWarnings("javadoc")
 public final class JsonEventJsonHandler<Result> implements JsonHandler<Result> {
