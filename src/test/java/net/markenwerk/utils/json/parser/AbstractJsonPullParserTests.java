@@ -27,6 +27,7 @@ import java.io.Reader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.markenwerk.utils.json.common.exceptions.InvalidJsonValueException;
 import net.markenwerk.utils.json.common.exceptions.JsonSyntaxError;
 import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
 
@@ -194,7 +195,7 @@ public abstract class AbstractJsonPullParserTests {
 	}
 
 	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
+	@Test(expected = InvalidJsonValueException.class)
 	public void literal_singleTooLargeInteger() throws IOException, JsonSyntaxException {
 		long value = ((long) Integer.MAX_VALUE) + 1;
 		DefaultJsonPullParser jsonParser = new DefaultJsonPullParser(getSource(Long.toString(value)));
@@ -209,7 +210,7 @@ public abstract class AbstractJsonPullParserTests {
 	}
 
 	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
+	@Test(expected = InvalidJsonValueException.class)
 	public void literal_singleTooSmallInteger() throws IOException, JsonSyntaxException {
 		long value = ((long) Integer.MIN_VALUE) - 1;
 		DefaultJsonPullParser jsonParser = new DefaultJsonPullParser(getSource(Long.toString(value)));
@@ -240,7 +241,7 @@ public abstract class AbstractJsonPullParserTests {
 	}
 
 	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
+	@Test(expected = InvalidJsonValueException.class)
 	public void literal_singleTooLargeShort() throws IOException, JsonSyntaxException {
 		long value = ((long) Short.MAX_VALUE) + 1;
 		DefaultJsonPullParser jsonParser = new DefaultJsonPullParser(getSource(Long.toString(value)));
@@ -255,7 +256,7 @@ public abstract class AbstractJsonPullParserTests {
 	}
 
 	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
+	@Test(expected = InvalidJsonValueException.class)
 	public void literal_singleTooSmallShort() throws IOException, JsonSyntaxException {
 		long value = ((long) Short.MIN_VALUE) - 1;
 		DefaultJsonPullParser jsonParser = new DefaultJsonPullParser(getSource(Long.toString(value)));
@@ -286,7 +287,7 @@ public abstract class AbstractJsonPullParserTests {
 	}
 
 	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
+	@Test(expected = InvalidJsonValueException.class)
 	public void literal_singleTooLargeCharacter() throws IOException, JsonSyntaxException {
 		long value = ((long) Character.MAX_VALUE) + 1;
 		DefaultJsonPullParser jsonParser = new DefaultJsonPullParser(getSource(Long.toString(value)));
@@ -301,7 +302,7 @@ public abstract class AbstractJsonPullParserTests {
 	}
 
 	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
+	@Test(expected = InvalidJsonValueException.class)
 	public void literal_singleTooSmallCharacter() throws IOException, JsonSyntaxException {
 		long value = ((long) Character.MIN_VALUE) - 1;
 		DefaultJsonPullParser jsonParser = new DefaultJsonPullParser(getSource(Long.toString(value)));
@@ -332,7 +333,7 @@ public abstract class AbstractJsonPullParserTests {
 	}
 
 	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
+	@Test(expected = InvalidJsonValueException.class)
 	public void literal_singleTooLargeByte() throws IOException, JsonSyntaxException {
 		long value = ((long) Byte.MAX_VALUE) + 1;
 		DefaultJsonPullParser jsonParser = new DefaultJsonPullParser(getSource(Long.toString(value)));
@@ -347,7 +348,7 @@ public abstract class AbstractJsonPullParserTests {
 	}
 
 	@SuppressWarnings("javadoc")
-	@Test(expected = ArithmeticException.class)
+	@Test(expected = InvalidJsonValueException.class)
 	public void literal_singleTooSmallByte() throws IOException, JsonSyntaxException {
 		long value = ((long) Byte.MIN_VALUE) - 1;
 		DefaultJsonPullParser jsonParser = new DefaultJsonPullParser(getSource(Long.toString(value)));
