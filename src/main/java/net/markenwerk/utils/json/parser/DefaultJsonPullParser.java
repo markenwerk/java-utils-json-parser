@@ -651,12 +651,12 @@ public final class DefaultJsonPullParser implements JsonPullParser {
 	@Override
 	public float nextFloat() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException, IOException {
 		consume(JsonState.DOUBLE);
-		if (longValue < Float.MIN_VALUE) {
+		if (doubleValue < Float.MIN_VALUE) {
 			throw new InvalidJsonValueException("Value is too small to be a float");
-		} else if (longValue > Float.MAX_VALUE) {
+		} else if (doubleValue > Float.MAX_VALUE) {
 			throw new InvalidJsonValueException("Value is too large to be a float");
 		} else {
-			return (int) longValue;
+			return (float) doubleValue;
 		}
 	}
 
