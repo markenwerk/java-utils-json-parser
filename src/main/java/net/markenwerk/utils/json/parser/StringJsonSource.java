@@ -43,10 +43,11 @@ public final class StringJsonSource implements JsonSource {
 	private int lastNewLinePosition;
 
 	/**
-	 * Creates a new {@link StringJsonSource} for the given {@link String}.
+	 * Creates a new {@link StringJsonSource}.
 	 * 
 	 * @param string
 	 *            The {@link String} to be used.
+	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null}.
 	 */

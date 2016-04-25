@@ -43,11 +43,11 @@ public final class CharacterArrayJsonSource implements JsonSource {
 	private int lastNewLinePosition;
 
 	/**
-	 * Creates a new {@link CharacterArrayJsonSource} for the given
-	 * {@link String}.
+	 * Creates a new {@link CharacterArrayJsonSource}.
 	 * 
 	 * @param characters
 	 *            The {@code char[]} to be used.
+	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null}.
 	 */

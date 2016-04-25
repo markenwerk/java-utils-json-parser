@@ -55,11 +55,12 @@ public final class ReaderJsonSource implements JsonSource {
 	private int lastNewLinePosition;
 
 	/**
-	 * Creates a new {@link StringJsonSource} for the given {@link Reader} with
-	 * the {@link ReaderJsonSource#DEFAULT_BUFFER_SIZE default} buffer size.
+	 * Creates a new {@link StringJsonSource} with the
+	 * {@link ReaderJsonSource#DEFAULT_BUFFER_SIZE default} buffer size.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to be used.
+	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link Reader} is {@literal null}.
 	 */
@@ -68,12 +69,13 @@ public final class ReaderJsonSource implements JsonSource {
 	}
 
 	/**
-	 * Creates a new {@link StringJsonSource} for the given {@link Reader}.
+	 * Creates a new {@link StringJsonSource}.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to be used.
 	 * @param size
 	 *            The buffer size to be used.
+	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link Reader} is {@literal null} or if the
 	 *             given size is smaller than the

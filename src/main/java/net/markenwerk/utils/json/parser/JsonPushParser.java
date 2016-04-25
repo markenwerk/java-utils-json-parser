@@ -23,7 +23,6 @@ package net.markenwerk.utils.json.parser;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.Reader;
 
 import net.markenwerk.utils.json.common.exceptions.JsonHandlingException;
 import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
@@ -60,12 +59,11 @@ public interface JsonPushParser extends Closeable {
 	 * @throws IllegalArgumentException
 	 *             If the given {@link JsonHandler} is {@literal null}.
 	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
+	 *             If reading from the underlying {@link JsonSource} failed.
 	 * @throws JsonSyntaxException
-	 *             If the {@link JsonSyntaxException} document contains a syntax
-	 *             error.
+	 *             If the JSON text contains a syntax error.
 	 * @throws JsonHandlingException
-	 *             If the given {@link JsonHandler} failed to while handling an
+	 *             If the given {@link JsonHandler} failed while handling an
 	 *             event.
 	 */
 	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, IOException,

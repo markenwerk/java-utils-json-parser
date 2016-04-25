@@ -58,10 +58,11 @@ public final class DefaultJsonPullParser implements JsonPullParser {
 	private double doubleValue;
 
 	/**
-	 * Creates a new {@link DefaultJsonPullParser} for the given {@link String}.
+	 * Creates a new {@link DefaultJsonPullParser}.
 	 *
 	 * @param string
 	 *            The {@link String} to read from.
+	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link String} is {@literal null}.
 	 */
@@ -70,10 +71,11 @@ public final class DefaultJsonPullParser implements JsonPullParser {
 	}
 
 	/**
-	 * Creates a new {@link DefaultJsonPullParser} for the given {@code char[]}.
+	 * Creates a new {@link DefaultJsonPullParser}.
 	 *
 	 * @param characters
 	 *            The {@code char[]} to read from.
+	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@code char[]} is {@literal null}.
 	 */
@@ -82,10 +84,11 @@ public final class DefaultJsonPullParser implements JsonPullParser {
 	}
 
 	/**
-	 * Creates a new {@link DefaultJsonPullParser} for the given {@link Reader}.
+	 * Creates a new {@link DefaultJsonPullParser}.
 	 * 
 	 * @param reader
 	 *            The {@link Reader} to read from.
+	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link Reader} is {@literal null}.
 	 */
@@ -94,11 +97,11 @@ public final class DefaultJsonPullParser implements JsonPullParser {
 	}
 
 	/**
-	 * Creates a new {@link DefaultJsonPullParser} for the given
-	 * {@link JsonSource}.
+	 * Creates a new {@link DefaultJsonPullParser}.
 	 * 
 	 * @param source
 	 *            The {@link JsonSource} to read from.
+	 * 
 	 * @throws IllegalArgumentException
 	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
@@ -108,8 +111,7 @@ public final class DefaultJsonPullParser implements JsonPullParser {
 	}
 
 	/**
-	 * Creates a new {@link DefaultJsonPullParser} for the given
-	 * {@link JsonSource}.
+	 * Creates a new {@link DefaultJsonPullParser}.
 	 * 
 	 * @param source
 	 *            The {@link JsonSource} to read from.
