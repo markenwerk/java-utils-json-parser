@@ -349,14 +349,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <li class="blockList">
 <h4>hasNextElement</h4>
 <pre>boolean&nbsp;hasNextElement()
-                throws net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                throws <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                        <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Returns whether the current JSON array or JSON object has more elements.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Whether the current JSON array or JSON object has more elements.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -369,7 +369,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <li class="blockList">
 <h4>currentState</h4>
 <pre><a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser">JsonState</a>&nbsp;currentState()
-                throws net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                throws <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                        <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Reads, if necessary, from the underlying Reader and describes the current
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> of this <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html" title="class in net.markenwerk.utils.json.parser"><code>DefaultJsonPullParser</code></a>, which describes
@@ -378,7 +378,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a>.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -392,7 +392,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>beginDocument</h4>
 <pre>void&nbsp;beginDocument()
             throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                   net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                   <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                    <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_BEGIN"><code>JsonState.DOCUMENT_BEGIN</code></a> and consumes the
@@ -402,7 +402,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_BEGIN"><code>JsonState.DOCUMENT_BEGIN</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -416,7 +416,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>endDocument</h4>
 <pre>void&nbsp;endDocument()
           throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                 net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                 <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                  <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_END"><code>JsonState.DOCUMENT_END</code></a> and consumes the end
@@ -431,7 +431,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOCUMENT_END"><code>JsonState.DOCUMENT_END</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -445,7 +445,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>beginArray</h4>
 <pre>void&nbsp;beginArray()
          throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                 <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#ARRAY_BEGIN"><code>JsonState.ARRAY_BEGIN</code></a> and consumes the
@@ -455,7 +455,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#ARRAY_BEGIN"><code>JsonState.ARRAY_BEGIN</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -469,7 +469,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>endArray</h4>
 <pre>void&nbsp;endArray()
        throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-              net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+              <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
               <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#ARRAY_END"><code>JsonState.ARRAY_END</code></a> and consumes the end of
@@ -479,7 +479,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#ARRAY_END"><code>JsonState.ARRAY_END</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -493,7 +493,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>beginObject</h4>
 <pre>void&nbsp;beginObject()
           throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                 net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                 <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                  <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#OBJECT_BEGIN"><code>JsonState.OBJECT_BEGIN</code></a> and consumes the
@@ -504,7 +504,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#OBJECT_BEGIN"><code>JsonState.OBJECT_BEGIN</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -518,7 +518,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>endObject</h4>
 <pre>void&nbsp;endObject()
         throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-               net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+               <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#OBJECT_END"><code>JsonState.OBJECT_END</code></a> and consumes the end of
@@ -528,7 +528,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#OBJECT_END"><code>JsonState.OBJECT_END</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -542,7 +542,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextNull</h4>
 <pre>void&nbsp;nextNull()
        throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-              net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+              <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
               <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#NULL"><code>JsonState.NULL</code></a> and consumes the
@@ -553,7 +553,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#NULL"><code>JsonState.NULL</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -567,7 +567,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextBoolean</h4>
 <pre>boolean&nbsp;nextBoolean()
              throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                    net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                    <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                     <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#BOOLEAN"><code>JsonState.BOOLEAN</code></a> and consumes and returns
@@ -580,7 +580,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#BOOLEAN"><code>JsonState.BOOLEAN</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -593,9 +593,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <li class="blockList">
 <h4>nextByte</h4>
 <pre>byte&nbsp;nextByte()
-       throws net.markenwerk.utils.json.common.exceptions.InvalidJsonValueException,
+       throws <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/InvalidJsonValueException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">InvalidJsonValueException</a>,
               <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-              net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+              <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
               <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
@@ -606,11 +606,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <code>byte</code> value.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>net.markenwerk.utils.json.common.exceptions.InvalidJsonValueException</code> - If the value is too large or too small to fit into a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/InvalidJsonValueException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">InvalidJsonValueException</a></code> - If the value is too large or too small to fit into a
              <code>byte</code>.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -624,7 +624,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextCharacter</h4>
 <pre>char&nbsp;nextCharacter()
             throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                   net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                   <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                    <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
@@ -635,11 +635,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <code>char</code> value.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>net.markenwerk.utils.json.common.exceptions.InvalidJsonValueException</code> - If the value is too large or too small to fit into a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/InvalidJsonValueException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">InvalidJsonValueException</a></code> - If the value is too large or too small to fit into a
              <code>char</code>.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -653,7 +653,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextShort</h4>
 <pre>short&nbsp;nextShort()
          throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                 <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
@@ -664,11 +664,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <code>short</code> value.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>net.markenwerk.utils.json.common.exceptions.InvalidJsonValueException</code> - If the value is too large or too small to fit into a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/InvalidJsonValueException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">InvalidJsonValueException</a></code> - If the value is too large or too small to fit into a
              <code>short</code>.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -682,7 +682,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextInteger</h4>
 <pre>int&nbsp;nextInteger()
          throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                 <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
@@ -693,11 +693,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <code>int</code> value.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>net.markenwerk.utils.json.common.exceptions.InvalidJsonValueException</code> - If the value is too large or too small to fit into a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/InvalidJsonValueException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">InvalidJsonValueException</a></code> - If the value is too large or too small to fit into a
              <code>int</code>.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -711,7 +711,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextLong</h4>
 <pre>long&nbsp;nextLong()
        throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-              net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+              <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
               <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a> and consumes and returns the
@@ -724,7 +724,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#LONG"><code>JsonState.LONG</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -738,7 +738,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextFloat</h4>
 <pre>float&nbsp;nextFloat()
          throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                 <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOUBLE"><code>JsonState.DOUBLE</code></a> and consumes and returns
@@ -751,7 +751,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOUBLE"><code>JsonState.DOUBLE</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -765,7 +765,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextDouble</h4>
 <pre>double&nbsp;nextDouble()
            throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                  net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                  <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                   <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOUBLE"><code>JsonState.DOUBLE</code></a> and consumes and returns
@@ -778,7 +778,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#DOUBLE"><code>JsonState.DOUBLE</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -792,7 +792,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextString</h4>
 <pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;nextString()
            throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                  net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                  <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                   <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a> and consumes and returns
@@ -805,7 +805,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -819,7 +819,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>readString</h4>
 <pre><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a>&nbsp;readString()
            throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                  net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                  <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                   <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a> and return a <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>
@@ -837,7 +837,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#STRING"><code>JsonState.STRING</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -851,7 +851,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <h4>nextName</h4>
 <pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;nextName()
          throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
-                net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                 <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Ensures that the <a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPullParser.html#currentState--"><code>current</code></a>
  <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#NAME"><code>JsonState.NAME</code></a> and consumes and returns the
@@ -863,7 +863,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the current <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> is not
              <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html#NAME"><code>JsonState.NAME</code></a>.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>
@@ -876,14 +876,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html
 <li class="blockList">
 <h4>skipValue</h4>
 <pre>void&nbsp;skipValue()
-        throws net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+        throws <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Skips the current JSON value. The next <a href="../../../../../net/markenwerk/utils/json/parser/JsonState.html" title="enum in net.markenwerk.utils.json.parser"><code>JsonState</code></a> describes either
  the next sibling value of this JSON value or the end of surrounding JSON
  array or JSON object.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the read <code>JsonSyntaxException</code> document contains a
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the read <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions"><code>JsonSyntaxException</code></a> document contains a
              syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a> failed.</dd>
 </dl>

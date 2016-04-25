@@ -204,9 +204,9 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPushPars
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>&lt;Result&gt;&nbsp;Result</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPushParser.html#handle-net.markenwerk.utils.json.common.handler.JsonHandler-">handle</a></span>(net.markenwerk.utils.json.common.handler.JsonHandler&lt;Result&gt;&nbsp;handler)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../net/markenwerk/utils/json/parser/DefaultJsonPushParser.html#handle-net.markenwerk.utils.json.common.handler.JsonHandler-">handle</a></span>(<a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler">JsonHandler</a>&lt;Result&gt;&nbsp;handler)</code>
 <div class="block">Handle the character sequence from the <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> and report to
- the <code>JsonHandler</code>.</div>
+ the <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler"><code>JsonHandler</code></a>.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -337,14 +337,14 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPushPars
 <ul class="blockList">
 <li class="blockList">
 <h4>handle</h4>
-<pre>public&nbsp;&lt;Result&gt;&nbsp;Result&nbsp;handle(net.markenwerk.utils.json.common.handler.JsonHandler&lt;Result&gt;&nbsp;handler)
+<pre>public&nbsp;&lt;Result&gt;&nbsp;Result&nbsp;handle(<a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler">JsonHandler</a>&lt;Result&gt;&nbsp;handler)
                        throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a>,
-                              net.markenwerk.utils.json.common.exceptions.JsonHandlingException,
-                              net.markenwerk.utils.json.common.exceptions.JsonSyntaxException,
+                              <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonHandlingException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonHandlingException</a>,
+                              <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a>,
                               <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPushParser.html#handle-net.markenwerk.utils.json.common.handler.JsonHandler-">JsonPushParser</a></code></span></div>
 <div class="block">Handle the character sequence from the <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> and report to
- the <code>JsonHandler</code>.
+ the <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler"><code>JsonHandler</code></a>.
  
  <p>
  Calling this method closes the underlying <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a>, but it can
@@ -353,17 +353,17 @@ implements <a href="../../../../../net/markenwerk/utils/json/parser/JsonPushPars
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPushParser.html#handle-net.markenwerk.utils.json.common.handler.JsonHandler-">handle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../net/markenwerk/utils/json/parser/JsonPushParser.html" title="interface in net.markenwerk.utils.json.parser">JsonPushParser</a></code></dd>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>Result</code> - The result type of the <code>JsonHandler</code>.</dd>
+<dd><code>Result</code> - The result type of the <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler"><code>JsonHandler</code></a>.</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>handler</code> - The <code>JsonHandler</code> to report to.</dd>
+<dd><code>handler</code> - The <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler"><code>JsonHandler</code></a> to report to.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The result that has been calculated by the given
-         <code>JsonHandler</code>.</dd>
+         <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler"><code>JsonHandler</code></a>.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If the given <code>JsonHandler</code> is null.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonHandlingException</code> - If the given <code>JsonHandler</code> failed while handling an
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If the given <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler"><code>JsonHandler</code></a> is null.</dd>
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonHandlingException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonHandlingException</a></code> - If the given <a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/handler/JsonHandler.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.handler"><code>JsonHandler</code></a> failed while handling an
              event.</dd>
-<dd><code>net.markenwerk.utils.json.common.exceptions.JsonSyntaxException</code> - If the JSON text contains a syntax error.</dd>
+<dd><code><a href="https://markenwerk.github.io/java-utils-json-common/net/markenwerk/utils/json/common/exceptions/JsonSyntaxException.html?is-external=true" title="class or interface in net.markenwerk.utils.json.common.exceptions">JsonSyntaxException</a></code> - If the JSON text contains a syntax error.</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If reading from the underlying <a href="../../../../../net/markenwerk/utils/json/parser/JsonSource.html" title="interface in net.markenwerk.utils.json.parser"><code>JsonSource</code></a> failed.</dd>
 </dl>
 </li>
