@@ -7,9 +7,16 @@
 [![Issues](https://img.shields.io/github/issues/markenwerk/java-utils-json-parser.svg)](https://github.com/markenwerk/java-utils-json-parser/issues)
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/markenwerk/java-utils-json-parser/blob/master/LICENSE)
 
+## Overview
+
 This library provides a pair of lightweight event based JSON parsers (a pull parser and a push parser) for JSON as specified in [RFC 7159](https://tools.ietf.org/html/rfc7159) and [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). An event based parser just emits a stream of events and doesn't create a document model for the parsed JSON document.
 
-## Overview
+Consult the [documentation](http://markenwerk.github.io/java-utils-json-parser/javadoc/index.html) and [usage description](#usage) for further information:
+
+-  
+
+
+## Maven
 
 This library is hosted in the [Maven Central Repository](https://maven-badges.herokuapp.com/maven-central/net.markenwerk/utils-json-parser). You can use it with the following coordinates:
 
@@ -21,7 +28,6 @@ This library is hosted in the [Maven Central Repository](https://maven-badges.he
 </dependency>
 ```
 
-Consult the [usage description](#usage) and [Javadoc](http://markenwerk.github.io/java-utils-json-parser/javadoc/index.html) for further information.
 
 ## Motivation
 
@@ -39,11 +45,11 @@ This library is intended to be as lightweight as possible and make no assumption
  
 ## Usage
 
-### Sources of JSON documents
+### Sources of JSON text
 
-Both parsers consume a [`JsonSource`][JsonSource], which represents a character stream and the necessary methods to it.
+Both parsers consume a [`JsonSource`][JsonSource] which represents a character stream, which contains a JSON text, and the necessary methods to consume it.
 
-This library provides the [`ReaderJsonSource`][ReaderJsonSource], which buffers and consumes the characters that are yielded by a given [`Reader`][Reader].
+This library provides the [`ReaderJsonSource`][ReaderJsonSource] that processes the characters that are yielded by a given [`Reader`][Reader].
 
 ```java
 Reader reader = ...
@@ -52,7 +58,7 @@ Reader reader = ...
 JsonSource jsonSource = new ReaderJsonSource(reader);
 ```
 
-Additionally, this library provides the [`StringJsonSource`][StringJsonSource] and the [`CharacterArrayJsonSource`][CharacterArrayJsonSource] that can be used to parse the characters from an existing string or an existing `char[]`.
+Additionally, this library provides the [`StringJsonSource`][StringJsonSource] and the [`CharacterArrayJsonSource`][CharacterArrayJsonSource] which process the characters from an existing string or an existing `char[]` respectively.
 
 ```java
 String string = ...
@@ -63,13 +69,13 @@ JsonSource jsonSource1 = new StringJsonSource(string);
 JsonSource jsonSource2 = new CharacterArrayJsonSource(chars);
 ```
 
-*It is usually not necessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].*
+> It's usually not necessary to create a [`JsonSource`][JsonSource] directly, because both parsers have convenient constructors, that create an appropriate [`JsonSource`][JsonSource].
 
 ### Push parser
 
-A [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler] and calls the appropriate callback methods of a [`JsonHandler`][JsonHandler], when processing a JSON document.
+A [`JsonPushParser`][JsonPushParser] takes a [`JsonHandler`][JsonHandler] and calls the appropriate callback methods while processing a JSON text.
 
-This library provides the default implementation [`DefaultJsonPushParser`][DefaultJsonPushParser], which consumes a [`JsonSource`][JsonSource] to process a JSON document.
+This library provides the default implementation [`DefaultJsonPushParser`][DefaultJsonPushParser], which consumes a [`JsonSource`][JsonSource] to process JSON text.
 
 ```java
 JsonSource jsonSource = ...
@@ -84,31 +90,31 @@ jsonPushParser.handle(jsonSource)
 
 #### Creating a document model
 
-This [gist](https://gist.github.com/toKrause/ef6b3f3f060640f8620c) shows a pair of simple [`JsonHandlers`][JsonHandler] for a [`JsonPushParser`][JsonPushParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
+This [gist](https://gist.github.com/toKrause/ef6b3f3f060640f8620c) a pair of simple [`JsonHandlers`][JsonHandler], which can be used to create a document model that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject] from the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212).
 
 If the root structure of the JSON document is a JSON array:
 
 ```java
-File file = ...;
+Reader reader = ...;
 
 // create a new json array from the file content
-JSONArray jsonArray = new JsonPushParser(new FileReader(file)).handle(new ArrayHandler());
+JSONArray jsonArray = new JsonPushParser(reader).handle(new ArrayHandler());
 ```
 
 If the root structure of the JSON document is a JSON object:
 
 ```java
-File file = ...;
+Reader reader = ...;
 
 // create a new json object from the file content
-JSONObject jsonObject = new JsonPushParser(new FileReader(file)).handle(new ObjectHandler());
+JSONObject jsonObject = new JsonPushParser(reader).handle(new ObjectHandler());
 ```
 
 ### Pull parser
 
-A [`JsonPullParser`][JsonPullParser], when asked, reports it's [`JsonState`][JsonState], which reflects the immediate future (`ARRAY_BEGIN`, `NULL`, `BOOLEN`, ..., `ARRAY_END`, ...) of the processed JSON document and determines the appropriate method to be called on the [`JsonPullParser`][JsonPullParser].
+A [`JsonPullParser`][JsonPullParser], when asked, reports it's [`JsonState`][JsonState], which reflects the immediate future (`ARRAY_BEGIN`, `NULL`, `BOOLEN`, ..., `ARRAY_END`, ...) of the processed JSON text and determines the appropriate method to be called on the [`JsonPullParser`][JsonPullParser].
 
-This library provides the default implementation [`DefaultJsonPullParser`][DefaultJsonPullParser], which consumes a [`JsonSource`][JsonSource] to process a JSON document.
+This library provides the default implementation [`DefaultJsonPullParser`][DefaultJsonPullParser], which consumes a [`JsonSource`][JsonSource] to process a JSON text.
 
 ```java
 JsonSource jsonSource = ...
@@ -117,7 +123,9 @@ JsonSource jsonSource = ...
 JsonPullParser jsonPullParser = new DefaultJsonPullParser(jsonSource);
 
 // consumes jsonSource and events
-while(jsonPullParser.hasNext()) {
+loop: while(true) {
+
+    // examine current state
 	switch(jsonPullParser.currentState()) {
 		case ARRAY_BEGIN:
 			jsonPullParser.beginArray();
@@ -126,41 +134,48 @@ while(jsonPullParser.hasNext()) {
 
 		...
 		
+	   case SOURCE_END:
+			break loop;
+		
 	}
 }
 ```
 
-Assuming the structure of the JSON document is known beforehand (e.g a JSON array of strings), it may not be necessary to repeatedly call `currentState()`:
+Assuming the structure of the JSON document is known beforehand (e.g a JSON array containing JSON strings), it isn't necessary to call `currentState()`:
 
 ```java
 // consumes a jsonarray of strings
+jsonPullParser.beginDocument();
 jsonPullParser.beginArray();
-while(jsonPullParser.hasNext()) {
+while(jsonPullParser.hasNextElement()) {
     tags.add(jsonPullParser.nextString());
 }
 jsonPullParser.endArray();
+jsonPullParser.endDocument();
 ```
 
 #### Creating a document model
 
-This [gist](https://gist.github.com/toKrause/95944d3069b5422ee45f) shows a pair of simple helper methods using a [`JsonPullParser`][JsonPullParser], that can be used to create a document model for the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212) (that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject])
+This [gist](https://gist.github.com/toKrause/ef6b3f3f060640f8620c) a pair of simple [`JsonHandlers`][JsonHandler], which can be used to create a document model that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject] from the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212).
+
+This [gist](https://gist.github.com/toKrause/95944d3069b5422ee45f) shows a pair of simple helper methods, that can be used to create a document model that consists of the well known [`JSONArrays`][JSONArray] and [`JSONObjects`][JSONObject] from the reference [JSON library](http://mvnrepository.com/artifact/org.json/json/20160212).
 
 If the root structure of the JSON document is a JSON array:
 
 ```java
-File file = ...;
+Reader reader = ...;
 
 // create a new json array from the file content
-JSONArray jsonArray = JsonUtil.readArray(new FileReader(file));
+JSONArray jsonArray = JsonUtil.readArray(reader);
 ```
 
 If the root structure of the JSON document is a JSON object:
 
 ```java
-File file = ...;
+Reader reader = ...;
 
 // create a new json object from the file content
-JSONArray jsonArray = JsonUtil.readObject(new FileReader(file));
+JSONArray jsonArray = JsonUtil.readObject(reader);
 ```
 
 #### Skipping values
@@ -187,7 +202,7 @@ while(jsonPullParser.hasNext()) {
 
 #### Reading strings efficiently
 
-A [`JsonPullParser`][JsonPullParser] can be used to create a [`Reader`][Reader] for a JSON string. This may yield considerable performance improvements if a JSON document contains large strings that need to be further processed (e.g. a Base64-encoded image), because no string object has to be created.
+A [`JsonPullParser`][JsonPullParser] can be used to create a [`Reader`][Reader] for a JSON string. This may yield considerable performance improvements if a JSON document contains large strings that need to be further processed (e.g. a Base64-encoded image), because no [`String`][String] object has to be created for the intermediate value.
 
 ```java
 while(jsonPullParser.hasNext()) {
@@ -256,6 +271,7 @@ Preloading the content of a JSON file into a `String` instead of using a [`FileR
 
 [FileReader]: http://docs.oracle.com/javase/8/docs/api/index.html?java/io/FileReader.html
 [Reader]: http://docs.oracle.com/javase/8/docs/api/index.html?java/io/Reader.html
+[String]: http://docs.oracle.com/javase/8/docs/api/index.html?java/lang/String.html
 
 [ArrayHandler]: https://gist.github.com/toKrause/ef6b3f3f060640f8620c#file-arrayhandler-java
 [JsonUtil]: https://gist.github.com/toKrause/95944d3069b5422ee45f#file-jsonutil-java
