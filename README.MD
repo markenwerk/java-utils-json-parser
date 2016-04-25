@@ -34,7 +34,6 @@ This library is hosted in the [Maven Central Repository](https://maven-badges.he
 </dependency>
 ```
 
-
 ## Motivation
 
 The original intention was, to create a pure Java implementation of an event based JSON parser, that  (like Android's [`JsonReader`](https://developer.android.com/reference/android/util/JsonReader.html)) has the ability, to stream through a character stream and process the contained JSON document, without the need to read the whole character stream into a string first.
