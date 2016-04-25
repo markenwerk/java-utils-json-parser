@@ -137,6 +137,7 @@ public final class DefaultJsonPushParser implements JsonPushParser {
 			throw new IllegalArgumentException("handler is null");
 		}
 		try {
+			this.handler = handler;
 			handleDocument();
 			return handler.getResult();
 		} finally {
