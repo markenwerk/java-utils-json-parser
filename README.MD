@@ -13,8 +13,14 @@ This library provides a pair of lightweight event based JSON parsers (a pull par
 
 Consult the [documentation](http://markenwerk.github.io/java-utils-json-parser/javadoc/index.html) and [usage description](#usage) for further information:
 
--  
-
+- [Sources of JSON text](#sources-of-json-text)
+- [Push parser](#push-parser)
+    - [Creating a document model](#creating-a-document-model)
+- [Pull parser](#pull-parser)
+    - [Creating a document model](#creating-a-document-model-1)
+    - [Skipping values](#skipping-values)
+    - [Reading strings efficiently](#reading-strings-efficiently)
+- [Performance comparison](#performance-comparison)
 
 ## Maven
 
@@ -244,13 +250,7 @@ The following table shows the results of a [performance test](https://gist.githu
 
 The four JSON files of different size have been created with a [random JSON generator](http://www.json-generator.com/).
 
-#### Conclusions
-
-Both parsers provided by this library are, for sufficiently large JSON documents, about 42% faster than the reference implementation.
-
-The relation between the size of the JSON input and the parsing duration is linear.
-
-Preloading the content of a JSON file into a `String` instead of using a [`FileReader`][FileReader] yield no significant performance improvement.
+Both parsers provided by this library are, for sufficiently large JSON documents, about 42% faster than the reference implementation. The relation between the size of the JSON input and the parsing duration is linear. Preloading the content of a JSON file into a `String` instead of using a [`FileReader`][FileReader] yield no significant performance improvement.
 
 
 [CharacterArrayJsonSource]: https://markenwerk.github.io/java-utils-json-parser/index.html?net/markenwerk/utils/json/parser/CharacterArrayJsonSource.html
