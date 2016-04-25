@@ -24,9 +24,9 @@ package net.markenwerk.utils.json.parser;
 import java.io.Closeable;
 import java.io.IOException;
 
-import net.markenwerk.utils.json.common.exceptions.JsonHandlingException;
-import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
-import net.markenwerk.utils.json.common.handler.JsonHandler;
+import net.markenwerk.utils.json.common.JsonSyntaxException;
+import net.markenwerk.utils.json.handler.JsonHandler;
+import net.markenwerk.utils.json.handler.JsonHandlingException;
 
 /**
  * 

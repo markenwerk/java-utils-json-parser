@@ -26,10 +26,10 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
-import net.markenwerk.utils.json.common.exceptions.JsonHandlingException;
-import net.markenwerk.utils.json.common.exceptions.JsonSyntaxError;
-import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
-import net.markenwerk.utils.json.common.handler.JsonHandler;
+import net.markenwerk.utils.json.common.JsonSyntaxError;
+import net.markenwerk.utils.json.common.JsonSyntaxException;
+import net.markenwerk.utils.json.handler.JsonHandler;
+import net.markenwerk.utils.json.handler.JsonHandlingException;
 
 /**
  * A {@link DefaultJsonPushParser} is a stream based JSON parser. It reads

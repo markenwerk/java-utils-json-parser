@@ -27,8 +27,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.markenwerk.utils.json.common.exceptions.JsonSyntaxError;
-import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
+import net.markenwerk.utils.json.common.JsonSyntaxError;
+import net.markenwerk.utils.json.common.JsonSyntaxException;
 import net.markenwerk.utils.json.parser.events.ArrayBeginJsonEvent;
 import net.markenwerk.utils.json.parser.events.ArrayEndJsonEvent;
 import net.markenwerk.utils.json.parser.events.BooleanJsonEvent;

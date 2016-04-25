@@ -25,8 +25,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 
-import net.markenwerk.utils.json.common.exceptions.InvalidJsonValueException;
-import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
+import net.markenwerk.utils.json.common.InvalidJsonValueException;
+import net.markenwerk.utils.json.common.JsonSyntaxException;
 
 /**
  * A {@link JsonPullParser} is an event based JSON parser. It

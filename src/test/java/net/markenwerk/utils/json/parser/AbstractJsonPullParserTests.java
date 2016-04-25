@@ -27,9 +27,9 @@ import java.io.Reader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.markenwerk.utils.json.common.exceptions.InvalidJsonValueException;
-import net.markenwerk.utils.json.common.exceptions.JsonSyntaxError;
-import net.markenwerk.utils.json.common.exceptions.JsonSyntaxException;
+import net.markenwerk.utils.json.common.InvalidJsonValueException;
+import net.markenwerk.utils.json.common.JsonSyntaxError;
+import net.markenwerk.utils.json.common.JsonSyntaxException;
 
 /**
  * JUnit test for {@link DefaultJsonPullParser}.

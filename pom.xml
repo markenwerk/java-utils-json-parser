@@ -62,7 +62,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.markenwerk</groupId>
-			<artifactId>utils-json-common</artifactId>
+			<artifactId>utils-json-handler</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 
@@ -229,7 +229,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-scm-publish-plugin</artifactId>
