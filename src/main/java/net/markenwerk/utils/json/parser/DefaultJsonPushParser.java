@@ -45,11 +45,11 @@ public final class DefaultJsonPushParser implements JsonPushParser {
 
 	private final JsonSource source;
 
+	private final boolean multiDocumentMode;
+
+	private final boolean strictStructMode;
+
 	private JsonHandler<?> handler;
-
-	private boolean multiDocumentMode;
-
-	private boolean strictStructMode;
 
 	/**
 	 * Creates a new {@link DefaultJsonPushParser} for the given {@link String}.
@@ -57,8 +57,7 @@ public final class DefaultJsonPushParser implements JsonPushParser {
 	 * @param string
 	 *            The {@link String} to read from.
 	 * @throws IllegalArgumentException
-	 *             If the given {@link String} is {@literal null} or if the
-	 *             given {@link JsonHandler} is {@literal null}.
+	 *             If the given {@link String} is {@literal null}.
 	 */
 	public DefaultJsonPushParser(String string) throws IllegalArgumentException {
 		this(new StringJsonSource(string));
@@ -70,8 +69,7 @@ public final class DefaultJsonPushParser implements JsonPushParser {
 	 * @param characters
 	 *            The {@code char[]} to read from.
 	 * @throws IllegalArgumentException
-	 *             If the given {@link String} is {@literal null} or if the
-	 *             given {@link JsonHandler} is {@literal null}.
+	 *             If the given {@code char[]} is {@literal null}.
 	 */
 	public DefaultJsonPushParser(char[] characters) throws IllegalArgumentException {
 		this(new CharacterArrayJsonSource(characters));
@@ -84,28 +82,10 @@ public final class DefaultJsonPushParser implements JsonPushParser {
 	 * @param reader
 	 *            The {@link Reader} to read from.
 	 * @throws IllegalArgumentException
-	 *             If the given {@link String} is {@literal null}.
+	 *             If the given {@link Reader} is {@literal null}.
 	 */
 	public DefaultJsonPushParser(Reader reader) throws IllegalArgumentException {
 		this(new ReaderJsonSource(reader));
-	}
-
-	/**
-	 * Creates a new {@link DefaultJsonPushParser} for the given {@link Reader}.
-	 * 
-	 * @param reader
-	 *            The {@link Reader} to read from.
-	 * @param size
-	 *            The buffer size to be used.
-	 * @throws IllegalArgumentException
-	 *             If the given {@link String} is {@literal null} or if the
-	 *             given {@link JsonHandler} is {@literal null} or if the given
-	 *             size is smaller than the
-	 *             {@link ReaderJsonSource#MINIMUM_BUFFER_SIZE minimum} buffer
-	 *             size.
-	 */
-	public DefaultJsonPushParser(Reader reader, int size) throws IllegalArgumentException {
-		this(new ReaderJsonSource(reader, size));
 	}
 
 	/**
@@ -115,68 +95,47 @@ public final class DefaultJsonPushParser implements JsonPushParser {
 	 * @param source
 	 *            The {@link JsonSource} to read from.
 	 * @throws IllegalArgumentException
-	 *             If the given {@link String} is {@literal null} or if the
-	 *             given {@link JsonHandler} is {@literal null}.
+	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
 	public DefaultJsonPushParser(JsonSource source) throws IllegalArgumentException {
-		if (null == source) {
-			throw new IllegalArgumentException("source is null");
-		}
-		this.source = source;
-	}
-
-	@Override
-	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, JsonHandlingException,
-			JsonSyntaxException, IOException {
-		return handle(handler, (JsonParserMode[]) null);
+		this(source, (JsonParserMode[]) null);
 	}
 
 	/**
-	 * Handle the character sequence from the {@link JsonSource} and report to
-	 * the {@link JsonHandler}.
+	 * Creates a new {@link DefaultJsonPushParser} for the given
+	 * {@link JsonSource}.
 	 * 
-	 * <p>
-	 * Calling this method closes the underlying {@link JsonSource}, but it can
-	 * be {@link DefaultJsonPushParser#close() closed manually}.
-	 * 
-	 * @param <Result>
-	 *            The result type of the {@link JsonHandler}.
-	 * 
-	 * @param handler
-	 *            The {@link JsonHandler} to report to.
-	 * 
-	 * @return The result that has been calculated by the given
-	 *         {@link JsonHandler}.
+	 * @param source
+	 *            The {@link JsonSource} to read from.
 	 * @param modes
 	 *            Selection of {@link JsonParserMode JsonParserModes} to be used
 	 *            during parsing.
 	 * 
 	 * @throws IllegalArgumentException
-	 *             If the given {@link JsonHandler} is {@literal null}.
-	 * @throws IOException
-	 *             If reading from the underlying {@link Reader} failed.
-	 * @throws JsonSyntaxException
-	 *             If the {@link JsonSyntaxException} document contains a syntax
-	 *             error.
-	 * @throws JsonHandlingException
-	 *             If the given {@link JsonHandler} failed to while handling an
-	 *             event.
+	 *             If the given {@link JsonSource} is {@literal null}.
 	 */
-	public <Result> Result handle(JsonHandler<Result> handler, JsonParserMode... modes)
-			throws IllegalArgumentException, IOException, JsonSyntaxException, JsonHandlingException {
+	public DefaultJsonPushParser(JsonSource source, JsonParserMode... modes) throws IllegalArgumentException {
+		if (null == source) {
+			throw new IllegalArgumentException("source is null");
+		}
+		this.source = source;
+		if (null != modes) {
+			List<JsonParserMode> modesList = Arrays.asList(modes);
+			this.multiDocumentMode = modesList.contains(JsonParserMode.MULTI_DOCUMENT_MODE);
+			this.strictStructMode = modesList.contains(JsonParserMode.STRICT_STRUCT_MODE);
+		} else {
+			this.multiDocumentMode = false;
+			this.strictStructMode = false;
+		}
+	}
+
+	@Override
+	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, JsonHandlingException,
+			JsonSyntaxException, IOException {
 		if (null == handler) {
 			throw new IllegalArgumentException("handler is null");
 		}
 		try {
-			this.handler = handler;
-			if (null != modes) {
-				List<JsonParserMode> modesList = Arrays.asList(modes);
-				this.multiDocumentMode = modesList.contains(JsonParserMode.MULTI_DOCUMENT_MODE);
-				this.strictStructMode = modesList.contains(JsonParserMode.STRICT_STRUCT_MODE);
-			} else {
-				this.multiDocumentMode = false;
-				this.strictStructMode = false;
-			}
 			handleDocument();
 			return handler.getResult();
 		} finally {

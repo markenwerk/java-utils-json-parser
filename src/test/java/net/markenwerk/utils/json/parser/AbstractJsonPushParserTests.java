@@ -85,10 +85,11 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void nonEmpty_invalidStart() throws IOException {
-		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("null"));
+		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("null"),
+				JsonParserMode.STRICT_STRUCT_MODE);
 		try {
 
-			jsonParser.handle(new NullHandler(), JsonParserMode.STRICT_STRUCT_MODE);
+			jsonParser.handle(new NullHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -147,7 +148,6 @@ public abstract class AbstractJsonPushParserTests {
 			jsonParser.close();
 		}
 	}
-
 
 	@Test
 	@SuppressWarnings("javadoc")
@@ -294,8 +294,6 @@ public abstract class AbstractJsonPushParserTests {
 			jsonParser.close();
 		}
 	}
-	
-	
 
 	@Test
 	@SuppressWarnings("javadoc")
@@ -511,7 +509,6 @@ public abstract class AbstractJsonPushParserTests {
 			jsonParser.close();
 		}
 	}
-	
 
 	@Test
 	@SuppressWarnings("javadoc")
@@ -1091,11 +1088,12 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode() throws IOException, JsonSyntaxException {
-		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{}[]"));
+		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{}[]"),
+				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMENT_MODE);
+					new CollectingJsonEventHandler()));
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
@@ -1117,11 +1115,12 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_trailingWhitespace() throws IOException, JsonSyntaxException {
-		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{}[] \n\r\t "));
+		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{}[] \n\r\t "),
+				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMENT_MODE);
+					new CollectingJsonEventHandler()));
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
@@ -1143,11 +1142,12 @@ public abstract class AbstractJsonPushParserTests {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void multipleDocumentMode_separatingWhitespace() throws IOException, JsonSyntaxException {
-		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{} \n\r\t []"));
+		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{} \n\r\t []"),
+				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
 			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()), JsonParserMode.MULTI_DOCUMENT_MODE);
+					new CollectingJsonEventHandler()));
 
 			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
 			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
