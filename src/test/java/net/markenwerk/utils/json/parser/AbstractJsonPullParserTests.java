@@ -912,16 +912,16 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
 			jsonParser.nextNull();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
 			jsonParser.endDocument();
 			Assert.assertEquals(JsonState.SOURCE_END, jsonParser.currentState());
-
+			
 		} finally {
 			jsonParser.close();
 		}
@@ -937,13 +937,13 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
 			jsonParser.nextNull();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
 			jsonParser.nextNull();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
@@ -965,13 +965,13 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 			jsonParser.beginArray();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
@@ -1138,12 +1138,12 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 			jsonParser.beginObject();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 			Assert.assertEquals("foo", jsonParser.nextName());
 			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
 			jsonParser.nextNull();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
@@ -1165,17 +1165,17 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 			jsonParser.beginObject();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 			Assert.assertEquals("foo", jsonParser.nextName());
 			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
 			jsonParser.nextNull();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 			Assert.assertEquals("bar", jsonParser.nextName());
 			Assert.assertEquals(JsonState.NULL, jsonParser.currentState());
 			jsonParser.nextNull();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
@@ -1197,15 +1197,15 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 			jsonParser.beginObject();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 			Assert.assertEquals("foo", jsonParser.nextName());
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 			jsonParser.beginObject();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
@@ -1396,62 +1396,62 @@ public abstract class AbstractJsonPullParserTests {
 				getSource(" \n { \"foo\" : [ \"bar\\n\" , true , { \n } ] , \"baz\" : { \"foo\" \t : \t 42 } } \n "));
 		try {
 			//@formatter:off
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.DOCUMENT_BEGIN, jsonParser.currentState());
 			jsonParser.beginDocument();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 				jsonParser.beginObject();
 				
-				Assert.assertTrue(jsonParser.hasNext());
+				Assert.assertTrue(jsonParser.hasNextElement());
 				Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 				Assert.assertEquals("foo", jsonParser.nextName());
 				
-				Assert.assertTrue(jsonParser.hasNext());
+				Assert.assertTrue(jsonParser.hasNextElement());
 				Assert.assertEquals(JsonState.ARRAY_BEGIN, jsonParser.currentState());
 					jsonParser.beginArray();
 					
-					Assert.assertTrue(jsonParser.hasNext());
+					Assert.assertTrue(jsonParser.hasNextElement());
 					Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 					Assert.assertEquals("bar\n", jsonParser.nextString());
 
-					Assert.assertTrue(jsonParser.hasNext());
+					Assert.assertTrue(jsonParser.hasNextElement());
 					Assert.assertEquals(JsonState.BOOLEAN, jsonParser.currentState());
 					Assert.assertEquals(true, jsonParser.nextBoolean());
 					
-					Assert.assertTrue(jsonParser.hasNext());
+					Assert.assertTrue(jsonParser.hasNextElement());
 					Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 						jsonParser.beginObject();
 					
-						Assert.assertFalse(jsonParser.hasNext());
+						Assert.assertFalse(jsonParser.hasNextElement());
 						Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 						jsonParser.endObject();
 						
-					Assert.assertFalse(jsonParser.hasNext());
+					Assert.assertFalse(jsonParser.hasNextElement());
 					Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 					jsonParser.endArray();
 					
-				Assert.assertTrue(jsonParser.hasNext());
+				Assert.assertTrue(jsonParser.hasNextElement());
 				Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 				Assert.assertEquals("baz", jsonParser.nextName());
 				
-				Assert.assertTrue(jsonParser.hasNext());
+				Assert.assertTrue(jsonParser.hasNextElement());
 				Assert.assertEquals(JsonState.OBJECT_BEGIN, jsonParser.currentState());
 					jsonParser.beginObject();
 					
-					Assert.assertTrue(jsonParser.hasNext());
+					Assert.assertTrue(jsonParser.hasNextElement());
 					Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 					Assert.assertEquals("foo", jsonParser.nextName());
 					
-					Assert.assertTrue(jsonParser.hasNext());
+					Assert.assertTrue(jsonParser.hasNextElement());
 					Assert.assertEquals(JsonState.LONG, jsonParser.currentState());
 					Assert.assertEquals(42, jsonParser.nextLong());
 					
-					Assert.assertFalse(jsonParser.hasNext());
+					Assert.assertFalse(jsonParser.hasNextElement());
 					Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 					jsonParser.endObject();
 
-				Assert.assertFalse(jsonParser.hasNext());
+				Assert.assertFalse(jsonParser.hasNextElement());
 				Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 				jsonParser.endObject();
 				
@@ -1473,7 +1473,7 @@ public abstract class AbstractJsonPullParserTests {
 
 			jsonParser.beginDocument();
 			jsonParser.skipValue();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
 			jsonParser.endDocument();
 
@@ -1491,7 +1491,7 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.skipValue();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			jsonParser.nextString();
 			jsonParser.endArray();
@@ -1511,7 +1511,7 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.skipValue();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.ARRAY_END, jsonParser.currentState());
 			jsonParser.endArray();
 			jsonParser.endDocument();
@@ -1530,7 +1530,7 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			jsonParser.beginArray();
 			jsonParser.skipValue();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.STRING, jsonParser.currentState());
 			jsonParser.nextString();
 			jsonParser.endArray();
@@ -1549,7 +1549,7 @@ public abstract class AbstractJsonPullParserTests {
 
 			jsonParser.beginDocument();
 			jsonParser.skipValue();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.DOCUMENT_END, jsonParser.currentState());
 			jsonParser.endDocument();
 
@@ -1567,7 +1567,7 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.skipValue();
-			Assert.assertFalse(jsonParser.hasNext());
+			Assert.assertFalse(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.OBJECT_END, jsonParser.currentState());
 			jsonParser.endObject();
 			jsonParser.endDocument();
@@ -1586,7 +1586,7 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginDocument();
 			jsonParser.beginObject();
 			jsonParser.skipValue();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 			jsonParser.nextName();
 			jsonParser.nextNull();
@@ -1608,7 +1608,7 @@ public abstract class AbstractJsonPullParserTests {
 			jsonParser.beginObject();
 			jsonParser.nextName();
 			jsonParser.skipValue();
-			Assert.assertTrue(jsonParser.hasNext());
+			Assert.assertTrue(jsonParser.hasNextElement());
 			Assert.assertEquals(JsonState.NAME, jsonParser.currentState());
 			jsonParser.nextName();
 			jsonParser.nextNull();

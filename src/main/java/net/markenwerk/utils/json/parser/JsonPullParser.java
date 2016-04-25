@@ -50,7 +50,7 @@ public interface JsonPullParser extends Closeable {
 	 * @throws IOException
 	 *             If reading from the underlying {@link Reader} failed.
 	 */
-	public boolean hasNext() throws JsonSyntaxException, IOException;
+	public boolean hasNextElement() throws JsonSyntaxException, IOException;
 
 	/**
 	 * Reads, if necessary, from the underlying Reader and describes the current

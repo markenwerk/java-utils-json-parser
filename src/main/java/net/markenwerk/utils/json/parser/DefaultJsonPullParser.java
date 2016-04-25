@@ -539,7 +539,7 @@ public final class DefaultJsonPullParser implements JsonPullParser {
 	}
 
 	@Override
-	public boolean hasNext() throws JsonSyntaxException, IOException {
+	public boolean hasNextElement() throws JsonSyntaxException, IOException {
 		currentState();
 		return JsonState.OBJECT_END != state && JsonState.ARRAY_END != state;
 	}
