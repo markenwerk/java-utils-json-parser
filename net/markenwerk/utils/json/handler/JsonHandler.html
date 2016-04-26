@@ -363,7 +363,8 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>onName</h4>
 <pre>void&nbsp;onName(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)
-     throws <a href="../../../../../net/markenwerk/utils/json/handler/JsonHandlingException.html" title="class in net.markenwerk.utils.json.handler">JsonHandlingException</a></pre>
+     throws <a href="../../../../../net/markenwerk/utils/json/common/InvalidJsonNameException.html" title="class in net.markenwerk.utils.json.common">InvalidJsonNameException</a>,
+            <a href="../../../../../net/markenwerk/utils/json/handler/JsonHandlingException.html" title="class in net.markenwerk.utils.json.handler">JsonHandlingException</a></pre>
 <div class="block">Called when the parsing of a JSON object encountered the name for the
  next JSON value.
  
@@ -374,6 +375,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - The name for the next JSON value.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../../net/markenwerk/utils/json/common/InvalidJsonNameException.html" title="class in net.markenwerk.utils.json.common">InvalidJsonNameException</a></code> - If the given value is null.</dd>
 <dd><code><a href="../../../../../net/markenwerk/utils/json/handler/JsonHandlingException.html" title="class in net.markenwerk.utils.json.handler">JsonHandlingException</a></code> - If the handling failed.</dd>
 </dl>
 </li>
