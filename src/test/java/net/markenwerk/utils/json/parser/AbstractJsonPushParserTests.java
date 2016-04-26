@@ -29,6 +29,7 @@ import org.junit.Test;
 
 import net.markenwerk.utils.json.common.JsonSyntaxError;
 import net.markenwerk.utils.json.common.JsonSyntaxException;
+import net.markenwerk.utils.json.handler.NullJsonHandler;
 import net.markenwerk.utils.json.parser.events.ArrayBeginJsonEvent;
 import net.markenwerk.utils.json.parser.events.ArrayEndJsonEvent;
 import net.markenwerk.utils.json.parser.events.BooleanJsonEvent;
@@ -70,7 +71,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource(""));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -89,7 +90,7 @@ public abstract class AbstractJsonPushParserTests {
 				JsonParserMode.STRICT_STRUCT_MODE);
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -283,7 +284,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("x"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -408,7 +409,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -426,7 +427,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\\""));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -444,7 +445,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\x\""));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -462,7 +463,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\u"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -480,7 +481,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\u\""));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -498,7 +499,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\uNOPE\""));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -596,7 +597,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("["));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -614,7 +615,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[}"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -632,7 +633,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[]X"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -715,7 +716,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[null"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -733,7 +734,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[null}"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -751,7 +752,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[null,"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -769,7 +770,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[null,]"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -807,7 +808,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -825,7 +826,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{]"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -912,7 +913,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{null}"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -930,7 +931,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\""));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -948,7 +949,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\":"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -966,7 +967,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\":null"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -984,7 +985,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\":null,"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -1002,7 +1003,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\",null}"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -1020,7 +1021,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\":null,null}"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -1038,7 +1039,7 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\":null]"));
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException exception) {
@@ -1174,7 +1175,7 @@ public abstract class AbstractJsonPushParserTests {
 
 		try {
 
-			jsonParser.handle(new NullHandler());
+			jsonParser.handle(new NullJsonHandler());
 
 			throw new RuntimeException("Expected JsonSyntaxException");
 		} catch (JsonSyntaxException e) {
