@@ -1,4 +1,3 @@
-net.markenwerk.utils.json.common.exceptions
-net.markenwerk.utils.json.common.handler
+net.markenwerk.utils.json.common
+net.markenwerk.utils.json.handler
 net.markenwerk.utils.json.parser
-net.markenwerk.utils.text.indentation
