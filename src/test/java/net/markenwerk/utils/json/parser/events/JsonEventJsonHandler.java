@@ -22,7 +22,6 @@
 package net.markenwerk.utils.json.parser.events;
 
 import net.markenwerk.utils.json.handler.JsonHandler;
-import net.markenwerk.utils.json.handler.JsonHandlingException;
 
 @SuppressWarnings("javadoc")
 public final class JsonEventJsonHandler<Result> implements JsonHandler<Result> {
@@ -72,7 +71,7 @@ public final class JsonEventJsonHandler<Result> implements JsonHandler<Result> {
 	}
 
 	@Override
-	public void onNext() throws JsonHandlingException {
+	public void onNext() {
 	}
 
 	@Override
