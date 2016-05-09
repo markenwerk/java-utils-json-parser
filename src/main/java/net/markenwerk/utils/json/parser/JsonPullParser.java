@@ -25,8 +25,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 
-import net.markenwerk.utils.json.common.InvalidJsonValueException;
-import net.markenwerk.utils.json.common.JsonSyntaxException;
+import net.markenwerk.utils.json.common.JsonValueException;
 
 /**
  * A {@link JsonPullParser} is an event based JSON parser. It
@@ -221,7 +220,7 @@ public interface JsonPullParser extends Closeable {
 	 * 
 	 * @return The {@code byte} value.
 	 * 
-	 * @throws InvalidJsonValueException
+	 * @throws JsonValueException
 	 *             If the value is too large or too small to fit into a
 	 *             {@code byte}.
 	 * @throws IllegalStateException
@@ -233,7 +232,7 @@ public interface JsonPullParser extends Closeable {
 	 * @throws IOException
 	 *             If reading from the underlying {@link Reader} failed.
 	 */
-	public byte nextByte() throws InvalidJsonValueException, IllegalStateException, JsonSyntaxException, IOException;
+	public byte nextByte() throws JsonValueException, IllegalStateException, JsonSyntaxException, IOException;
 
 	/**
 	 * Ensures that the {@link DefaultJsonPullParser#currentState() current}
@@ -244,7 +243,7 @@ public interface JsonPullParser extends Closeable {
 	 * 
 	 * @return The {@code char} value.
 	 * 
-	 * @throws InvalidJsonValueException
+	 * @throws JsonValueException
 	 *             If the value is too large or too small to fit into a
 	 *             {@code char}.
 	 * @throws IllegalStateException
@@ -267,7 +266,7 @@ public interface JsonPullParser extends Closeable {
 	 * 
 	 * @return The {@code short} value.
 	 * 
-	 * @throws InvalidJsonValueException
+	 * @throws JsonValueException
 	 *             If the value is too large or too small to fit into a
 	 *             {@code short}.
 	 * @throws IllegalStateException
@@ -290,7 +289,7 @@ public interface JsonPullParser extends Closeable {
 	 * 
 	 * @return The {@code int} value.
 	 * 
-	 * @throws InvalidJsonValueException
+	 * @throws JsonValueException
 	 *             If the value is too large or too small to fit into a
 	 *             {@code int}.
 	 * @throws IllegalStateException

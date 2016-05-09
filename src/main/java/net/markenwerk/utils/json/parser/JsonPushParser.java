@@ -24,8 +24,7 @@ package net.markenwerk.utils.json.parser;
 import java.io.Closeable;
 import java.io.IOException;
 
-import net.markenwerk.utils.json.common.FailedJsonOperationException;
-import net.markenwerk.utils.json.common.JsonSyntaxException;
+import net.markenwerk.utils.json.common.JsonException;
 import net.markenwerk.utils.json.handler.JsonHandler;
 
 /**
@@ -62,12 +61,12 @@ public interface JsonPushParser extends Closeable {
 	 *             If reading from the underlying {@link JsonSource} failed.
 	 * @throws JsonSyntaxException
 	 *             If the JSON text contains a syntax error.
-	 * @throws FailedJsonOperationException
+	 * @throws JsonException
 	 *             If the given {@link JsonHandler} failed while handling an
 	 *             event.
 	 */
 	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException, IOException,
-			JsonSyntaxException, FailedJsonOperationException;
+			JsonSyntaxException, JsonException;
 
 	/**
 	 * Returns the {@link JsonSource#getLine() line} that corresponds to the
