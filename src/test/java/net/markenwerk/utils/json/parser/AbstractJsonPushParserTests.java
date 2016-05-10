@@ -22,27 +22,26 @@
 package net.markenwerk.utils.json.parser;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.markenwerk.utils.json.common.handler.replay.JsonReplay;
+import net.markenwerk.utils.json.common.handler.replay.RecordingJsonHandler;
+import net.markenwerk.utils.json.common.handler.replay.events.ArrayBeginJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.ArrayEndJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.BooleanJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.DocumentBeginJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.DocumentEndJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.DoubleJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.LongJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.NameJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.NextJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.NullJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.ObjectBeginJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.ObjectEndJsonEvent;
+import net.markenwerk.utils.json.common.handler.replay.events.StringJsonEvent;
 import net.markenwerk.utils.json.handler.NullJsonHandler;
-import net.markenwerk.utils.json.parser.events.ArrayBeginJsonEvent;
-import net.markenwerk.utils.json.parser.events.ArrayEndJsonEvent;
-import net.markenwerk.utils.json.parser.events.BooleanJsonEvent;
-import net.markenwerk.utils.json.parser.events.CollectingJsonEventHandler;
-import net.markenwerk.utils.json.parser.events.DocumentBeginJsonEvent;
-import net.markenwerk.utils.json.parser.events.DocumentEndJsonEvent;
-import net.markenwerk.utils.json.parser.events.DoubleJsonEvent;
-import net.markenwerk.utils.json.parser.events.JsonEvent;
-import net.markenwerk.utils.json.parser.events.JsonEventJsonHandler;
-import net.markenwerk.utils.json.parser.events.LongJsonEvent;
-import net.markenwerk.utils.json.parser.events.NameJsonEvent;
-import net.markenwerk.utils.json.parser.events.NullJsonEvent;
-import net.markenwerk.utils.json.parser.events.ObjectBeginJsonEvent;
-import net.markenwerk.utils.json.parser.events.ObjectEndJsonEvent;
-import net.markenwerk.utils.json.parser.events.StringJsonEvent;
 
 /**
  * JUnit test for {@link DefaultJsonPushParser}.
@@ -106,10 +105,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("null"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new NullJsonEvent(), events.get(1));
+			replay.assertEquals(new NullJsonEvent(), 1);
 
 		} finally {
 			jsonParser.close();
@@ -122,10 +120,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("false"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new BooleanJsonEvent(false), events.get(1));
+			replay.assertEquals(new BooleanJsonEvent(false), 1);
 
 		} finally {
 			jsonParser.close();
@@ -138,10 +135,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("true"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new BooleanJsonEvent(true), events.get(1));
+			replay.assertEquals(new BooleanJsonEvent(true), 1);
 
 		} finally {
 			jsonParser.close();
@@ -154,10 +150,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("0"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new LongJsonEvent(0), events.get(1));
+			replay.assertEquals(new LongJsonEvent(0), 1);
 
 		} finally {
 			jsonParser.close();
@@ -170,10 +165,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("42"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new LongJsonEvent(42), events.get(1));
+			replay.assertEquals(new LongJsonEvent(42), 1);
 
 		} finally {
 			jsonParser.close();
@@ -186,10 +180,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("-42"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new LongJsonEvent(-42), events.get(1));
+			replay.assertEquals(new LongJsonEvent(-42), 1);
 
 		} finally {
 			jsonParser.close();
@@ -202,10 +195,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("0.0"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DoubleJsonEvent(0.0), events.get(1));
+			replay.assertEquals(new DoubleJsonEvent(0.0), 1);
 
 		} finally {
 			jsonParser.close();
@@ -218,10 +210,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("42.23"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DoubleJsonEvent(42.23), events.get(1));
+			replay.assertEquals(new DoubleJsonEvent(42.23), 1);
 
 		} finally {
 			jsonParser.close();
@@ -234,10 +225,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("-42.23"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DoubleJsonEvent(-42.23), events.get(1));
+			replay.assertEquals(new DoubleJsonEvent(-42.23), 1);
 
 		} finally {
 			jsonParser.close();
@@ -250,10 +240,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("42.0e7"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DoubleJsonEvent(42.0e7), events.get(1));
+			replay.assertEquals(new DoubleJsonEvent(42.0e7), 1);
 
 		} finally {
 			jsonParser.close();
@@ -266,10 +255,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("42.0e-7"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DoubleJsonEvent(42.0e-7), events.get(1));
+			replay.assertEquals(new DoubleJsonEvent(42.0e-7), 1);
 
 		} finally {
 			jsonParser.close();
@@ -300,10 +288,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\""));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new StringJsonEvent(""), events.get(1));
+			replay.assertEquals(new StringJsonEvent(""), 1);
 
 		} finally {
 			jsonParser.close();
@@ -316,10 +303,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"foo\""));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new StringJsonEvent("foo"), events.get(1));
+			replay.assertEquals(new StringJsonEvent("foo"), 1);
 
 		} finally {
 			jsonParser.close();
@@ -333,10 +319,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"" + value + "\""));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new StringJsonEvent(value), events.get(1));
+			replay.assertEquals(new StringJsonEvent(value), 1);
 
 		} finally {
 			jsonParser.close();
@@ -358,10 +343,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\\"\\\\\\/\\b\\f\\r\\n\\t\""));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new StringJsonEvent("\"\\/\b\f\r\n\t"), events.get(1));
+			replay.assertEquals(new StringJsonEvent("\"\\/\b\f\r\n\t"), 1);
 
 		} finally {
 			jsonParser.close();
@@ -374,10 +358,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\uBEEF\\ubeef\""));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new StringJsonEvent("\ubeef\uBEEF"), events.get(1));
+			replay.assertEquals(new StringJsonEvent("\ubeef\uBEEF"), 1);
 
 		} finally {
 			jsonParser.close();
@@ -391,10 +374,9 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("\"\\uD834\\uDD1E\""));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new StringJsonEvent("\uD834\uDD1E"), events.get(1));
+			replay.assertEquals(new StringJsonEvent("\uD834\uDD1E"), 1);
 
 		} finally {
 			jsonParser.close();
@@ -515,14 +497,15 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[]"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(2));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
-			Assert.assertEquals(4, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -535,14 +518,15 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource(JsonSource.BYTE_ORDER_MARK + "[]"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(2));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
-			Assert.assertEquals(4, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -555,14 +539,15 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource(" \n\r\t []"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(2));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
-			Assert.assertEquals(4, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -575,14 +560,15 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[] \n\r\t "));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(2));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
-			Assert.assertEquals(4, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -649,15 +635,16 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[null]"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new NullJsonEvent(), events.get(2));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(3));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(4));
-			Assert.assertEquals(5, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new NullJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -670,16 +657,18 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[null,null]"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new NullJsonEvent(), events.get(2));
-			Assert.assertEquals(new NullJsonEvent(), events.get(3));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(4));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(5));
-			Assert.assertEquals(6, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new NullJsonEvent(),
+				new NextJsonEvent(),
+				new NullJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -692,16 +681,17 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("[[]]"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(2));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(3));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(4));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(5));
-			Assert.assertEquals(6, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -786,14 +776,15 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{}"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(2));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
-			Assert.assertEquals(4, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ObjectBeginJsonEvent(),
+				new ObjectEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -842,16 +833,17 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\":null}"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new NameJsonEvent("foo"), events.get(2));
-			Assert.assertEquals(new NullJsonEvent(), events.get(3));
-			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(4));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(5));
-			Assert.assertEquals(6, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ObjectBeginJsonEvent(),
+				new NameJsonEvent("foo"), 
+				new NullJsonEvent(),
+				new ObjectEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -864,18 +856,20 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\":null,\"bar\":null}"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new NameJsonEvent("foo"), events.get(2));
-			Assert.assertEquals(new NullJsonEvent(), events.get(3));
-			Assert.assertEquals(new NameJsonEvent("bar"), events.get(4));
-			Assert.assertEquals(new NullJsonEvent(), events.get(5));
-			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(6));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(7));
-			Assert.assertEquals(8, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ObjectBeginJsonEvent(),
+				new NameJsonEvent("foo"), 
+				new NullJsonEvent(),
+				new NextJsonEvent(),
+				new NameJsonEvent("bar"), 
+				new NullJsonEvent(),
+				new ObjectEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -888,17 +882,18 @@ public abstract class AbstractJsonPushParserTests {
 		DefaultJsonPushParser jsonParser = new DefaultJsonPushParser(getSource("{\"foo\":{}}"));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new NameJsonEvent("foo"), events.get(2));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(3));
-			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(4));
-			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(5));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(6));
-			Assert.assertEquals(7, events.size());
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ObjectBeginJsonEvent(),
+				new NameJsonEvent("foo"), 
+				new ObjectBeginJsonEvent(),
+				new ObjectEndJsonEvent(),
+				new ObjectEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -1056,28 +1051,30 @@ public abstract class AbstractJsonPushParserTests {
 				getSource(" \n { \"foo\" : [ \"bar\\n\" , true , { \n } ] , \"baz\" : { \"foo\" \t : \t 42 } } \n "));
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			//@formatter:off
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
-				Assert.assertEquals(new NameJsonEvent("foo"), events.get(2));
-				Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(3));
-					Assert.assertEquals(new StringJsonEvent("bar\n"), events.get(4));
-					Assert.assertEquals(new BooleanJsonEvent(true), events.get(5));
-					Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(6));
-						Assert.assertEquals(new ObjectEndJsonEvent(), events.get(7));
-					Assert.assertEquals(new ArrayEndJsonEvent(), events.get(8));
-				Assert.assertEquals(new NameJsonEvent("baz"), events.get(9));
-				Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(10));
-					Assert.assertEquals(new NameJsonEvent("foo"), events.get(11));
-					Assert.assertEquals(new LongJsonEvent(42), events.get(12));
-					Assert.assertEquals(new ObjectEndJsonEvent(), events.get(13));
-				Assert.assertEquals(new ObjectEndJsonEvent(), events.get(14));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(15));
-			Assert.assertEquals(16, events.size());
-			//@formatter:on
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+					new ObjectBeginJsonEvent(),
+					new NameJsonEvent("foo"),
+						new ArrayBeginJsonEvent(),
+						new StringJsonEvent("bar\n"),
+						new NextJsonEvent(), 
+						new BooleanJsonEvent(true),
+						new NextJsonEvent(),
+							new ObjectBeginJsonEvent(),
+							new ObjectEndJsonEvent(),
+						new ArrayEndJsonEvent(),
+					new NextJsonEvent(),
+					new NameJsonEvent("baz"),
+						new ObjectBeginJsonEvent(),
+						new NameJsonEvent("foo"),
+						new LongJsonEvent(42),
+						new ObjectEndJsonEvent(),
+					new ObjectEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -1091,20 +1088,20 @@ public abstract class AbstractJsonPushParserTests {
 				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(2));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ObjectBeginJsonEvent(),
+				new ObjectEndJsonEvent(),
+				new DocumentEndJsonEvent(),
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(4));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(5));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(6));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(7));
-
-			Assert.assertEquals(8, events.size());
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
 		} finally {
 			jsonParser.close();
@@ -1118,20 +1115,22 @@ public abstract class AbstractJsonPushParserTests {
 				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(2));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ObjectBeginJsonEvent(),
+				new ObjectEndJsonEvent(),
+				new DocumentEndJsonEvent(),
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(4));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(5));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(6));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(7));
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
-			Assert.assertEquals(8, events.size());
+			Assert.assertEquals(8, replay.size());
 
 		} finally {
 			jsonParser.close();
@@ -1145,20 +1144,22 @@ public abstract class AbstractJsonPushParserTests {
 				JsonParserMode.MULTI_DOCUMENT_MODE);
 		try {
 
-			List<JsonEvent> events = jsonParser.handle(new JsonEventJsonHandler<List<JsonEvent>>(
-					new CollectingJsonEventHandler()));
+			JsonReplay replay = jsonParser.handle(new RecordingJsonHandler());
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(0));
-			Assert.assertEquals(new ObjectBeginJsonEvent(), events.get(1));
-			Assert.assertEquals(new ObjectEndJsonEvent(), events.get(2));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(3));
+			// @formatter:off
+			replay.assertEquals(
+				new DocumentBeginJsonEvent(),
+				new ObjectBeginJsonEvent(),
+				new ObjectEndJsonEvent(),
+				new DocumentEndJsonEvent(),
 
-			Assert.assertEquals(new DocumentBeginJsonEvent(), events.get(4));
-			Assert.assertEquals(new ArrayBeginJsonEvent(), events.get(5));
-			Assert.assertEquals(new ArrayEndJsonEvent(), events.get(6));
-			Assert.assertEquals(new DocumentEndJsonEvent(), events.get(7));
+				new DocumentBeginJsonEvent(),
+				new ArrayBeginJsonEvent(),
+				new ArrayEndJsonEvent(),
+				new DocumentEndJsonEvent());
+			// @formatter:on
 
-			Assert.assertEquals(8, events.size());
+			Assert.assertEquals(8, replay.size());
 
 		} finally {
 			jsonParser.close();
