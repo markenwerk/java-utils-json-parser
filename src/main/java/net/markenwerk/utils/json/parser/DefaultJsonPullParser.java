@@ -122,7 +122,7 @@ public final class DefaultJsonPullParser implements JsonPullParser {
 	 */
 	public DefaultJsonPullParser(JsonSource source, JsonParserMode... modes) throws IllegalArgumentException {
 		if (null == source) {
-			throw new IllegalArgumentException("source is null");
+			throw new IllegalArgumentException("The given source is null");
 		}
 		this.source = source;
 		if (null != modes) {

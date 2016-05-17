@@ -115,7 +115,7 @@ public final class DefaultJsonPushParser implements JsonPushParser {
 	 */
 	public DefaultJsonPushParser(JsonSource source, JsonParserMode... modes) throws IllegalArgumentException {
 		if (null == source) {
-			throw new IllegalArgumentException("source is null");
+			throw new IllegalArgumentException("The given source is null");
 		}
 		this.source = source;
 		if (null != modes) {
@@ -132,7 +132,7 @@ public final class DefaultJsonPushParser implements JsonPushParser {
 	public <Result> Result handle(JsonHandler<Result> handler) throws IllegalArgumentException,
 			JsonException, JsonSyntaxException, IOException {
 		if (null == handler) {
-			throw new IllegalArgumentException("handler is null");
+			throw new IllegalArgumentException("The given handler is null");
 		}
 		try {
 			this.handler = handler;

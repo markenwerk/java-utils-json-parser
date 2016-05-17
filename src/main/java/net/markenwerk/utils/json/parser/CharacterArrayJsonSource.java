@@ -53,7 +53,7 @@ public final class CharacterArrayJsonSource implements JsonSource {
 	 */
 	public CharacterArrayJsonSource(char[] characters) throws IllegalArgumentException {
 		if (null == characters) {
-			throw new IllegalArgumentException("characters is null");
+			throw new IllegalArgumentException("The given character array is null");
 		}
 		this.characters = characters;
 		if (0 != characters.length && JsonSource.BYTE_ORDER_MARK == characters[0]) {

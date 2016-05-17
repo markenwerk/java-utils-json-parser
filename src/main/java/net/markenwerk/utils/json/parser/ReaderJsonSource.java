@@ -84,10 +84,10 @@ public final class ReaderJsonSource implements JsonSource {
 	 */
 	public ReaderJsonSource(Reader reader, int size) {
 		if (null == reader) {
-			throw new IllegalArgumentException("reader is null");
+			throw new IllegalArgumentException("The given reader is null");
 		}
 		if (size < MINIMUM_BUFFER_SIZE) {
-			throw new IllegalArgumentException("sizes is too small");
+			throw new IllegalArgumentException("The given size is too small: " + size);
 		}
 		this.reader = reader;
 		this.buffer = new char[size];

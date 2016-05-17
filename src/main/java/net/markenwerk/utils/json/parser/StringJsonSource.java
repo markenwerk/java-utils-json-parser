@@ -53,7 +53,7 @@ public final class StringJsonSource implements JsonSource {
 	 */
 	public StringJsonSource(String string) throws IllegalArgumentException {
 		if (null == string) {
-			throw new IllegalArgumentException("string is null");
+			throw new IllegalArgumentException("The given string is null");
 		}
 		this.string = string;
 		if (0 != string.length() && JsonSource.BYTE_ORDER_MARK == string.charAt(0)) {
